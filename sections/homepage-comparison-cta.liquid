@@ -1,10 +1,10 @@
 <section class="outer-container flex flex-wrap justify-center">
     <div class="homepage-comparison-cta__left-product text-center w-full px-15 py-40 md:px-20 md:w-1/2" style="background-color:{{ section.settings.cta_bg_1 }}">
-        <h2 class="homepage-comparison-cta__title h3 mb-17">{{ section.settings.cta_title_1 }}</h2>
-        <h3 class="homepage-comparison-cta__subtitle text-xl p mb-40">{{ section.settings.cta_subtitle_1 }}</h3>
+        <h2 class="homepage-comparison-cta__title h3 mb-17">{% if section.settings.cta_title_1 != blank %}{{ section.settings.cta_title_1 }}{% else %}<span class="visually-hidden">Placeholder</span>{% endif %}</h2>
+        <h3 class="homepage-comparison-cta__subtitle text-xl p mb-40">{% if section.settings.cta_subtitle_1 != blank %}{{ section.settings.cta_subtitle_1 }}{% else %}<span class="visually-hidden">Placeholder</span>{% endif %}</h3>
         <div class="homepage-comaprison-cta__image mb-40 flex justify-center items-center">
             <div class="homepage-comparison-cta__image-container">
-                <img src="{{ section.settings.cta_img_1 | img_url: '1000x' }}" />
+                <img src="{{ section.settings.cta_img_1 | img_url: '1000x' }}" alt="" />
             </div>
         </div>
         <a class="btn-primary btn-md flex items-center justify-center mx-auto w-268" href="{{ section.settings.cta_url_1 }}">
@@ -17,17 +17,17 @@
     </div>
     <div class="homepage-comparison-cta__right-product text-center w-full px-15 py-40 md:px-20 md:w-1/2 relative" style="background-color:{{ section.settings.cta_bg_2 }}">
         <div class="homepage-comparison-cta__title-container mb-17 flex items-center justify-center w-full">
-            <h2 class="homepage-comparison-cta__title h3 relative z-10">{{ section.settings.cta_title_2 }} </h2>
+            <h2 class="homepage-comparison-cta__title h3 relative z-10">{% if section.settings.cta_title_2 != blank %}{{ section.settings.cta_title_2 }}{% else %}<span class="visually-hidden">Placeholder</span>{% endif %} </h2>
         </div>
         <h3 class="homepage-comparison-cta__subtitle p text-xl mb-40 relative z-10">
           {{ section.settings.cta_subtitle_2 }}
         </h3>
         {% if section.settings.cta_icon_2 != blank %}
-          <div class="homepage-comparison-cta__icon absolute w-50 md:w-65 z-0"><img src="{{ section.settings.cta_icon_2 | img_url: '100x' }}" /></div>
+          <div class="homepage-comparison-cta__icon absolute w-50 md:w-65 z-0"><img src="{{ section.settings.cta_icon_2 | img_url: '100x' }}" alt="" /></div>
         {% endif %}
         <div class="homepage-comaprison-cta__image mb-40 flex justify-center items-center">
             <div class="homepage-comparison-cta__image-container">
-            <img src="{{ section.settings.cta_img_2 | img_url: '1000x' }}" />
+            <img src="{{ section.settings.cta_img_2 | img_url: '1000x' }}" alt="" />
             </div>
         </div>
         <a class="btn-primary btn-md flex items-center justify-center mx-auto w-268" href="{{ section.settings.cta_url_2 }}">

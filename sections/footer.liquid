@@ -19,28 +19,28 @@
         <ul class="flex justify-center items-center pb-40">
           {% if settings.facebook_link != blank %}
             <li class="mr-25">
-              <a class="block w-12 text-white" href="{{ settings.facebook_link }}" target="_blank">
+              <a class="block w-12 text-white" href="{{ settings.facebook_link }}" target="_blank" aria-label="Visit us on Facebook">
                 {% render 'icons', icon: 'facebook2' %}
               </a>
             </li>
           {% endif %}
           {% if settings.twitter_link != blank %}
             <li class="mr-25">
-              <a class="block w-6 text-white" href="{{ settings.twitter_link }}" target="_blank">
+              <a class="block w-6 text-white" href="{{ settings.twitter_link }}" target="_blank" aria-label="Visit us on Twitter">
                 {% render 'icons', icon: 'twitter2' %}
               </a>
             </li>
           {% endif %}
           {% if settings.instagram_link != blank %}
             <li class="mr-25">
-              <a class="block w-6 text-white" href="{{ settings.instagram_link }}" target="_blank">
+              <a class="block w-6 text-white" href="{{ settings.instagram_link }}" target="_blank" aria-label="Visit us on Insta">
                 {% render 'icons', icon: 'instagram2' %}
               </a>
             </li>
           {% endif %}
           {% if settings.youtube_link != blank %}
           <li class="">
-            <a class="block w-6 text-white" href="{{ settings.youtube_link }}" target="_blank">
+            <a class="block w-6 text-white" href="{{ settings.youtube_link }}" target="_blank" aria-label="Visit us on YouTube">
               {% render 'icons', icon: 'youtube2' %}
             </a>
           </li>
@@ -79,22 +79,22 @@
               {% endfor %}
               <li class="justify-start items-center pt-15 hidden md:flex">
                 {% if settings.facebook_link != blank %}
-                  <a class="block w-12 text-white mr-25" href="{{ settings.facebook_link }}" target="_blank">
+                  <a class="block w-12 text-white mr-25" href="{{ settings.facebook_link }}" target="_blank" aria-label="Visit Coop on Facebook">
                     {% render 'icons', icon: 'facebook2' %}
                   </a>
                 {% endif %}
                 {% if settings.twitter_link != blank %}
-                  <a class="block w-6 text-white mr-25" href="{{ settings.twitter_link }}" target="_blank">
+                  <a class="block w-6 text-white mr-25" href="{{ settings.twitter_link }}" target="_blank" aria-label="Visit Coop on Twitter">
                     {% render 'icons', icon: 'twitter2' %}
                   </a>
                 {% endif %}
                 {% if settings.instagram_link != blank %}
-                  <a class="block w-6 text-white mr-25" href="{{ settings.instagram_link }}" target="_blank">
+                  <a class="block w-6 text-white mr-25" href="{{ settings.instagram_link }}" target="_blank" aria-label="Visit Coop on Instagram">
                     {% render 'icons', icon: 'instagram2' %}
                   </a>
                 {% endif %}
                 {% if settings.youtube_link != blank %}
-                  <a class="block w-6 text-white" href="{{ settings.youtube_link }}" target="_blank">
+                  <a class="block w-6 text-white" href="{{ settings.youtube_link }}" target="_blank" aria-label="Visit Coop on YouTube">
                     {% render 'icons', icon: 'youtube2' %}
                   </a>
                 {% endif %}

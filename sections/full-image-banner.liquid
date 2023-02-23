@@ -21,8 +21,8 @@
     {% if section.settings.link != blank %}
       <a href="{{ section.settings.link }}">
     {% endif %}
-      <img src="{{ section.settings.image_mobile | img_url: '1024x'}}" alt="{{section.image_mobile.alt}}" class="w-full {% if mobile_image_only %}block{% endif %} {% if desktop_image_only %}hidden{% endif %} {% if both_image %}block md:hidden{% endif %}">
-      <img src="{{ section.settings.image_desktop | img_url: 'master'}}" alt="{{section.image_desktop.alt}}" class="w-full {% if mobile_image_only %}hidden{% endif %} {% if desktop_image_only %}block{% endif %} {% if both_image %}hidden md:block{% endif %}">
+      <img src="{{ section.settings.image_mobile | img_url: '1024x'}}" alt="{{section.settings.image_mobile.alt}}" class="w-full {% if mobile_image_only %}block{% endif %} {% if desktop_image_only %}hidden{% endif %} {% if both_image %}block md:hidden{% endif %}">
+      <img src="{{ section.settings.image_desktop | img_url: 'master'}}" alt="{{section.settings.image_desktop.alt}}" class="w-full {% if mobile_image_only %}hidden{% endif %} {% if desktop_image_only %}block{% endif %} {% if both_image %}hidden md:block{% endif %}">
     {% if section.settings.link != blank %}
       </a>
     {% endif %}

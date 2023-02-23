@@ -116,14 +116,14 @@
     function run_pc_js_init(){
       window.shopstorm = {};
       window.shopstorm.shop = window.shopstorm.shop || {};
-      window.shopstorm.shop.moneyFormat = window.shopstorm.shop.moneyFormat || '{{ shop.money_format | replace: "'", "\\'" }}';
+      window.shopstorm.shop.moneyFormat = window.shopstorm.shop.moneyFormat || '{{ shop.money_format }}';
       window.shopstorm.apps = window.shopstorm.apps || {};
       window.shopstorm.apps.productCustomizer = window.shopstorm.apps.productCustomizer || {};
       if (typeof(shopstorm.apps.productCustomizer.$) === 'undefined' && typeof($) !== 'undefined') { shopstorm.apps.productCustomizer.$ = $; }
       window.shopstorm.apps.productCustomizer.pricingVariantId = window.shopstorm.apps.productCustomizer.pricingVariantId || '{{ shop.metafields.product_customizer.quantity_pricing_variant_id }}';
       window.shopstorm.apps.productCustomizer.options = window.shopstorm.apps.productCustomizer.options || [];
       window.shopstorm.ConditionalLogic = window.shopstorm.ConditionalLogic || {};
-      shopstorm.apps.productCustomizer.options.push({ id: "{{ product.id }}", title: "{{ product.title | replace: '"', '\"' }}", data: {{ product.metafields.product_customizer | json }}, discount: {{ discount_percentage }} });
+      shopstorm.apps.productCustomizer.options.push({ id: "{{ product.id }}", title: "{{ product.title | escape }}", data: {{ product.metafields.product_customizer | json }}, discount: {{ discount_percentage }} });
       shopstorm.ConditionalLogic.rules = (shopstorm.ConditionalLogic.rules || []).concat({{ product.metafields.product_customizer_x.conditional_logic | default: '[]' }});
       shopstorm.jsSection = 'product-customizer:product-init';
       shopstorm.apps.productCustomizer.swatchTriggered = true;

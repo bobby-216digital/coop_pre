@@ -8,7 +8,7 @@
       {% for acf_product_accordion in acf_products_accordion %}
         <div class="relative last:border-t border-b border-black -m-px">
           <button title="Item Accordion" type="button" class="w-full py-20 text-left" aria-expanded="false" data-toggle-item-accordion="">
-            <h3 class="p2">{{ product.metafields.accentuate.produc_single_accordion_text[forloop.index0] }}</h3>
+            {% if product.metafields.accentuate.produc_single_accordion_text[forloop.index0] != blank %}<h3 class="p2">{{ product.metafields.accentuate.produc_single_accordion_text[forloop.index0] }}</h3>{% endif %}
 
             <span class="toggle-icon block absolute top-20 right-10 w-25">
               <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>

@@ -35,7 +35,7 @@
               <div class="video-full-width--container">
                   {% if product.metafields.accentuate.modal_video_youtube[forloop.index0] != blank %}
                   <div class="video-full-width--video-container">
-                      <iframe id="youtube-video-iframe-text-modal-{{forloop.index0}}" class="video-full-width--video" src="{{ product.metafields.accentuate.modal_video_youtube[forloop.index0] }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+                      <iframe title="Video Player" id="youtube-video-iframe-text-modal-{{forloop.index0}}" class="video-full-width--video" src="{{ product.metafields.accentuate.modal_video_youtube[forloop.index0] }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
                   </div>
                   {% endif %}
               </div>

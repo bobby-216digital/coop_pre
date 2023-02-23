@@ -32,7 +32,7 @@
               <div class="video-full-width--container">
                   {% if block.settings.youtube_url != blank %}
                   <div class="video-full-width--video-container">
-                      <iframe id="youtube-video-iframe-text-modal-hp-{{forloop.index0}}" class="video-full-width--video" src="{{ block.settings.youtube_url }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+                      <iframe title="Video Player" id="youtube-video-iframe-text-modal-hp-{{forloop.index0}}" class="video-full-width--video" src="{{ block.settings.youtube_url }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
                   </div>
                   {% endif %}
               </div>

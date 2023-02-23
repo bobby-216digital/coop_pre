@@ -46,10 +46,10 @@
             {%
               render 'lazy-image-acf',
               type: 'color',
-              image_base: image.src
+              image_base: {{ image.src }}
               sizes: '50vw',
               srcs: '724x,1448x,',
-              alt: product.title | escape
+              alt: {{ product.title | escape }}
             %}
           </figure>
           {% endfor %}
