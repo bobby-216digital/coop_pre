@@ -1,0 +1,57 @@
+{% paginate search.results by 10 %}
+  <section class="pt-130 md:pt-130 pb-60 md:pb-80">
+    <div class="container">
+      {% if search.performed == false %}
+        <h1 class="h5 text-center mb-30">
+          <span class="sr-only">{{ 'general.search.heading' | t: count: search.results_count }}:</span>
+          {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+        </h1>
+      {% else %}
+        <h1 class="h5 text-center mb-30">
+          <span class="sr-only">{{ 'general.search.heading' | t: count: search.results_count }}:</span>
+          {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+        </h1>
+      {% endif %}
+      <div class="mb-40 md:mb-60">
+        {% if search.performed and search.results_count == 0 %}
+          <div class="text-center mb-20">
+            <p class="p3">{{ 'general.search.no_results' | t }}</p>
+          </div>
+        {% endif %}
+        <form action="{{ routes.search_url }}" method="get" role="search" class="">
+          <div class="">
+            <div class="form__search relative md:w-1/4 m-auto">
+              <button type="submit" class="absolute top-20 left-20 w-20" aria-label="{{ 'general.search.submit' | t }}">
+                {% render 'icons', icon: 'search' %}
+              </button>
+              <input class="px-50 bg-white" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-label="{{ 'general.search.placeholder' | t }}" aria-haspopup="listbox" data-template-form-search/>
+              <input type="hidden" name="type" value="product">
+              <input type="hidden" name="options[prefix]" value="last" aria-hidden="true" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    {% if search.performed %}
+      <div class="container">
+        {% if search.results_count > 0 %}
+          <hr class="mb-40 md:mb-80 border-b-1 border-gray-100" aria-hidden="true" />
+        {% endif %}
+        <ul class="grid grid-cols-2 md:grid-cols-3 gap-x-20 gap-y-60">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              {% render 'product-card', product: item, imageClass: 'object-contain' %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {%- comment -%} Pagination {%- endcomment -%}
+    <div class="container mt-60 md:mt-80">
+      {% render 'pagination', paginate: paginate, count: search.results_count %}
+    </div>
+  </section>
+
+{% endpaginate %}

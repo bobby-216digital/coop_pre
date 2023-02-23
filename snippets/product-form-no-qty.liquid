@@ -1,0 +1,156 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+<div data-product-form data-price-parent="{{price_parent}}">
+  {% form "product", product, class: 'product-form' %}
+    <div class="product-form-select text-label-xs mb-30">
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+            <div data-product-option="{{option.name | handleize}}">
+              {% if option.name == "Color" %}
+                <div class="mb-30">
+                  <div class="flex mb-15">
+                    <p class="p4 mr-5">{{ option.name }}:</p>
+                    <p class="p3" data-color>{{ option.selected_value }}</p>
+                  </div>
+                  {%- comment -%} Product Colors {%- endcomment -%}
+                    {% render 'product-colors', option: option, class: 'w-25 h-25' %}
+                  {%- comment -%} / Product Colors {%- endcomment -%}
+                </div>
+                {% elsif option.name != "Pack" and option.name != "Bundle" %}
+                <div class="mb-20">
+                  <div class="flex justify-between gap-20 mb-15">
+                    <label class="p4">{{ option.name }}:</label>
+                    {% if size_guide_page %}
+                      <button type="button" class="p3 text-right underline" data-open-size-guide-modal>
+                        Size Guide
+                      </button>
+                    {% endif %}
+                  </div>
+                  <div class="relative bg-secondary-100 rounded-full">
+                    <div>
+                      <select title="Product Selection"
+                        class="bg-secondary-100 product-select-options"
+                        data-product-selector
+                        name="{{ option.name | handleize }}"
+                        data-index="option{{ option.position }}"
+                        >
+                        {% for value in option.values %}
+                          <option
+                            value="{{ value | escape }}"
+                            {% if option.selected_value == value %}selected="selected"{% endif %}>
+                              {{ value }}
+                          </option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <div class="quantity-selector" js-show-when-loaded>
+                <div class="grid grid-cols-3 gap-5 mb-20 md:gap-20">
+                    {% for bundle_number in product.metafields.seed.quantity_number %}
+                        <div class="button-contain">
+                            <button class="rounded-full bg-secondary-100 h-60 pdp-bundle-btn px-17 py-5 xxl:px-30 w-full border border-black uppercase mb-10" data-qty-number="{{ bundle_number }}" js-change-qty>
+                                {{product.metafields.seed.quantity_button_label[forloop.index0]}}
+                            </button>
+                            {% if product.metafields.seed.quantity_button_subtitle[forloop.index0] != blank %}
+                                <span class="block button-subtitle w-full text-center"> {{ product.metafields.seed.quantity_button_subtitle[forloop.index0] }} </span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+      {% endunless %}
+
+      <select title="Product Variant" name="id" class="hidden" js-hidden-option-selector>
+        {% for variant in product.variants %}
+          <option
+            data-title="{{ variant.title | escape }}"
+            data-variant="{{ variant | json | escape }}"
+            data-variant-option-1="{{variant.option1 | escape}}"
+            data-variant-option-2="{{variant.option2 | escape}}"
+            {% if variant.metafields.seed.variant_custom_price_1 != blank %}
+            data-is-bundle="true"
+            data-variant-price="${{ variant.metafields.seed.variant_custom_price_1 }}/ea"
+            {% else %}
+            data-is-bundle="false"
+            data-variant-price="${{ variant.price | money_without_currency }}/ea"
+            {% endif %}
+            {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %}
+            value="{{ variant.id | escape }}">
+            {% if variant.available == false %}
+              {{ variant.title | escape }} - Sold Out
+            {% else %}
+              {{ variant.title | escape }} - {{ variant.price | money }}
+            {% endif %}
+          </option>
+        {% endfor %}
+      </select>
+
+      <div class="grid grid-cols-3 bg-primary-100 rounded-full h-60 w-full" data-add-to-bag>
+        <div class="p4 flex justify-between my-10 items-center px-15 border-r border-black hidden">
+          <button type="button" class="w-30 p-1" data-btnqty data-func="minus">
+            <span class="btn-minus inline-block btn-lg w-11 h-22">-</span>
+          </button>
+          <input title="Quantity" type="text" name="quantity" value="1" min="1" class="quantity-input p4 p-0 text-center bg-transparent" js-qty-number>
+          <button type="button" class="w-30 p-1" data-btnqty data-func="plus">
+            <span class="inline-block btn-lg w-11 h-22">+</span>
+          </button>
+        </div>
+        <button type="submit" class="btn-lg col-span-3 uppercase" onclick="googleAnalytics()">
+          ADD TO CART
+        </button>
+      </div>
+
+      <p data-form-errors class="mt-20 hidden text-center text-xs"></p>
+
+    </div>
+  {% endform %}
+  {%- comment -%} Form Notify item {%- endcomment -%}
+  <div class="mb-30 {% if current_variant.available == false %}block{% else %} hidden{% endif %}" data-form-notify-stock>
+    <p class="p3 mb-15">Notify me when this item is back in stock</p>
+    <p class="p3 mb-15 hidden">You’re on the list! When this item returns, you’ll be the first to know. </p>
+
+    <form data-form-available data-product-variant-id="{{current_variant.id}}" data-product-id={{ product.id }}>
+      <div class="flex border border-black rounded-full p-10 pl-30">
+        <input class="p3 bg-transparent p-0 pr-5 placeholder-opacity-70" type="text" placeholder="Enter Your Email" py-10="">
+        <button class="btn-md btn-secondary bg-black text-white py-12 px-20 hover:bg-transparent hover:text-black">Submit</button>
+      </div>
+      <p data-form-available-msg class="label-md font-bold pt-10"></p>
+    </form>
+  </div>
+  {%- comment -%} / Form Notify item {%- endcomment -%}
+</div>
+
+<script>
+  function googleAnalytics(){
+    dataLayer.push({ 'ecommerce': null });dataLayer.push({
+
+    'event': 'add_to_cart',
+
+    'ecommerce': {
+
+        'items': [{
+
+        'item_id': '{{ product.id }}',
+
+        'item_name': '{{ product.title | remove: "'" | remove: '"' }}',
+
+        'item_brand': '{{ product.vendor | remove: "'" | remove: '"' }}',
+
+        'item_category': '{{ product.collections[0].title | remove: "'" | remove: '"' }}',
+
+        'item_variant': '{{ product.selected_variant.sku }}',
+
+        'currency': '{{ shop.currency }}',
+
+        'price': '{{ product.price  | times: 0.01}}'
+
+        }]
+
+      }
+
+    });
+  }
+</script>

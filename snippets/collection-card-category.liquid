@@ -1,0 +1,42 @@
+{% for acf_cards_category in collection.metafields.accentuate.category_cards %}
+  {% assign cards_handles = acf_cards_category | split: '|' %}
+  {%- comment -%}
+    Maximum and a minimum of two Cards Category. if only there are one the module should not render.
+    COOP-8 / COOP-21
+  {%- endcomment -%}
+  {% unless cards_handles.size < 2 %}
+    <section class="container container pb-80 md:pb-100">
+      <h2 class="h3 mb-20 md:mb-30">
+        Other Categories
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-20 overflow-hidden">
+        {% for cards_handle in cards_handles limit: 2 %}
+          {% for collection in collections %}
+            {% if collection.handle == cards_handle %}
+              <div class="overflow-hidden">
+                <div class="collection-cart">
+                  <div class="relative focus-within:outline-black cursor-pointer">
+                    <div class="collection-cart-hover absolute top-0 left-0 flex items-end w-full h-full px-30 md:px-40 py-30 bg-gradient-to-t from-gray-300 opacity-60 z-20">
+                      <a class="h5 text-white outline-none" href="{{ collection.url }}">
+                        {{ collection.title }}
+                      </a>
+                    </div>
+                    <figure class="aspect-w-4 aspect-h-3 duration-500 ease-in-out">
+                      {%
+                      render 'lazy-image',
+                      type: 'color',
+                      image_base: collection.image.src,
+                      sizes: '30vw',
+                      srcs: '550x,1100x'
+                      %}
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endunless %}
+{% endfor %}

@@ -1,0 +1,177 @@
+<section class="review-slider py-35 lg:py-55 w-full md:flex" {% if section.settings.bg_color != blank %}style="background-color: {{ section.settings.bg_color }};"{% endif %}>
+  <div class="review-slider__header md:max-w-md md:w-1/4 px-35 md:pl-60 md:pt-25" style="min-width: 350px;">
+    {% if section.settings.title != blank %}
+      <h1 class="review-slider__title h3 text-center md:text-left">{{ section.settings.title }}</h1>
+    {% endif %}
+    {% if section.settings.text != blank %}
+      <div class="review-slider__text p2 text-center md:text-left mt-24">{{ section.settings.text }}</div>
+    {% endif %}
+    {% if section.settings.show_social_media_icons %}
+      <ul class="review-slider__icons flex items-center justify-center md:justify-start mt-22">
+        {% if settings.facebook_link != blank %}
+          <li>
+            <a class="review-slider__icon block w-12 mx-12 md:ml-0 md:mr-24" href="{{ settings.facebook_link }}" target="_blank" rel="noopener noreferrer">
+              {% render 'icons', icon: 'facebook2' %}
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.instagram_link != blank %}
+          <li>
+            <a class="review-slider__icon block w-24 mx-12 md:ml-0 md:mr-24" href="{{ settings.instagram_link }}" target="_blank" rel="noopener noreferrer">
+              {% render 'icons', icon: 'instagram2' %}
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.twitter_link != blank %}
+          <li>
+            <a class="review-slider__icon block w-24 mx-12 md:ml-0 md:mr-24" href="{{ settings.twitter_link }}" target="_blank" rel="noopener noreferrer">
+              {% render 'icons', icon: 'twitter2' %}
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.youtube_link != blank %}
+          <li>
+            <a class="review-slider__icon block w-24 mx-12 md:ml-0 md:mr-24" href="{{ settings.youtube_link }}" target="_blank" rel="noopener noreferrer">
+              {% render 'icons', icon: 'youtube2' %}
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  </div>
+  <div class="carousel swiper-container review-slider__container flex-1 mt-27 md:mt-0">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide review-slider__slide h-auto" aria-hidden="false">
+          <div class="review-slider__slide-container py-25 h-full">
+            <div class="review-slider__slide-wrapper flex flex-col justify-between h-full">
+              <div class="review-slider__slide-top">
+                <div class="review-slider__slide-icon w-30 mb-15">{% render 'icons', icon: 'quotation-mark' %}</div>
+                <div class="p2">{{ block.settings.review }}</div>
+              </div>
+              <div class="review-slider__slide-bottom flex mt-24 items-center justify-start">
+                {% unless block.settings.social_media == 'no-icon' %}
+                  <div class="review-slider__slide-icon mr-20 {% if block.settings.social_media == 'facebook' %}w-20{% else %}w-40{% endif %}">
+                    {% if block.settings.social_media == 'facebook' %}
+                      {% render 'icons', icon: 'facebook2' %}
+                    {% elsif block.settings.social_media == 'twitter' %}
+                      {% render 'icons', icon: 'twitter2' %}
+                    {% elsif block.settings.social_media == 'instagram' %}
+                      {% render 'icons', icon: 'instagram3' %}
+                    {% elsif block.settings.social_media == 'youtube' %}
+                      {% render 'icons', icon: 'youtube2' %}
+                    {% endif %}
+                  </div>
+                {% endunless %}
+                <div class="review-slider__slide-author">
+                  <div class="p2">{{ block.settings.author_name }}</div>
+                  <div class="p2 opacity-60">{{ block.settings.author_place }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 1 %}
+      {% if section.settings.show_arrows_desktop %}
+      <div class="review-slider__arrows flex-row justify-between w-full hidden md:flex">
+        <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center">
+          {% render 'icons', icon: 'caret-left' %}
+        </button>
+        <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center">
+          {% render 'icons', icon: 'caret-right' %}
+        </button>
+      </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_media_icons",
+        "label": "Show Social Media Icons"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_arrows_desktop",
+        "label": "Show Arrow Icons In Desktop"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Review Slide",
+        "type": "slide",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "review",
+            "label": "Review"
+          },
+          {
+            "type": "text",
+            "id": "author_name",
+            "label": "Author Name"
+          },
+          {
+            "type": "text",
+            "id": "author_place",
+            "label": "Author Place"
+          },
+          {
+            "type": "radio",
+            "id": "social_media",
+            "label": "Review from",
+            "options": [
+              {
+                "value": "no-icon",
+                "label": "Don't show social media icon"
+              },
+              {
+                "value": "facebook",
+                "label": "Facebook"
+              },
+              {
+                "value": "twitter",
+                "label": "Twitter"
+              },
+              {
+                "value": "instagram",
+                "label": "Instagram"
+              },
+              {
+                "value": "youtube",
+                "label": "Youtube"
+              }
+            ],
+            "default": "no-icon"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Review Slider"
+      }
+    ]
+  }
+{% endschema %}

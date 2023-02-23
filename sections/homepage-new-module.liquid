@@ -1,0 +1,50 @@
+<section class="homepage-new-module {% if section.settings.show_mobile == true %}{% else %}hidden{% endif %} py-20 px-10 w-full md:block" style="background-color:#EEDEC6">    
+    <div class="homepage-new-module__icons flex justify-center flex-wrap items-center grid grid-cols-2 md:grid-cols-4 md:gap-x-8">
+        {% for block in section.blocks %}
+            <div class="homepage-new-module__container items-center px-5 px-5 md:px-20 md:h-60 pb-0 mb-20 md:mb-10{% if block.settings.hide_mobile == true %}hidden {% endif %}  md:flex-1 flex">
+              <img src="{{ block.settings.icon_img | img_url: '60x'}}" alt="{{block.icon_img.alt}}" class="w-50 h-50 md:w-55 md:h-55">
+              <p class="text-sm mt-2 md:mt-0 ml-2">{{ block.settings.icon_text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% schema %}
+  {
+    "settings": [      
+      {
+        "type": "checkbox",
+        "id": "show_mobile",
+        "label": "Show In Mobile"
+      }
+    ],
+    "blocks": [
+    {
+        "type": "image",
+        "name": "Icon Section",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon_img",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "icon_text",
+            "label": "Icon text"
+          },
+          {
+            "type": "checkbox",
+            "id": "hide_mobile",
+            "label": "Hide this icon on mobile"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Homepage New Module for Aug"
+      }
+    ]
+  }
+{% endschema %}

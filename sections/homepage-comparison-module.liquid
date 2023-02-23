@@ -1,0 +1,183 @@
+<section class="container">
+  <h2 class="h3 mb-20 text-center mx-auto md:w-740">{{ section.settings.title }}<span class="bckg-word animate inline-block"><strong>{{ section.settings.title_highlight }}</strong></span></h2>
+  <p class="p3 mb-40 md:text-center md:mx-auto md:w-360">{{ section.settings.subtitle }}</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 md:gap-5 md:pb-60">
+    {% comment %}First comparison product{% endcomment %}
+    {% assign all_product_handle = all_products[section.settings.product_one] %}
+    <div class="md:pt-30 md:pb-20 first:pb-80 md:first:pb-60  pb-60 md:px-40 text-center cursor-pointer" data-animate-scale>
+      <a class="block overflow-hidden" href="{{ all_product_handle.url }}">
+        <figure class="aspect-w-16 aspect-h-9" data-img-scale>
+          {% if section.settings.product_one_image %}
+            {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: section.settings.product_one_image,
+            sizes: '30vw',
+            srcs: '550x,1100x'
+            %}
+          {% else %}
+            {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: all_product_handle.featured_image,
+            sizes: '30vw',
+            srcs: '550x,1100x'
+            %}
+          {% endif %}
+        </figure>
+        <span class="visually-hidden">Product Image</span>
+      </a>
+      <h2 class="h4 pt-30 pb-15 md:py-20">
+        <a title="Title of All Products" class="outline-none" href="{{ all_product_handle.url }}">
+          {{ all_product_handle.title }}
+          <span class="visually-hidden">{{ all_product_handle.title }}</span>
+        </a>
+      </h2>
+      <div class="p3 line-clamp-3 mb-15">
+        {% if section.settings.product_one_text != '' %}
+          {{ section.settings.product_one_text }}
+        {% else %}
+          {{ all_product_handle.description }}
+        {% endif %}
+      </div>
+      <div class="flex justify-center mb-30">
+        {% assign current_variant = all_products[section.settings.product_one].selected_or_first_available_variant %}
+        {% render 'product-price', variant: current_variant, product: product %}
+      </div>
+      <a class="btn-primary btn-md flex items-center justify-center mx-auto w-268" title="{{ all_product_handle.title }} Link" href="{{ all_product_handle.url }}" data-hover>
+        {% if section.settings.product_one_cta != '' %}
+          {{ section.settings.product_one_cta }}
+        {% else %}
+          Shop {{ all_product_handle.title }}
+        {% endif %}
+      </a>
+    </div>
+
+    {% comment %}Second comparison product{% endcomment %}
+    {% assign all_product_handle = all_products[section.settings.product_two] %}
+    <div class="md:pt-30 md:pb-20 pb-60 md:px-40 text-center cursor-pointer" data-animate-scale>
+      <a class="block overflow-hidden" href="{{ all_product_handle.url }}">
+        <figure class="aspect-w-16 aspect-h-9" data-img-scale>
+          {% if section.settings.product_two_image %}
+            {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: section.settings.product_two_image,
+            sizes: '30vw',
+            srcs: '550x,1100x'
+            %}
+          {% else %}
+            {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: all_product_handle.featured_image,
+            sizes: '30vw',
+            srcs: '550x,1100x'
+            %}
+          {% endif %}
+        </figure>
+        <span class="visually-hidden">Product Image</span>
+      </a>
+      <h2 class="h4 py-10 md:py-20">
+        <a title="Title of All Products" class="outline-none" href="{{ all_product_handle.url }}">
+          {{ all_product_handle.title }}
+          <span class="visually-hidden">{{ all_product_handle.title }}</span>
+        </a>
+      </h2>
+      <div class="p3 line-clamp-3 mb-15">
+        {% if section.settings.product_two_text != '' %}
+          {{ section.settings.product_two_text }}
+        {% else %}
+          {{ all_product_handle.description }}
+        {% endif %}
+      </div>
+      <div class="flex justify-center mb-30">
+        {% assign current_variant = all_products[section.settings.product_two].selected_or_first_available_variant %}
+        {% render 'product-price', variant: current_variant, product: product %}
+      </div>
+      <a class="btn-primary btn-md flex items-center justify-center mx-auto w-268" title="{{ all_product_handle.title }} Link" href="{{ all_product_handle.url }}" data-hover>
+        {% if section.settings.product_two_cta != '' %}
+          {{ section.settings.product_two_cta }}
+        {% else %}
+          Shop {{ all_product_handle.title }}
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Featured Products Module Content"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "No More"
+      },
+      {
+        "id": "title_highlight",
+        "type": "text",
+        "label": "Title Highlighted Text",
+        "default": "Waking Up Tired"
+      },
+      {
+        "id": "subtitle",
+        "type": "text",
+        "label": "Subtitle",
+        "default": "One-size-fits-all products can lead to poor sleep, aches, grogginess, and memory loss. So we made it easier to get a good night of sleep."
+      },
+      {
+         "type": "product",
+         "id": "product_one",
+         "label": "First Comparison Product"
+      },
+      {
+         "type": "image_picker",
+         "id": "product_one_image",
+         "label": "First Comparison Product Image"
+      },
+      {
+         "type": "richtext",
+         "id": "product_one_text",
+         "label": "First Comparison Product Description"
+      },
+      {
+         "type": "text",
+         "id": "product_one_cta",
+         "label": "First Product CTA Text"
+      },
+      {
+         "type": "product",
+         "id": "product_two",
+         "label": "Second Comparison Product"
+      },
+      {
+         "type": "image_picker",
+         "id": "product_two_image",
+         "label": "Second Comparison Product Image"
+      },
+      {
+         "type": "richtext",
+         "id": "product_two_text",
+         "label": "Second Comparison Product Description"
+      },
+      {
+         "type": "text",
+         "id": "product_two_cta",
+         "label": "Second Product CTA Text"
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Homepage Comparison Products"
+      }
+    ]
+  }
+{% endschema %}

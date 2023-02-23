@@ -1,0 +1,87 @@
+<section class="pt-50 md:pt-80 pb-80 md:pb-100">
+  <div class="container">
+    <ul class="grid grid-cols-1 md:grid-cols-3 md:grid-flow-row-dense gap-20 mb-40 md:mb-80">
+      {% for block in section.blocks %}
+        {% if block.settings.card_quotes_enable %}
+          <li class="card-quote--lg" style="display: none">
+            {% if block.settings.card_quotes_link %}
+              <a class="h-full block" href="{{ block.settings.card_quotes_link }}">
+            {% endif %}
+              <div class="card-quote__holder">
+                <div class="quote-md md:quote-lg line-clamp-5 md:line-clamp-3">{{ block.settings.card_quotes_text_1 }}</div>
+                <div class=" p3 flex items-end h-full uppercase">{{ block.settings.card_quotes_text_2 }}</div>
+              </div>
+            {% if block.settings.card_quotes_link %}
+              </a>
+            {% endif %}
+          </li>
+        {% else %}
+          <li class="card-quote--sm" style="display: none">
+            {% if block.settings.card_quotes_link %}
+              <a class="h-full block" href="{{ block.settings.card_quotes_link }}">
+            {% endif %}
+              <div class="card-quote__holder">
+                <div class="p1 font-medium pb-15 line-clamp-4 md:line-clamp-3">
+                  {{ block.settings.card_quotes_text_1 }}
+                </div>
+                <div class="p2 flex items-end h-full">
+                  {{ block.settings.card_quotes_text_2 }}
+                </div>
+              </div>
+            {% if block.settings.card_quotes_link %}
+              </a>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <div class="text-center">
+      <button role="button" class="btn-primary" data-load-more-quotes aria-label="Load More quotes">
+        Load More quotes
+      </button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Card Quotes",
+    "class": "card_quotes",
+    "blocks": [
+      {
+        "type": "quote",
+        "name": "Card Quote",
+        "settings": [
+          {
+            "id": "card_quotes_text_1",
+            "type": "text",
+            "label": "Card Quote Text 1"
+          },
+          {
+            "id": "card_quotes_text_2",
+            "type": "text",
+            "label": "Card Quote Text 2"
+          },
+          {
+            "type": "checkbox",
+            "id": "card_quotes_enable",
+            "label": "Card Quote Large",
+            "default": true
+          },
+          {
+            "type": "url",
+            "id": "card_quotes_link",
+            "label": "Card Quote Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Card Quotes ",
+        "category": "Card"
+      }
+    ]
+  }
+{% endschema %}
+

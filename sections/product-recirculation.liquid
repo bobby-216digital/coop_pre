@@ -1,0 +1,89 @@
+<div class="relative pt-40 lg:py-35 lg:px-30" {% if section.settings.bg_color != blank %}style="background-color: {{ section.settings.bg_color }};"{% endif %}>
+  <div class="px-27 lg:px-0">
+    {% if section.settings.carousel_products_title != blank %}
+      <h2 class="h4 mb-20 text-center {% if section.settings.hide_title_mobile %}hidden lg:block{% endif %}">{{ section.settings.carousel_products_title }}</h2>
+    {% endif %}
+    {% if section.settings.carousel_products_subtitle != blank %}
+      <p class="p text-center mb-20 {% if section.settings.hide_title_mobile %}hidden lg:block{% endif %}">{{ section.settings.carousel_products_subtitle }}</p>
+    {% endif %}
+  </div>
+  <div class="carousel swiper-container product-card-recirculation px-15 lg:px-0">
+    <ul class="swiper-wrapper">
+      <!-- Item -->
+      {% for block in section.blocks %}
+        {% assign carousels_product = all_products[block.settings.carousel_product] %}
+        {% render 'product-card', product: carousels_product, class: 'swiper-slide', imageClass: 'object-cover', imageHover: false, show_add: true %}
+      {% endfor %}
+    </ul>
+    <div class="flex flex-row justify-between lg:hidden p-20 relative -left-20" style="background-color: #f0f0f0; width: calc(100% + 40px);">
+      <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center w-27 h-15">
+        {% render 'icons', icon: 'arrow-prev' %}
+      </button>
+      <div class="fraction-pagination font-sansRegular label-md flex items-center w-auto mx-20"></div>
+      <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center w-27 h-15">
+        {% render 'icons', icon: 'arrow-next' %}
+      </button>
+    </div>
+    <div class="hidden lg:flex flex-row justify-between product-recirculation__arrows w-full px-7">
+      <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center">
+        {% render 'icons', icon: 'caret-left' %}
+      </button>
+      <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center">
+        {% render 'icons', icon: 'caret-right' %}
+      </button>
+    </div>
+  </div>
+</div>
+{% comment %}Rebuy widgets to trigger from product card{% endcomment %}
+<div data-rebuy-id="60908" data-rebuy-shopify-product-ids="11181631044"></div>
+<div data-rebuy-id="60908" data-rebuy-shopify-product-ids="7051792318517"></div>
+<div data-rebuy-id="60145" data-rebuy-shopify-product-ids="11181688516"></div>
+<div data-rebuy-id="60145" data-rebuy-shopify-product-ids="7051791204405"></div>
+
+{% schema %}
+  {
+    "name": "Carousel Products",
+    "class": "carousel_products",
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "id": "carousel_products_title",
+        "type": "richtext",
+        "label": "Carousel Products Title"
+      },
+      {
+        "id": "carousel_products_subtitle",
+        "type": "textarea",
+        "label": "Carousel Products Subtitle"
+      },
+      {
+        "id": "hide_title_mobile",
+        "type": "checkbox",
+        "label": "Hide Title & Subtitle on Mobile"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "carousel_product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Carousel Products",
+        "category": "carousel product"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,90 @@
+<section class="flex flex-col relative bg-secondary-200 md:flex-row">
+  <div class="p-20 md:p-0 md:flex-1{% if section.settings.layout == 'right' %} md:order-2{% endif %}">
+    <figure class="aspect-w-1 aspect-h-1">
+      {% if section.settings.image %}
+        {%
+        render 'lazy-image',
+        type: 'color',
+        image_base: section.settings.image,
+        sizes: '30vw',
+        srcs: '550x,1100x'
+        %}
+      {% endif %}
+    </figure>
+  </div>
+  <div class="flex flex-col px-20 pb-60 md:p-0 md:justify-center md:flex-1{% if section.settings.layout == 'right' %} md:order-1{% endif %}">
+    <h2 style="font-family: Roslinda;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 50px;
+    letter-spacing: -1px;" class="mb-15 mx-auto md:w-445">{{ section.settings.title }}</h2>
+    <p class="p3 mb-30 md:w-445 md:mx-auto">{{ section.settings.subtitle }}</p>
+    <div class="md:w-445 md:mx-auto">
+      <a class="btn-primary btn-md flex items-center justify-center w-268" title="{{ section.settings.cta_text }} Link" href="{{ section.settings.cta_link }}">
+          {{ section.settings.cta_text }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Text Module Content"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "We’re here to help (we’ve all been sleep deprived)."
+      },
+      {
+        "id": "subtitle",
+        "type": "text",
+        "label": "Subtitle",
+        "default": "From body aches to moodiness to exhaustion, we understand what you’re going through. Sleep is an essential part of being your best self—& that’s not just an anecdotal observation, it’s a proven fact."
+      },
+      {
+        "id": "cta_text",
+        "type": "text",
+        "label": "Button Text",
+        "default": "Learn More"
+      },
+      {
+        "id": "cta_link",
+        "type": "url",
+        "label": "Button Link"
+      },
+      {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Image"
+      },
+      {
+        "id": "layout",
+        "type": "select",
+        "label": "Module Layout",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left Image"
+          },
+          {
+            "value": "right",
+            "label": "Right Image"
+          }
+        ],
+        "default": "left",
+        "info": "Select layout for Text Module"
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Text Module"
+      }
+    ]
+  }
+{% endschema %}

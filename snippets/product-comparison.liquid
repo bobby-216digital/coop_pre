@@ -1,0 +1,66 @@
+{% assign acf_product_comparison_handles = product.metafields.accentuate.product_comparison | split: '|' %}
+
+{% if product.metafields.accentuate.product_comparison_title %}
+<div class="pt-80 px-20 lg:px-80 pb-80" data-product-comparison>
+  <div class="text-center py-40 lg:py-80 px-20 lg:px-60 rounded-10 lg:rounded-20 bg-white">
+    <h2 class="lg:w-2/3 m-auto h3 text-center mb-60 lg:px-10">
+      {{ product.metafields.accentuate.product_comparison_title }}
+    </h2>
+    <div class="relative grid grid-cols-2 gap-x-40 lg:gap-x-120">
+      <span class="block absolute top-0 w-0.5 h-full inset-1/2 border-r border-gray-100 transform -translate-x-1"></span>
+      {% for product_comparison in acf_product_comparison_handles limit: 2 %}
+      {% assign product_compared = all_products[product_comparison] %}
+        <div>
+          <h3 class="quote-sm lg:quote-md mb-20">{{ product_compared.title }}</h3>
+          <div class="p3 mb-10">
+            {% if product_compared.metafields.accentuate.short_description %}
+              {{ product_compared.metafields.accentuate.short_description.html }}
+            {% else %}
+              {{ product_compared.description }}
+            {% endif %}
+
+          </div>
+          <div class="p4 flex justify-center mb-30">
+            {% render 'product-price', variant: product_compared, disabled: true %}
+          </div>
+          <figure class="aspect-w-4 aspect-h-3 m-auto mb-40">
+            {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: product_compared.featured_image,
+            sizes: '30vw',
+            srcs: '320x,640x'
+            %}
+          </figure>
+          <span class="block mb-40 border-b border-gray-100"></span>
+          <p class="p4 mb-15">Best For</p>
+          <p class="p3 mb-40">
+            {{ product_compared.metafields.accentuate.product_comparison_best_for }}
+          </p>
+          <span class="block mb-40 border-b border-gray-100"></span>
+          <p class="p4 mb-15">Density</p>
+          <p class="p3 mb-40">
+            {{ product_compared.metafields.accentuate.product_comparison_density }}
+          </p>
+          <span class="block mb-40 border-b border-gray-100"></span>
+          <p class="p4 mb-15">Sizes Available</p>
+          <p class="p3 mb-60">
+            {{ product_compared.options_by_name['Size'].values | join: ', ' }}
+          </p>
+          <div class="lg:px-80">
+            <button type="button" class="btn-primary p4 w-full px-20 flex justify-around lg:block" data-open-product-form-modal="{{product_compared.id}}">
+              <span class="hidden lg:inline-block">Shop {{ product_compared.title }}</span>
+              <span class="block lg:hidden">Shop Now</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% for product_comparison in acf_product_comparison_handles limit: 2 %}
+  {% assign product_compared = all_products[product_comparison] %}
+  {% render "product-form-modal", product: product_compared %}
+{% endfor %}

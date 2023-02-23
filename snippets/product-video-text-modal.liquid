@@ -1,0 +1,57 @@
+{% if product.metafields.accentuate.product_text_modal_video_img %}
+<div class="product__image-text py-40 lg:py-80 bg-secondary-200 modal-video">
+  {% for acf_section in product.metafields.accentuate.product_text_modal_video_img %}
+    <div class="container flex">
+      <div class="flex flex-col justify-center lg:w-1/2 lg:px-80">
+        <h2 class="h3 mb-40">{{ product.metafields.accentuate.product_text_modal_video_title[forloop.index0] }}</h2>
+        <div class="paragraph">
+          {{ product.metafields.accentuate.product_text_modal_video_copy[forloop.index0] }}
+        </div>
+      </div>
+      <div class="lg:w-1/2 pl-0 lg:pl-0 pr-0 mb-30 lg:mb-0">
+        <div class="modal__image-container" {% if product.metafields.accentuate.modal_video_type[forloop.index0] == 'youtube' %} js-src-youtube="{{ product.metafields.accentuate.modal_video_youtube[forloop.index0] }}?&rel=0&showinfo=0&controls=1" {% endif %} js-open-video-modal="text-modal-{{forloop.index0}}" js-open-video>
+            {% for image in acf_section %}
+            <figure class="aspect-w-8 aspect-h-5 m-auto rounded-full">
+                <i class="flex justify-center items-center" style="z-index:2" data-icon-plus>{% render 'icons', icon: 'play' %}</i>
+                {%
+                render 'lazy-image-acf',
+                type: 'color',
+                image_base: image.src
+                sizes: '50vw',
+                srcs: '1448x,724x,',
+                alt: product.title | escape
+                %}
+            </figure> 
+            {% endfor %}
+        </div>
+      </div>
+      <div js-video-modal-number="text-modal-{{forloop.index0}}" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+          <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+          <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="text-modal-{{forloop.index0}}">
+              {% render 'icons', icon: 'close' %}
+          </button>
+          <div class="video-container">
+              {% if product.metafields.accentuate.modal_video_type[forloop.index0] == 'youtube' %}
+              <div class="video-full-width--container">
+                  {% if product.metafields.accentuate.modal_video_youtube[forloop.index0] != blank %}
+                  <div class="video-full-width--video-container">
+                      <iframe id="youtube-video-iframe-text-modal-{{forloop.index0}}" class="video-full-width--video" src="{{ product.metafields.accentuate.modal_video_youtube[forloop.index0] }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+                  </div>
+                  {% endif %}
+              </div>
+              {% elsif product.metafields.accentuate.modal_video_type[forloop.index0] == 'html5' %}
+                  {% if product.metafields.accentuate.modal_video_html5[forloop.index0] != blank %}
+                      <video id="vimeo-video-iframe-text-modal-{{forloop.index0}}" class="vimeo__video" width="100%" controls playsinline>
+                          <source src="{{ product.metafields.accentuate.modal_video_html5[forloop.index0] }}" type="video/mp4">
+                          This Browser Doesn't Support Video Tag.
+                      </video>
+                  {% endif %}
+              {% else %}
+              {% endif %}
+          </div>
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}

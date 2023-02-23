@@ -1,0 +1,59 @@
+{% if section.settings.text_image %}
+  <section class="relative bg-secondary-200">
+    <div class="container">
+      <div class="flex lg:justify-end flex-col lg:flex-row">
+        <div class="about-image-text relative lg:absolute lg:top-1/2 lg:left-0 -mt-100 lg:mt-30 lg:transform lg:-translate-y-1/2">
+          <figure class="aspect-w-1 aspect-h-1 lg:aspect-w-4 lg:aspect-h-5">
+            {%
+              render 'lazy-image',
+              type: 'color',
+              image_base: section.settings.text_image
+              sizes: '50vw',
+              srcs: '547x,1094x',
+              classes: 'object-contain lg:object-cover lg:object-right'
+            %}
+          </figure>
+        </div>
+        <div class="bckg-word flex flex-col justify-center lg:w-1/2 pt-40 lg:pt-130 pb-50 lg:pb-100 animate">
+          <div class="h3 mb-30 text-center lg:text-left">
+            {{ section.settings.text_title }}
+          </div>
+
+          <div class="p3 lg:pr-100">
+            {{ section.settings.text_copy }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Text and Image",
+    "class": "text_image",
+    "settings": [
+      {
+        "id": "text_title",
+        "type": "richtext",
+        "label": "Text + Image Title"
+      },
+      {
+        "id": "text_copy",
+        "type": "richtext",
+        "label": "Text + Image Copy"
+      },
+      {
+        "id": "text_image",
+        "type": "image_picker",
+        "label": "Text + Image Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text + Image",
+        "category": "Text + Image"
+      }
+    ]
+  }
+{% endschema %}

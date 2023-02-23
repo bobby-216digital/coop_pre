@@ -1,0 +1,456 @@
+<div id="content" class="mt-100 site-content product article-{{section.id}}" data-section-id="{{section.id}}" data-section-type="article-template">
+  <div class="container  md:w-1/2 m-auto px-20 mdpx-40">
+    <div class="row" id="primary-content-custom">
+      {%- if section.settings.sidebar  == "left" and section.blocks.size > 0 -%}
+      {%- include "blog-sidebar" -%}
+      {%- endif -%}
+      <div id="primary" class="content-area {%- if section.blocks.size > 0 -%}{{" col-md-9"}}{%- else -%}{{" col-md-12"}}{%- endif -%}{{" col-sm-12 col-xs-12"}}">
+        <main id="main" class="site-main">
+          <article class="blog-wapper post type-post status-publish format-standard has-post-thumbnail">
+            <header class="entry-header">
+              <h1 class="h2 mb-40 entry-title">{{article.title}}</h1>
+              <div class="entry-meta">
+                <div class="entry-metas">
+                  {%- if section.settings.blog_author != '' -%}
+                  <span class="entry-author entry-meta">
+                    <span class="url fn n">{{article.author}}</span>
+                  </span>
+                  {%- endif -%}
+                  {%- if section.settings.blog_date != '' -%}
+                  <span class="entry-meta" rel="bookmark">
+                    {{ article.published_at | time_tag: format: 'month_day_year' }}
+                  </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </header>
+            <div class="entry-format mb-40">
+              <img width="1170" height="780" src="{{- article.image | img_url: 'master', crop: "center" -}}"
+                   class="attachment-full size-full wp-post-image" alt="{{article.title}}" 
+                   srcset="{{ article.image | img_url: '1170x', crop: "center" }} 1170w,
+                           {{ article.image | img_url: '300x', crop: "center" }} 300w,
+                           {{ article.image | img_url: '768x', crop: "center" }} 768w,
+                           {{ article.image | img_url: '1024x', crop: "center" }} 1024w, 
+                           {{ article.image | img_url: '370x', crop: "center" }} 370w"
+                   sizes="(max-width: 1170px) 100vw, 1170px">
+            </div>
+            <div class="entry-content rich-text-wrapper">
+              {{article.content}}
+            </div>
+            {%- include 'recommended-products' -%}
+            <footer class="entry-footer"> 
+              {%- if article.tags.size > 0 -%}
+              <span class="tags-links">
+                <span>{{"blogs.article.tags" | t}}:</span> 
+                {%- capture article_tags = -%}
+                {%- assign tags_count = 1 -%}
+                {%- for tag in article.tags -%}
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}" rel="tag">{{ tag }}</a>{% if tags_count < article.tags.size %},&nbsp;{% endif %}
+                {%- assign tags_count = tags_count | plus:1 -%}
+                {%- endfor -%}
+                {%- endcapture -%}
+                {{- 'blogs.article.and_tags_html' | t: tags: article_tags -}}
+              </span>
+              {%- endif -%}
+              {%- if section.settings.blog_sharing != '' -%}
+              <div class="footer-socials"><span>{{"blogs.article.share" | t}}: </span>
+                <div class="social-links addthis">
+                  {%- include 'addthis' -%}
+                </div>
+              </div>
+              {%- endif -%}
+            </footer>
+          </article>
+
+          <nav class="navigation post-navigation" role="navigation">
+            <h2 class="screen-reader-text">{{"blogs.article.post_navigation" | t}}</h2>
+            <div class="nav-links">
+              {%- if blog.previous_article -%}
+              {%- assign article_handle = blog.previous_article | split: '/' | last -%}
+              {%- assign previous_article = article_handle | replace: '-', ' ' | capitalize -%}
+              {%- for my_article in blog.articles -%}
+              {%- assign my_article_handle = my_article.handle | split: '/' | last -%}
+              {%- if my_article_handle == article_handle -%}
+              {%- assign previous_article = my_article.title -%}
+              {%- break -%}
+              {%- endif -%}
+              {%- endfor -%}
+              <div class="nav-previous">
+                <a href="{{ blog.previous_article }}" rel="prev">
+                  <span class="screen-reader-text">{{"blogs.article.previous_post" | t}}</span>
+                  <span class="icon-arrow-left"></span>
+                  <span aria-hidden="true" class="nav-subtitle">{{"blogs.article.previous" | t}}</span><br> 
+                  <span class="nav-title">{{- previous_article -}}</span>
+                </a>
+              </div>
+
+              {%- endif -%}
+              {%- if blog.next_article -%}
+              {%- assign article_handle = blog.next_article | split: '/' | last -%}
+              {%- assign next_article = article_handle | replace: '-', ' ' | capitalize -%}
+              {%- for my_article in blog.articles -%}
+              {%- assign my_article_handle = my_article.handle | split: '/' | last -%}
+              {%- if my_article_handle == article_handle -%}
+              {%- assign next_article = my_article.title -%}
+              {%- break -%}
+              {%- endif -%}
+              {%- endfor -%}
+              <div class="nav-next">
+                <a href="{{ blog.next_article }}" rel="next">
+                  <span class="screen-reader-text">{{"blogs.article.next_post" | t}}</span>
+                  <span aria-hidden="true" class="nav-subtitle">{{"blogs.article.next" | t}}</span>
+                  <span class="icon-arrow-right"></span><br> 
+                  <span class="nav-title">{{- next_article -}}</span>
+                </a>
+              </div>
+              {%- endif -%}
+            </div>
+          </nav>
+          {%- if blog.comments_enabled? -%}
+          {%- assign new_comment = false -%}
+          {%- if comment and comment.created_at -%}
+          {%- assign new_comment = true -%}
+          {%- assign new_comment_id = comment.id -%}
+          {%- endif -%}
+
+          {%- if new_comment -%}
+          {%- assign duplicate_comment = false %}
+          {%- for comment in article.comments -%}
+          {%- if comment.id == new_comment_id -%}
+          {%- assign duplicate_comment = true -%}
+          {%- break -%}
+          {%- endif -%}
+          {%- endfor -%}
+
+          {%- if duplicate_comment -%}
+          {%- assign number_of_comments = article.comments_count -%}
+          {%- else -%}
+          {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+          {%- endif -%}
+          {%- else -%}
+          {%- assign number_of_comments = article.comments_count -%}
+          {%- endif -%}
+          <div id="comments" class="comments-area">
+            <div class="row">
+              <div class="col-md-8  col-md-offset-2 col-comment">
+                {%- if number_of_comments > 0 -%}
+                <h2 class="comments-title has-comments">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h2>
+                {%- paginate article.comments by 5 -%}
+                {%- if new_comment -%}
+                <p class="note form-success">
+                  {%- if blog.moderated? -%}
+                  {{- 'blogs.comments.success_moderated' | t | escape -}}
+                  {%- else -%}
+                  {{- 'blogs.comments.success' | t | escape -}}
+                  {%- endif -%}
+                </p>
+                {%- endif -%}
+                <ol class="comment-list has-comments">
+                  {%- if new_comment -%}
+                  <li id="comment-{{ comment.id  }}" class="comment even thread-even depth-1">
+                    <article id="div-comment-43" class="comment-body">
+                      <header class="comment-meta">
+                        <div class="comment-author vcard">
+                          <img alt="" src="{{"author-image.png" | asset_img_url: "master"}}"class="avatar avatar-70 photo" height="70" width="70">
+                        </div>
+                      </header>
+                      <div class="comment-content">
+                        <div class="comment-metadata"> 
+                          <cite class="fn"><a href="javascript:void(0);" rel="external nofollow" class="url">{{ comment.author  }}</a> - </cite>                         
+                          <a href="javascript:void(0);" class="date">
+                            {{ comment.created_at | time_tag: format: 'month_day_year' }}
+                          </a>
+                        </div> 
+                        {{ comment.content }}
+                      </div>
+                    </article>
+                  </li>
+                  {%- endif -%}
+                  {%- for comment in article.comments -%}
+                  {%- unless comment.id == new_comment_id -%}
+                  <li id="comment-{{ comment.id  }}" class="comment even thread-even depth-1">
+                    <article id="div-comment-43" class="comment-body">
+                      <header class="comment-meta">
+                        <div class="comment-author vcard">
+                          <img alt="" src="{{"author-comment.png" | asset_img_url: "master"}}"class="avatar avatar-70 photo" height="70" width="70">
+                        </div>
+                      </header>
+                      <div class="comment-content">
+                        <div class="comment-metadata"> 
+                          <cite class="fn"><a href="javascript:void(0);" rel="external nofollow" class="url">{{ comment.author  }}</a> - </cite>                         
+                          <a href="javascript:void(0);" class="date">
+                            {{ comment.created_at | time_tag: format: 'month_day_year' }}
+                          </a>
+                        </div> 
+                        {{ comment.content }}
+                      </div>
+                    </article>
+                  </li>
+                  {%- endunless -%}
+                  {%- endfor -%}
+                </ol>
+                {% assign dm_paginate_by = paginate.page_size %}{%- endpaginate -%}
+                {%- endif -%}
+                <div class="comments-links"></div>
+                <div id="respond" class="comment-respond">
+                  <h3 id="reply-title" class="comment-reply-title">{{ 'blogs.comments.title' | t | escape }}</h3>
+                  {%- form 'new_comment', article, class: "comment-form" -%}
+                  <p class="comment-notes">
+                    <span id="email-notes">{{ 'blogs.comments.notes' | t | escape }}</span> {{ 'blogs.comments.required_fields' | t | escape }} <span class="required">*</span>
+                  </p>
+                  <p class="comment-form-comment">
+                    <textarea placeholder="{{ 'blogs.comments.message' | t | escape }}" id="comment" required="required" name="comment[body]" cols="45" rows="7" aria-required="true"></textarea>
+                  </p>
+                  <p class="comment-form-author col-md-6 col-sm-12">
+                    <input placeholder="{{ 'blogs.comments.name' | t | escape }} " id="author" required="required" name="comment[author]" type="text" size="30">
+                  </p>
+                  <p class="comment-form-email col-md-6 col-sm-12">
+                    <input placeholder="{{ 'blogs.comments.email' | t | escape }}" id="email" required="required" name="comment[email]" type="email" required="" value="" size="30">
+                  </p>
+                  {% if blog.moderated? %}
+                  <p class="form-submit">{{ 'blogs.comments.moderated' | t | escape }}</p>
+                  {% endif %}
+                  <p class="form-submit">
+                    <input name="submit" type="submit" id="submit" class="submit" value="{{ 'blogs.comments.post' | t | escape }}"> 
+                  </p>
+                  {%- endform -%}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- endif -%}
+        </main>
+      </div>
+      {%- if section.settings.sidebar  == "right" and section.blocks.size > 0 -%}
+      {%- include "blog-sidebar" -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% if dm_paginate_by %}{% render 'spurit_dmr_collection_template_snippet', paginate_by: dm_paginate_by %}{% endif %}{% schema %}
+  {
+    "name": "Posts",
+    "settings": [
+	  {
+        "type": "select",
+        "id": "sidebar",
+        "label": "Sidebar Placement",
+        "options": [ 
+		  {
+            "value": "",
+            "label": "None"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "blog_author",
+        "label": "Show Author",
+        "options": [
+          {
+            "value": "",
+            "label": "No"
+          },
+          {
+            "value": "1",
+            "label": "Yes"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "blog_date",
+        "label": "Show Date",
+        "options": [
+          {
+            "value": "",
+            "label": "No"
+          },
+          {
+            "value": "1",
+            "label": "Yes"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "blog_sharing",
+        "label": "Sharing Options",
+        "options": [
+          {
+            "value": "",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "Enable"
+          }
+        ]
+      },
+	  {
+		"type": "header",
+		"content": "Recommended Products"
+	  }, 
+	  {
+        "type": "collection",
+        "id": "collection",
+        "label": "Choose a Collection"
+      },
+	  {
+        "type": "select",
+        "id": "slide_enable",
+        "label": "Enable Slide?",
+        "options": [
+          {
+            "value": "",
+            "label": "Disable"
+          },
+          {
+            "value": "1",
+            "label": "Enable"
+          }
+        ]
+      },
+	  {
+        "type": "text",
+        "id": "product_related_products_limit",
+        "label": "Number of Products"
+      },
+      {
+        "type": "select",
+        "id": "product_related_products_view",
+        "label": "Number of Products per View",
+        "options": [
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ]
+      }
+    ],
+	
+	"blocks": [
+		{
+			"type":"search",
+			"name": "Search Bar",
+			"settings":[
+				{
+					"type": "checkbox",
+					"id": "visible_on_mobile",
+					"label": "Visible on Mobile"
+				}
+			]
+		},
+		{
+			"type":"articles",
+			"name": "Recent Posts",
+			"settings":[
+				{
+					"type": "checkbox",
+					"id": "visible_on_mobile",
+					"label": "Visible on Mobile"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading",
+					"default": "Recent Posts"
+				},
+				{
+					"type": "text",
+					"id": "limit",
+					"label": "Limit",
+					"default": "4"
+				}
+			]
+		},
+		{
+			"type":"linklist",
+			"name": "Custom Linklist",
+			"settings":[
+				{
+					"type": "checkbox",
+					"id": "visible_on_mobile",
+					"label": "Visible on Mobile"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading"
+				},
+				{
+					"type": "link_list",
+					"id": "linklist",
+					"label": "Choose a Linklist"
+				}
+			]
+		},
+		{
+			"type":"tag",
+			"name": "Tags",
+			"settings":[
+				{
+					"type": "checkbox",
+					"id": "visible_on_mobile",
+					"label": "Visible on Mobile"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading",
+					"default": "Tags"
+				},
+				{
+					"type": "text",
+					"id": "limit",
+					"label": "Limit",
+					"default": "20"
+				}
+			]
+		},
+		{
+			"type":"image",
+			"name": "Banner",
+			"settings":[
+				{
+					"type": "checkbox",
+					"id": "visible_on_mobile",
+					"label": "Visible on Mobile"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading",
+					"default": "Recent Posts"
+				},
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Choose a Image"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,56 @@
+<h2 class="h5 mb-30">
+  {{ 'customer.account.view_addresses' | t }}
+</h2>
+<hr class="mb-30 border-black border-b-1 border-opacity-30 bg-white opacity-30">
+{% for address in customer.addresses %}
+  <div class="address-customer relative mb-30">
+    {% if address == customer.default_address %}
+      <div class="flex justify-between mb-10">
+        <p class="p4">{{ 'customer.addresses.default' | t }}</p>
+      </div>
+    {% endif %}
+    <div class="absolute top-0 right-0 flex justify-end">
+      <div>
+        <button id="edit_address_{{ address.id }}" type="button" class="p3 underline mr-30 md:mr-40" data-form-id="{{ address.id }}" aria-owns="EditAddress_{{ address.id }}" aria-expanded="false" data-edit-address> {{ 'customer.addresses.edit' | t }} </button>
+        <button type="button" class="p3 underline" data-target="{{ address.url }}" data-confirm-delete-address> {{ 'customer.addresses.delete' | t }} </button>
+        {%- comment -%} CONFIRM DELETE ADDRESS {%- endcomment -%}
+          <div class="fixed top-0 left-0 w-full h-full p-20 bg-black bg-opacity-60 hidden duration-500 z-50" data-confirm-delete-address-modal>
+            <div class="flex h-full">
+              <div class="flex flex-col items-center justify-center md:w-1/2 m-auto p-20 md:p-40 bg-secondary-200">
+                <div role="button" class="" data-close-delete-address></div>
+                <h2 class="h4 mb-30 text-black">Delete this address?</h2>
+                <form class="w-full" method="post" action="/account/addresses/{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                  <div class="grid md:grid-cols-2">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn-primary btn-md w-full md:w-auto md:mr-10 cursor-pointer">
+                      {{ 'customer.addresses.delete' | t }}
+                    </button>
+                    <button type="button" class="btn-secondary btn-md w-full cursor-pointer" data-close-confirm-delete-address>{{ 'customer.addresses.cancel' | t }}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        {%- comment -%} CONFIRM DELETE ADDRESS {%- endcomment -%}
+      </div>
+    </div>
+    
+    <div class="mb-30">
+      <div>{{ address.first_name }} {{ address.last_name }}</div>
+      <div>{{ address.address1 }}</div>
+      <div>{{ address.address2 }}</div>
+      <div>{{ address.country }} {{ address.province }} {{ address.zip }}</div>
+      <div>{{ address.city }}</div>
+    </div>
+    {%- comment -%} EDIT ADDRESS {%- endcomment -%}
+    {% render 'customer-edit-address' address: address %}
+    {%- comment -%} EDIT ADDRESS {%- endcomment -%}
+    
+    <hr class="my-30 border-black border-b-1 bg-white opacity-30">
+  </div>
+
+  
+
+{% endfor %}
+
+

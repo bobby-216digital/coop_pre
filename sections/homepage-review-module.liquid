@@ -1,0 +1,124 @@
+<section class="py-80 relative">
+  <h3 class="h3 mb-40 md:mb-20 text-center mx-20 md:hidden"><span class="bckg-word">{{ section.settings.title_mobile }}</span></h3>
+  <h3 class="hidden h3 mb-40 md:mb-20 text-center md:flex md:mx-auto md:w-550"><span class="bckg-word animate inline-block">{{ section.settings.title }}</span></h3>
+
+  <div class="">
+    <div class="carousel swiper-container review-carousel w-full grid grid-cols-2 gap-x-30">
+      <div class="swiper-wrapper mb-20 md:mb-40 col-span-2 md:col-span-1">
+        {%- comment -%} Item {%- endcomment -%}
+        {% for block in section.blocks %}
+          <li class="swiper-slide" aria-hidden="false">
+            <div class="prose flex items-center h-full px-20 md:px-0 md:ml-80 md:mr-115 md:w-550">
+              <blockquote class="relative border-none">
+                <div class="quote-sm font-roslinda font-light not-italic border-transparent mb-20 md:mb-40">
+                  {{ block.settings.review_text }}&rdquo;
+                </div>
+                <span class="p4 block text-black not-italic">{{ block.settings.review_title }}</span>
+                <span class="p3 block text-black not-italic mb-10">{{ block.settings.review_name }}</span>
+                <div class="block not-italic">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.review_stars %}
+                      <span class="start-fill text-primary-200">★</span>
+                    {% else %}
+                      <span class="start-empty text-primary-200">☆</span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </blockquote>
+            </div>
+          </li>
+        {% endfor %}
+      </div>
+      <div class="w-full md:w-auto col-span-2 md:col-span-1 row-start-1 md:row-start-auto mb-40 md:mb-0">
+        <figure class="aspect-w-16 aspect-h-9">
+          {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: section.settings.review_photo
+            sizes: '50vw',
+            srcs: '463x,926x',
+            classes: 'object-contain object-right'
+          %}
+        </figure>
+      </div>
+      <div class="relative flex flex-row justify-between lg:justify-center w-full px-20 col-span-2 order-3">
+        <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center md:w-27 md:h-15">{% render 'icons', icon: 'arrow-prev' %}</button>
+        <div class="fraction-pagination font-sansRegular label-md flex items-center w-auto mx-20"></div>
+        <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center md:w-27 md:h-15">{% render 'icons', icon: 'arrow-next' %}</button>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Review Module Content"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "info": "Use a strong tag to apply highlight effect to text",
+        "default": "The Most <strong>5-Starred</strong> Pillows in America"
+      },
+      {
+        "id": "title_mobile",
+        "type": "text",
+        "label": "Title",
+        "info": "Use a strong tag to apply highlight effect to text",
+        "default": "The Most<br><strong>5-Starred</strong> Pillows in America"
+      },
+      {
+        "id": "review_photo",
+        "type": "image_picker",
+        "label": "Review Photo"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product_review",
+        "name": "Product Review",
+        "settings": [
+          {
+            "id": "review_text",
+            "type": "text",
+            "label": "Review Text",
+            "default": "Your pillow has changed my life. They feel like I’m sleeping on a cloud and I sleep through the night and wake up without any neck pain."
+          },
+          {
+            "id": "review_title",
+            "type": "text",
+            "label": "Product Title",
+            "default": "The Eden Pillow"
+          },
+          {
+            "id": "review_name",
+            "type": "text",
+            "label": "Product Reviewer",
+            "default": "Reviewed By Customer Name"
+          },
+          {
+            "id": "review_stars",
+            "type": "range",
+            "min": 1,
+            "max": 5,
+            "step": 1,
+            "label": "Review Stars",
+            "info": "Select number of stars to appear",
+            "default": 5
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Homepage Review Module"
+      }
+    ]
+  }
+{% endschema %}

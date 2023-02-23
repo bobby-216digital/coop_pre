@@ -1,0 +1,5 @@
+<script>
+  {%- capture url -%} {{ 'index.js' | asset_url }} {%- endcapture -%}
+  const baseurl = '{{url}}'.replace(/index.js.+/, "")
+  window.assetPath = baseurl;
+</script>

@@ -1,0 +1,75 @@
+{% assign base = image_base %}
+{% assign base_mobile = image_mobile %}
+{% assign img_alt = base.alt | escape %}
+{% assign src_arr = srcs | split: ',' %}
+
+{% comment %}
+generate srcset values
+{% endcomment %}
+{% capture srcset %}
+  {% for val in src_arr %}
+    {% if base_mobile %}
+      {% if forloop.first %}
+        {% if base_mobile %} {{ base_mobile | img_url: val }} {{ val | replace: 'x', 'w'}}, {% endif %}
+      {% else %}
+        {{ base | img_url: val }} {{ val | replace: 'x', 'w'}}{% if forloop.last == false %}, {% endif %}
+      {% endif %}
+    {% else %}
+      {{ base | img_url: val }} {{ val | replace: 'x', 'w'}}{% if forloop.last == false %}, {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+
+{% comment %}
+assign fade in speed (used by js)
+{% endcomment %}
+{% assign speed = 300 %}
+
+{% comment %}
+assign loader type, transition type and speed
+{% endcomment %}
+{% assign modifier = '' %}
+{% assign transition_type = '' %}
+
+{% if type == 'spinner' %}
+  {% assign modifier = ' lazy--' | append: type %}
+  {% assign transition_type = ' lazy__img--translate-in' %}
+  {% assign speed = 300 %}
+{% endif %}
+
+{% if type == 'color' %}
+  {% assign color = true %}
+  {% assign modifier = ' lazy--' | append: type %}
+  {% assign placeholder = base | img_url: '1x1' %}
+  {% assign transition_type = ' lazy__img--fade-in' %}
+  {% assign speed = 1000 %}
+{% endif %}
+
+<div class="lazy{{ modifier }} {{ ratio }}  {{ container_cleasses }}" data-transitionspeed="{{ speed }}">
+  <div class="lazy__loader">
+    {% comment %}
+    Intrinsic canvas (placeholder while image loads)
+    {% endcomment %}
+    <canvas
+      class="lazy__placeholder {{ classes_mask }}"
+      {% if color %}
+        style="background-image: url('{{ placeholder }}');"
+      {% endif %}
+      width="{{ base.width }}" height="{{ base.height }}"></canvas>
+  </div>
+
+  {% comment %}
+  JS replaces data-src/data-srcset with src/srcset respectively
+  {% endcomment %}
+  <img
+    class="lazy__img{{ transition_type }} {{ ratio }} {{ classes }}"
+    sizes="{{ sizes }}"
+    alt="{{ img_alt }}"
+    data-object-fit
+    {% if base_mobile %}
+      data-src="{{ base_mobile | img_url: src_arr[0] }}"
+    {% else %}
+      data-src="{{ base | img_url: src_arr[0] }}"
+    {% endif %}
+    data-srcset="{{ srcset }}">
+</div><!-- .lazy -->

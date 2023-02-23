@@ -1,0 +1,89 @@
+{% assign badge = '' %}
+{% for tag in product.tags %}
+  {% if tag contains 'badge:' %}
+    {% assign badge = tag | remove: 'badge:' %}
+  {% endif %}
+{% endfor %}
+
+<li data-product-card data-common-form-parent class="{{ class }} group p-12 {% unless imageHover %}lg:hover:bg-secondary-50 duration-500{% endunless %}">
+  <div class="card product-card focus-within:outline-black cursor-pointer" data-delegate="[data-delegated-link]">
+    {% if imageHover %}
+      <div class="relative bg-secondary-200 lg:group-hover:bg-primary-100 duration-500">
+        <figure class="aspect-w-4 aspect-h-3">
+          {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: product.featured_image,
+            sizes: '30vw',
+            srcs: '360x,720x',
+            classes: imageClass
+          %}
+        </figure>
+        {% if badge != blank %}
+          <div class="uppercase absolute top-0 right-0 px-10 py-7 bg-secondary-100 p3 text-sm z-20 whitespace-nowrap max-w-max">{{ badge }}</div>
+        {% endif %}
+      </div>
+    {% else %}
+    <div class="relative">
+      {% if badge != blank %}
+        <div class="uppercase absolute top-0 right-0 px-10 py-7 bg-secondary-100 p3 text-sm z-20 whitespace-nowrap max-w-max">{{ badge }}</div>
+      {% endif %}
+      <div class="relative bg-secondary-200 lg:group-hover:opacity-0 duration-500" style="z-index: 10;" js-product-card-image data-position="{{ product.featured_image.position }}">
+        <figure class="aspect-w-4 aspect-h-3">
+          {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: product.featured_image,
+            sizes: '30vw',
+            srcs: '360x,720x',
+            classes: imageClass
+          %}
+        </figure>
+      </div>
+      <div class="absolute top-0 left-0 w-full" style="z-index: 0;" js-product-card-image data-position="{{ product.images[1].position }}">
+        <figure class="aspect-w-4 aspect-h-3">
+          {%
+            render 'lazy-image',
+            type: 'color',
+            image_base: product.images[1],
+            sizes: '30vw',
+            srcs: '200x,360x',
+            classes: imageClass
+          %}
+        </figure>
+      </div>
+      {% for image in product.images offset: 2 %}
+        <div class="absolute top-0 left-0 w-full" style="z-index: -1;" js-product-card-image data-position="{{ image.position }}">
+          <figure class="aspect-w-4 aspect-h-3">
+            {%
+              render 'lazy-image',
+              type: 'color',
+              image_base: image,
+              sizes: '30vw',
+              srcs: '200x,360x',
+              classes: imageClass
+            %}
+          </figure>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <h3 class="h6 pt-15 mb-10">
+      <span class="visually-hidden">Product Title</span>
+    	<a title="Title of Products" class="outline-none" href="{{ product.url }}" data-delegated-link> {{ product.title }} </a>
+    </h3>
+
+    {% assign current_variant = product.selected_or_first_available_variant %}
+    <div class="flex justify-between items-center flex-wrap mb-10 gap-7">
+    {%- comment -%} Product Reviews Stars {%- endcomment -%}
+      {% render 'stamped-product-review-badge', product: product %}
+    {%- comment -%} / Product Reviews Stars {%- endcomment -%}
+      {% render 'product-price', variant: current_variant, product: product %}
+    </div>
+  </div>
+  {%- comment -%} Enable Colors and Botton +Add {%- endcomment -%}
+  {% if show_add %}
+    {% render "new-product-card-form", product: product, price_parent: "[data-common-form-parent]" %}
+  {% endif %}
+</li>
+

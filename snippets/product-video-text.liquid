@@ -1,0 +1,22 @@
+{% if product.metafields.accentuate.product_video_text_video %}
+<div class="product__image-text py-40 lg:py-80 bg-secondary-200">
+  {% for acf_videos in product.metafields.accentuate.product_video_text_video %}
+    <div class="container flex">
+      <div class="flex flex-col justify-center lg:w-1/2 lg:px-80">
+        <h2 class="h3 mb-40">{{ product.metafields.accentuate.product_video_text_title[forloop.index0] }}</h2>
+        <div class="paragraph">
+          {{ product.metafields.accentuate.product_video_text_copy[forloop.index0] }}
+        </div>
+      </div>
+      <div class="lg:w-1/2 pl-0 lg:pl-60 pr-100 mb-30 lg:mb-0">
+        {% for video in acf_videos %}
+            <video class="vimeo__video" width="100%" loop muted autoplay playsinline>
+                <source src="{{ video }}" type="video/mp4">
+                This Browser Doesn't Support Video Tag.
+            </video>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}

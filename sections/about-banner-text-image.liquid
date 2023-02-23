@@ -1,0 +1,73 @@
+{% if section.settings.banner_title %}
+  <section class="banner relative w-full flex flex-wrap flex-col-reverse md:flex-row mb-100 md:mb-0 pt-100">
+    <div id="ghero__index--text" class="relative container flex flex-col w-full md:h-full z-10">
+      <span class="hidden md:block md:mt-10 md:mb-30 w-2/5 transform -translate-x-20">
+        <img src="{{ section.settings.banner_svg }}" alt="">
+      </span>
+      <span class="block md:hidden mb-5">
+        <img src="{{ section.settings.banner_svg_mobile }}" alt="">
+      </span>
+      <div class="w-full md:w-1/2 mb-60">
+        <h1 class="h1-md mb-20 md:mb-30">
+          {{ section.settings.banner_title }}
+        </h1>
+        <div class="p2 md:pr-100">
+          {{ section.settings.banner_copy }}
+        </div>
+      </div>
+    </div>
+    <div id="ghero__index--image" class="banner-text-image relative md:absolute md:top-120 md:right-0 -mb-30 md:mb-0 pl-20 md:pl-0 transform md:-translate-y-10">
+      <figure class="aspect-w-4 aspect-h-3 rounded-l-full overflow-hidden">
+        {%
+          render 'lazy-image',
+          type: 'color',
+          image_base: section.settings.banner_image
+          sizes: '50vw',
+          srcs: '725x,1450x'
+        %}
+      </figure>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Banner Text and Image",
+    "class": "banner_text_image",
+    "settings": [
+      {
+        "id": "banner_title",
+        "type": "text",
+        "label": "Banner Title"
+      },
+      {
+        "id": "banner_copy",
+        "type": "richtext",
+        "label": "Banner Copy"
+      },
+      {
+        "id": "banner_image",
+        "type": "image_picker",
+        "label": "Banner Image"
+      },
+      {
+        "id": "banner_svg",
+        "type": "text",
+        "label": "Banner SVG Desktop",
+        "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+      },
+      {
+        "id": "banner_svg_mobile",
+        "type": "text",
+        "label": "Banner SVG Mobile",
+        "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner Text + Image",
+        "category": "Banner"
+      }
+    ]
+  }
+{% endschema %}

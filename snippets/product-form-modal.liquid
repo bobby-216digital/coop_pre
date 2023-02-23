@@ -1,0 +1,17 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+<div class="hidden fixed duration-1000 top-0 w-full h-screen items-center p-20 bg-black bg-opacity-70 z-50 opacity-0" data-product-form-modal="{{product.id}}">
+  <div data-common-form-parent class="relative lg:w-2/5 m-auto py-60 px-20 lg:px-40 rounded-md bg-white max-h-full overflow-hidden overflow-y-auto">
+    <button title="Close Modal" class="absolute top-20 right-20 w-20" data-close-product-form-modal>
+      {% render 'icons', icon: 'close' %}
+    </button>
+    <h2 class="h5 mb-10">
+      {{ product.title }}
+    </h2>
+    <div class="mb-40">
+      {% render 'product-price', variant: current_variant, product: product %}
+    </div>
+    <div>
+      {% render "product-form", product:product, price_parent: "[data-common-form-parent]" %}
+    </div>
+  </div>
+</div>

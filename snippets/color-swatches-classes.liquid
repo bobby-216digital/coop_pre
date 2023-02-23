@@ -1,0 +1,11 @@
+<style>
+  {%- assign swatch_colors = settings.swatches_colors | newline_to_br | split: '<br />' -%}
+  {%- for color in swatch_colors -%}
+    {%- assign color_split = color | split: ":" -%}
+    {%- assign color_name = color_split[0] | strip_newlines | handleize |  handleescape | replace: "\n", "" -%}
+    {%- assign color_value = color_split[1] | strip_newlines | escape | replace: "\n", "" -%}
+
+    .swatch_{{color_name}} { background-color: {{color_value}} }
+    
+  {%- endfor -%}
+</style>

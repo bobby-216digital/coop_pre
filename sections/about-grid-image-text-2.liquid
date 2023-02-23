@@ -1,0 +1,83 @@
+{% if section.settings.grid_title %}
+  <section class="pt-50 md:pt-120 pb-50 md:pb-100">
+    <div class="container mb-30 md:mb-60">
+      <div class="bckg-word h3 mb-20 md:mb-30 text-center animate">
+        {{ section.settings.grid_title }}
+      </div>
+      <div class="p3 md:w-1/2 m-auto text-center">
+        {{ section.settings.grid_copy }}
+      </div>
+    </div>
+    <div class="container">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-40 md:gap-y-50 md:px-80">
+        {% for block in section.blocks %}
+          <li>
+            <figure class="aspect-w-16 aspect-h-9 mb-30 md:mb-27">
+              {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: block.settings.grid_image
+                sizes: '25vw',
+                srcs: '455x,910x'
+              %}
+            </figure>
+            <h3 class="h6 mb-10">
+              {{ block.settings.grid_image_title }}
+            </h3>
+            <div class="p3">
+              {{ block.settings.grid_image_copy }}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Grid Image",
+    "class": "grid_image_text",
+    "settings": [
+      {
+        "id": "grid_title",
+        "type": "richtext",
+        "label": "Grid Image Title"
+      },
+      {
+        "id": "grid_copy",
+        "type": "richtext",
+        "label": "Grid Image Copy"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "quote",
+        "name": "Grid Image + Text",
+        "settings": [
+          {
+            "id": "grid_image",
+            "type": "image_picker",
+            "label": "Grid Image + Text Image"
+          },
+          {
+            "id": "grid_image_title",
+            "type": "text",
+            "label": "Grid Image + Text Title"
+          },
+          {
+            "id": "grid_image_copy",
+            "type": "richtext",
+            "label": "Grid Image + Text Copy"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Grid Image + Text",
+        "category": "Grid Image + Text"
+      }
+    ]
+  }
+{% endschema %}

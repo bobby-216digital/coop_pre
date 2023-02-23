@@ -1,0 +1,66 @@
+{% assign base = image_base %}
+{% assign src_arr = srcs | split: ',' %}
+
+{% assign query_args = base | split : '?' | last %}
+{% assign image_sizes = query_args | split : 'x' %}
+{% assign image_width = image_sizes[0] %}
+{% assign image_height =image_sizes[1] %}
+
+{% comment %}
+generate srcset values
+{% endcomment %}
+{% capture srcset %}
+  {% for val in src_arr %}
+    https://images.accentuate.io?c_options=w_{{val  | replace: 'x', ''}}&image={{base}} {{ val | replace: 'x', 'w'}}{% if forloop.last == false %}, {% endif %}
+  {% endfor %}
+{% endcapture %}
+
+{% comment %}
+assign fade in speed (used by js)
+{% endcomment %}
+{% assign speed = 300 %}
+
+{% comment %}
+assign loader type, transition type and speed
+{% endcomment %}
+{% assign modifier = '' %}
+{% assign transition_type = '' %}
+
+{% if type == 'spinner' %}
+  {% assign modifier = ' lazy--' | append: type %}
+  {% assign transition_type = ' lazy__img--translate-in' %}
+  {% assign speed = 300 %}
+{% endif %}
+
+{% if type == 'color' %}
+  {% assign color = true %}
+  {% assign modifier = ' lazy--' | append: type %}
+  {% capture placeholder  %}https://images.accentuate.io?c_options=w_1&image={{base}}{% endcapture %}
+  {% assign transition_type = ' lazy__img--fade-in' %}
+  {% assign speed = 1000 %}
+{% endif %}
+
+<div class="lazy{{ modifier }} {{ ratio }}" data-transitionspeed="{{ speed }}">
+  <div class="lazy__loader">
+    {% comment %}
+    Intrinsic canvas (placeholder while image loads)
+    {% endcomment %}
+    <canvas
+      class="lazy__placeholder"
+      {% if color %}
+        style="background-image: url('{{ placeholder }}');"
+      {% endif %}
+      width="{{ image_width }}" height="{{ image_height }}"></canvas>
+  </div>
+
+  {% comment %}
+  JS replaces data-src/data-srcset with src/srcset respectively
+  {% endcomment %}
+  <img
+    class="lazy__img{{ transition_type }} {{ ratio }} {{ classes }}"
+    sizes="{{ sizes }}"
+    alt="{{ img_alt }}"
+    data-object-fit
+    data-src="https://images.accentuate.io?c_options=w_{{ src_arr[0] | replace: 'x', ''}}&image={{base}}"
+    data-srcset="{{ srcset }}">
+</div><!-- .lazy -->

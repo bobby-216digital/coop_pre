@@ -1,0 +1,308 @@
+<div class="faq-page pt-20">
+    <div class="faq-page__header">
+        <h1 class="faq-page__title text-center h5 mb-30"> {{ section.settings.page_title }} </h1>
+    
+        <p class="faq-page__subtitle text-center"> {{ section.settings.page_subtitle }} </p>
+    </div>
+
+    <div class="faq-page__faqs-container container py-20">
+        {% if section.settings.section_1_checkbox == true %}
+            <div class="faq-page__faqs">
+                <h2 class="faq-page__faq-section-title h6">{{ section.settings.section_1_title }}</h2>
+                
+                <div class="faq-page__faqs-section-container">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'faq_1' %}
+                            <div style="border: 1px solid #ddd; background-color: white; box-shadow: 0 1px 1px rgb(0 0 0 / 5%)"  class="relative border -m-px accordion-box {% if forloop.last == true %}{% else %}mb-5{% endif %}">
+                                <button title="Item Accordion" style="border: 1px solid #ddd;" type="button" class="border-b w-full py-10 px-10 text-left flex items-center justify-between" aria-expanded="false" data-toggle-item-accordion="">
+                                    <h3 class="p2">{{ block.settings.question }}</h3>
+                                    
+                                    <span class="toggle-icon block w-10">
+                                    <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>
+                                    <i class="hidden w-10" data-icon-minus>{% render 'icons', icon: 'minus' %}</i>
+                                    </span>
+                                </button>
+                                <div role="region" data-copy-accordion style="display: none;">
+                                    <div class="paragraph accordion-text px-10 py-10">
+                                    {{ block.settings.answers }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    
+        {% if section.settings.section_2_checkbox == true %}
+            <div class="faq-page__faqs">
+                <h2 class="faq-page__faq-section-title h6">{{ section.settings.section_2_title }}</h2>
+    
+                <div class="faq-page__faqs-section-container">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'faq_2' %}
+                            <div  style="border: 1px solid #ddd; background-color: white; box-shadow: 0 1px 1px rgb(0 0 0 / 5%)" class="relative border -m-px accordion-box {% if forloop.last == true %}{% else %}mb-5{% endif %}">
+                                <button title="Item Accordion" style="border: 1px solid #ddd;" type="button" class="border-b w-full py-10 px-10 text-left flex items-center justify-between" aria-expanded="false" data-toggle-item-accordion="">
+                                    <h3 class="p2">{{ block.settings.question }}</h3>
+                                    
+                                    <span class="toggle-icon block w-10">
+                                    <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>
+                                    <i class="hidden w-10" data-icon-minus>{% render 'icons', icon: 'minus' %}</i>
+                                    </span>
+                                </button>
+                                <div role="region" data-copy-accordion style="display: none;">
+                                    <div class="paragraph accordion-text px-10 py-10">
+                                    {{ block.settings.answers }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    
+        {% if section.settings.section_3_checkbox == true %}
+            <div class="faq-page__faqs">
+                <h2 class="faq-page__faq-section-title h6">{{ section.settings.section_3_title }}</h2>
+    
+                <div class="faq-page__faqs-section-container">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'faq_3' %}
+                            <div  style="border: 1px solid #ddd; background-color: white; box-shadow: 0 1px 1px rgb(0 0 0 / 5%)" class="relative border -m-px accordion-box {% if forloop.last == true %}{% else %}mb-5{% endif %}">
+                                <button title="Item Accordion" style="border: 1px solid #ddd;" type="button" class="border-b w-full py-10 px-10 text-left flex items-center justify-between" aria-expanded="false" data-toggle-item-accordion="">
+                                    <h3 class="p2">{{ block.settings.question }}</h3>
+                                    
+                                    <span class="toggle-icon block w-10">
+                                    <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>
+                                    <i class="hidden w-10" data-icon-minus>{% render 'icons', icon: 'minus' %}</i>
+                                    </span>
+                                </button>
+                                <div role="region" data-copy-accordion style="display: none;">
+                                    <div class="paragraph accordion-text px-10 py-10">
+                                    {{ block.settings.answers }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    
+        {% if section.settings.section_4_checkbox == true %}
+            <div class="faq-page__faqs">
+                <h2 class="faq-page__faq-section-title h6">{{ section.settings.section_4_title }}</h2>
+    
+                <div class="faq-page__faqs-section-container">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'faq_4' %}
+                            <div  style="border: 1px solid #ddd; background-color: white; box-shadow: 0 1px 1px rgb(0 0 0 / 5%)" class="relative border -m-px accordion-box {% if forloop.last == true %}{% else %}mb-5{% endif %}">
+                                <button title="Item Accordion" style="border: 1px solid #ddd;" type="button" class="border-b w-full py-10 px-10 text-left flex items-center justify-between" aria-expanded="false" data-toggle-item-accordion="">
+                                    <h3 class="p2">{{ block.settings.question }}</h3>
+                                    
+                                    <span class="toggle-icon block w-10">
+                                    <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>
+                                    <i class="hidden w-10" data-icon-minus>{% render 'icons', icon: 'minus' %}</i>
+                                    </span>
+                                </button>
+                                <div role="region" data-copy-accordion style="display: none;">
+                                    <div class="paragraph accordion-text px-10 py-10">
+                                    {{ block.settings.answers }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    
+        {% if section.settings.section_5_checkbox == true %}
+            <div class="faq-page__faqs">
+                <h2 class="faq-page__faq-section-title h6">{{ section.settings.section_5_title }}</h2>
+    
+                <div class="faq-page__faqs-section-container">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'faq_5' %}
+                            <div  style="border: 1px solid #ddd; background-color: white; box-shadow: 0 1px 1px rgb(0 0 0 / 5%)" class="relative border -m-px accordion-box {% if forloop.last == true %}{% else %}mb-5{% endif %}">
+                                <button title="Item Accordion" style="border: 1px solid #ddd;" type="button" class="border-b w-full py-10 px-10 text-left flex items-center justify-between" aria-expanded="false" data-toggle-item-accordion="">
+                                    <h3 class="p2">{{ block.settings.question }}</h3>
+                                    
+                                    <span class="toggle-icon block w-10">
+                                    <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>
+                                    <i class="hidden w-10" data-icon-minus>{% render 'icons', icon: 'minus' %}</i>
+                                    </span>
+                                </button>
+                                <div role="region" data-copy-accordion style="display: none;">
+                                    <div class="paragraph accordion-text px-10 py-10">
+                                    {{ block.settings.answers }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "FAQ",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_title",
+        "label": "Page Title",
+        "info": "Title for page."
+      },
+      {
+        "type": "textarea",
+        "id": "page_subtitle",
+        "label": "Page Subtitle",
+        "info": "Subtitle for page."
+      },
+      {
+        "type": "checkbox",
+        "id": "section_1_checkbox",
+        "label": "Enable Section 1"
+      },
+      {
+        "type": "text",
+        "id": "section_1_title",
+        "label": "Title 1",
+        "info": "Title for first section."
+      },
+      {
+        "type": "checkbox",
+        "id": "section_2_checkbox",
+        "label": "Enable Section 2"
+      },
+      {
+        "type": "text",
+        "id": "section_2_title",
+        "label": "Title 2",
+        "info": "Title for second section."
+      },
+      {
+        "type": "checkbox",
+        "id": "section_3_checkbox",
+        "label": "Enable Section 3"
+      },
+      {
+        "type": "text",
+        "id": "section_3_title",
+        "label": "Title 3",
+        "info": "Title for third section."
+      },
+      {
+        "type": "checkbox",
+        "id": "section_4_checkbox",
+        "label": "Enable Section 4"
+      },
+      {
+        "type": "text",
+        "id": "section_4_title",
+        "label": "Title 4",
+        "info": "Title for fourth section."
+      },
+      {
+        "type": "checkbox",
+        "id": "section_5_checkbox",
+        "label": "Enable Section 5"
+      },
+      {
+        "type": "text",
+        "id": "section_5_title",
+        "label": "Title 5",
+        "info": "Title for fifth section."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "faq_1",
+        "name": "FAQ for Section 1",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "FAQ Question"
+          },
+          {
+            "type": "richtext",
+            "id": "answers",
+            "label": "FAQ Answers"
+          }
+        ]
+      },
+      {
+        "type": "faq_2",
+        "name": "FAQ for Section 2",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "FAQ Question"
+          },
+          {
+            "type": "richtext",
+            "id": "answers",
+            "label": "FAQ Answers"
+          }
+        ]
+      },
+      {
+        "type": "faq_3",
+        "name": "FAQ for Section 3",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "FAQ Question"
+          },
+          {
+            "type": "richtext",
+            "id": "answers",
+            "label": "FAQ Answers"
+          }
+        ]
+      },
+      {
+        "type": "faq_4",
+        "name": "FAQ for Section 4",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "FAQ Question"
+          },
+          {
+            "type": "richtext",
+            "id": "answers",
+            "label": "FAQ Answers"
+          }
+        ]
+      },
+      {
+        "type": "faq_5",
+        "name": "FAQ for Section 5",
+        "settings": [
+          {
+            "type": "text",
+            "id": "question",
+            "label": "FAQ Question"
+          },
+          {
+            "type": "richtext",
+            "id": "answers",
+            "label": "FAQ Answers"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

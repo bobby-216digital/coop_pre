@@ -1,0 +1,120 @@
+<div class="product__image-text py-40 lg:py-80 bg-secondary-200 modal-video">
+  {% for block in section.blocks %}
+    <div class="container flex">
+      <div class="flex flex-col justify-center lg:w-1/2 lg:px-80">
+        <h2 class="h3 mb-40">{{ block.settings.block_title }}</h2>
+        <div class="paragraph">
+          {{ block.settings.block_content }}
+        </div>
+      </div>
+      <div class="lg:w-1/2 pl-0 lg:pl-0 pr-0 mb-30 lg:mb-0">
+        <div class="modal__image-container" {% if block.settings.video_type == 'youtube' %} js-src-youtube="{{ block.settings.youtube_url }}?&rel=0&showinfo=0&controls=1" {% endif %} js-open-video-modal="text-modal-hp-{{forloop.index0}}" js-open-video>
+            <figure class="aspect-w-8 aspect-h-5 m-auto rounded-full">
+                <i class="flex justify-center items-center" style="z-index:2" data-icon-plus>{% render 'icons', icon: 'play' %}</i>
+                {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: block.settings.block_img
+                sizes: '50vw',
+                srcs: '1448x,724x,',
+                alt: product.title | escape
+                %}
+            </figure> 
+        </div>
+      </div>
+      <div js-video-modal-number="text-modal-hp-{{forloop.index0}}" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+          <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+          <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="text-modal-hp-{{forloop.index0}}">
+              {% render 'icons', icon: 'close' %}
+          </button>
+          <div class="video-container">
+              {% if block.settings.video_type == 'youtube' %}
+              <div class="video-full-width--container">
+                  {% if block.settings.youtube_url != blank %}
+                  <div class="video-full-width--video-container">
+                      <iframe id="youtube-video-iframe-text-modal-hp-{{forloop.index0}}" class="video-full-width--video" src="{{ block.settings.youtube_url }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+                  </div>
+                  {% endif %}
+              </div>
+              {% elsif block.settings.video_type == 'html5' %}
+                  {% if block.settings.html_url != blank %}
+                      <video id="vimeo-video-iframe-text-modal-hp-{{forloop.index0}}" class="vimeo__video" width="100%" controls playsinline>
+                          <source src="{{ block.settings.html_url }}" type="video/mp4">
+                          This Browser Doesn't Support Video Tag.
+                      </video>
+                  {% endif %}
+              {% else %}
+              {% endif %}
+          </div>
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Facts",
+    "class": "facts",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "modal_video",
+        "name": "Modal Video Section",
+        "settings": [
+          {
+            "id": "block_title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "block_content",
+            "type": "textarea",
+            "label": "Content"
+          },
+          {
+            "id": "block_img",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "type": "select",
+            "id": "video_type",
+            "label": "Video_type",
+            "options": [
+              {
+                "value": "youtube",
+                "label": "Youtube"
+              },
+              {
+                "value": "html5",
+                "label": "Vimeo"
+              }
+            ],
+            "default": "youtube"
+          },
+          {
+            "id": "youtube_url",
+            "type": "text",
+            "label": "Youtube URL (Embed)"
+          },
+          {
+            "id": "html_url",
+            "type": "text",
+            "label": "Vimeo URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Modal",
+        "category": "Repeat"
+      }
+    ]
+  }
+{% endschema %}
+
+

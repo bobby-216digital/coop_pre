@@ -1,0 +1,41 @@
+<section class="brand-carousel relative bg-primary-100 overflow-hidden">
+  <div class="brand-carousel-container h-full">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+      <figure class="swiper-slide flex items-center h-full">
+        <img src="{{ block.settings.brand_carousel_image | img_url: 'medium' }}" alt="">
+      </figure>
+      {% endfor %}
+    </div>
+  </div>
+  {%- comment -%} Pagination {%- endcomment -%}
+  <div class="swiper-pagination flex md:hidden justify-center absolute bottom-30 w-full h-10 z-10"></div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Brand Carousels",
+    "class": "brand_carousel",
+    "blocks": [
+      {
+        "type": "quote",
+        "name": "Brand Carousel",
+        "settings": [
+          {
+            "id": "brand_carousel_image",
+            "type": "image_picker",
+            "label": "Brand Carousel Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Brand Carousels",
+        "category": "Carousel"
+      }
+    ]
+  }
+{% endschema %}
+

@@ -1,0 +1,338 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign size_guide_page = product.metafields.accentuate.product_size_guide %}
+
+{%- comment -%} Button Add To Bag {%- endcomment -%}
+  <div class="product__scroll-bar fixed top-0 transform -translate-y-full flex items-center justify-between w-full md:pl-30 lg:py-30 lg:pr-10 bg-white opacity-100 z-30 duration-200">
+    <h6 class="h6 hidden lg:inline-block">{{ product.title }}</h6>
+    <button title="Open Modal" type="button" class="btn-primary btn-md w-full lg:w-auto py-27 lg:py-17 rounded-none lg:rounded-full" data-open-product-form-modal="{{product.id}}">
+      Add to Cart
+    </button>
+  </div>
+{%- comment -%} Button Add To Bag {%- endcomment -%}
+
+<div class="lg:w-full hidden lg:block pl-40 mt-80 pt-60 pb-30 bg-white">
+  {% render 'breadcrumbs', class: 'font-bold text-[#000000] font-roslinda text-xl' %}
+</div>
+<div class="product__carousel flex flex-col-reverse lg:flex-row mt-100 md:mt-0">
+  <div class="lg:w-1/2 bg-white px-0 lg:px-40">
+    {%- comment -%} Product Carousel {%- endcomment -%}
+      <div class="lg:mb-40">
+        {% render 'product-carousel' %}
+      </div>
+
+      {% render 'product-guarantee', isMobile: false %}
+
+      <div class="block lg:hidden">
+        <div data-common-form-parent class="relative px-20 pt-30 pb-40 bg-white">
+          <div class="mb-15">
+            <h2 class="h5 m-0 lg:pb-10">{{ product.title }}</h2>
+          </div>
+          {%- comment -%} Product Reviews Stars {%- endcomment -%}
+          <div class="mb-30 block md:flex items-center justify-between ">
+            <div>
+              {% render 'product-price', variant: current_variant, product: product %}
+            </div>
+            {% render 'stamped-product-review-badge', product: product %}
+          </div>
+          {% form "product", product, class: 'product-form' %}
+            <div class="p2 pb-10">
+              {{ form | payment_terms }}
+            </div>
+          {% endform %}
+          {%- comment -%} / Product Reviews Stars {%- endcomment -%}
+          <div class="mb-40">
+            <div class="mb-40 p3 product__description">
+              {{ product.description }}
+
+            </div>
+          </div>
+          {% render "product-form", product:product, price_parent: "[data-common-form-parent]", size_guide_page: size_guide_page %}
+          <div class="mb border-b border-gray-100"></div>
+
+          {% if product.title == 'The Original' %}
+          <div class="badge-embed" style="margin-top: 20px;"></div>
+          {% endif %}
+
+          <div class="pt-20">
+            {% render 'product-single-accordion' %}
+          </div>
+
+          {% render 'product-guarantee', isMobile: true %}
+        </div>
+      </div>
+    {%- comment -%} / Product Carousel {%- endcomment -%}
+
+    {%- comment -%} Product Add Ons {%- endcomment -%}
+      {% assign acf_product_add_ons_handles = product.metafields.accentuate.product_add_on | split: '|' %}
+      {% if acf_product_add_ons_handles.size > 0 %}
+        <div class="lg:pl-100 pt-60 lg:pt-0">
+          {% render 'product-add-ons' %}
+        </div>
+      {% endif %}
+    {%- comment -%} Product Add Ons {%- endcomment -%}
+  </div>
+
+  <div data-common-form-parent class="hidden lg:block w-1/2 px-40 pb-40 bg-white z-10">
+    <div class="mb-15">
+      <h2 class="h3 m-0 md:pb-10 md:pr-5">{{ product.title }}</h2>
+    </div>
+
+    {%- comment -%} Product Reviews Stars {%- endcomment -%}
+      <div class="mb-30 block md:flex items-center justify-between">
+        <div>
+          {% render 'product-price', variant: current_variant, product: product %}
+        </div>
+        {% render 'stamped-product-review-badge', product: product %}
+      </div>
+    {%- comment -%} / Product Reviews Stars {%- endcomment -%}
+    {% form "product", product, class: 'product-form' %}
+      <div class="p2 pb-10">
+        {{ form | payment_terms }}
+      </div>
+    {% endform %}
+    <div class="mb-40">
+      <div class="mb-40 p3 product__description">
+        {{ product.description }}
+      </div>
+    </div>
+    {% render "product-form", product:product, price_parent: "[data-common-form-parent]", size_guide_page: size_guide_page %}
+    <div class="mb-20 border-b border-gray-100"></div>
+    {% if product.title == 'The Original' %}
+    <div class="badge-embed" style="margin-top: 20px;"></div>
+    {% endif %}
+
+    {%- comment -%} Product accordion {%- endcomment -%}
+    <div class="p-20">
+      {% render 'product-single-accordion' %}
+    </div>
+    {%- comment -%} / Product accordion {%- endcomment -%}
+  </div>
+
+</div>
+
+{% render 'product-advantages' %}
+
+{% render 'product-video-text' %}
+
+{% render 'product-video-text-modal' %}
+
+{% render 'product-image-text' %}
+
+{% render 'product-comparison' %}
+
+
+{% render 'product-hero' %}
+
+{% render 'product-reviews' %}
+
+{% render 'product-module-image-text' %}
+
+{% render 'product-recirculation' %}
+
+{% render 'product-as-seen-instagram' %}
+
+<div class="faq-section pt-80 px-20 lg:px-80 pb-80 bg-white">
+  {% if product.metafields.seed.text_section_title != blank %}
+    <h3 class="lg:w-2/3 m-auto h3 text-center mb-60 lg:px-10">{{ product.metafields.seed.text_section_title }}</h3>
+  {% endif %}
+
+  {% if product.metafields.seed.text_section_content != blank %}
+  <div class="faq-description-short">
+      {% if product.metafields.seed.text_section_content_short != blank %}
+
+      {{ product.metafields.seed.text_section_content_short.html }}
+
+      {% endif %}
+     <a href="#" class="readmore">...Read More</a>
+  </div>
+  <div class="faq-desciption-big hidden">
+    <div class="faq-description-content">
+      {{ product.metafields.seed.text_section_content.html  }}
+    </div>
+     <br><a href="#" class="readless">Read less</a>
+  </div>
+  {% endif %}
+</div>
+
+{% render "product-form-modal", product: product %}
+
+{%- comment -%} Product Size Guide Modal {%- endcomment -%}
+  <div data-size-guide-modal="{{ size_guide_page }}" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" data-size-guide-modal>
+    <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+      <button title="Close Modal" class="absolute top-20 right-20 w-20" data-close-size-guide-modal>
+        {% render 'icons', icon: 'close' %}
+      </button>
+      <h2 class="h5 mb-20 px-40">
+        Size Guide
+      </h2>
+      <div class="overflow-hidden overflow-x-auto">
+        <div id="size-guide" class="size-guide font-sansRegular"></div>
+      </div>
+    </div>
+  </div>
+
+  {% if product.metafields.accentuate.tab_video_1 == 'true' %}
+  {%- comment -%} Product Video Modal 1 {%- endcomment -%}
+  <div js-video-modal-number="1" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+    <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+      <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="1">
+        {% render 'icons', icon: 'close' %}
+      </button>
+      <div class="video-container">
+        {% if product.metafields.accentuate.tab_video_type_1 == 'youtube' %}
+        <div class="video-full-width--container">
+            {% if product.metafields.accentuate.tab_video_youtube_1 != blank %}
+            <div class="video-full-width--video-container">
+                <iframe class="video-full-width--video" src="{{ product.metafields.accentuate.tab_video_youtube_1 }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+            </div>
+            {% endif %}
+        </div>
+        {% elsif product.metafields.accentuate.tab_video_type_1 == 'html5' %}
+            {% if product.metafields.accentuate.tab_video_html5_1 != blank %}
+                <video class="vimeo__video" width="100%" controls playsinline>
+                    <source src="{{ product.metafields.accentuate.tab_video_html5_1 }}" type="video/mp4">
+                    This Browser Doesn't Support Video Tag.
+                </video>
+            {% endif %}
+        {% else %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if product.metafields.accentuate.tab_video_1 == 'true' %}
+  {%- comment -%} Product Video Modal 1 {%- endcomment -%}
+  <div js-video-modal-number="1" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+    <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+      <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="1">
+        {% render 'icons', icon: 'close' %}
+      </button>
+      <div class="video-container">
+        {% if product.metafields.accentuate.tab_video_type_1 == 'youtube' %}
+        <div class="video-full-width--container">
+            {% if product.metafields.accentuate.tab_video_youtube_1 != blank %}
+            <div class="video-full-width--video-container">
+                <iframe class="video-full-width--video" src="{{ product.metafields.accentuate.tab_video_youtube_1 }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+            </div>
+            {% endif %}
+        </div>
+        {% elsif product.metafields.accentuate.tab_video_type_1 == 'html5' %}
+            {% if product.metafields.accentuate.tab_video_html5_1 != blank %}
+                <video class="vimeo__video" width="100%" controls playsinline>
+                    <source src="{{ product.metafields.accentuate.tab_video_html5_1 }}" type="video/mp4">
+                    This Browser Doesn't Support Video Tag.
+                </video>
+            {% endif %}
+        {% else %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if product.metafields.accentuate.tab_video_2 == 'true' %}
+  {%- comment -%} Product Video Modal 2 {%- endcomment -%}
+  <div js-video-modal-number="2" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+    <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+      <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="2">
+        {% render 'icons', icon: 'close' %}
+      </button>
+      <div class="video-container">
+        {% if product.metafields.accentuate.tab_video_type_2 == 'youtube' %}
+        <div class="video-full-width--container">
+            {% if product.metafields.accentuate.tab_video_youtube_2 != blank %}
+            <div class="video-full-width--video-container">
+                <iframe class="video-full-width--video" src="{{ product.metafields.accentuate.tab_video_youtube_2 }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+            </div>
+            {% endif %}
+        </div>
+        {% elsif product.metafields.accentuate.tab_video_type_2 == 'html5' %}
+            {% if product.metafields.accentuate.tab_video_html5_2 != blank %}
+                <video class="vimeo__video" width="100%" controls playsinline>
+                    <source src="{{ product.metafields.accentuate.tab_video_html5_2 }}" type="video/mp4">
+                    This Browser Doesn't Support Video Tag.
+                </video>
+            {% endif %}
+        {% else %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if product.metafields.accentuate.tab_video_3 == 'true' %}
+  {%- comment -%} Product Video Modal 3 {%- endcomment -%}
+  <div js-video-modal-number="3" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+    <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+      <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="3">
+        {% render 'icons', icon: 'close' %}
+      </button>
+      <div class="video-container">
+        {% if product.metafields.accentuate.tab_video_type_3 == 'youtube' %}
+        <div class="video-full-width--container">
+            {% if product.metafields.accentuate.tab_video_youtube_3 != blank %}
+            <div class="video-full-width--video-container">
+                <iframe class="video-full-width--video" src="{{ product.metafields.accentuate.tab_video_youtube_3 }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+            </div>
+            {% endif %}
+        </div>
+        {% elsif product.metafields.accentuate.tab_video_type_3 == 'html5' %}
+            {% if product.metafields.accentuate.tab_video_html5_3 != blank %}
+                <video class="vimeo__video" width="100%" controls playsinline>
+                    <source src="{{ product.metafields.accentuate.tab_video_html5_3 }}" type="video/mp4">
+                    This Browser Doesn't Support Video Tag.
+                </video>
+            {% endif %}
+        {% else %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if product.metafields.accentuate.tab_video_4 == 'true' %}
+  {%- comment -%} Product Video Modal 4 {%- endcomment -%}
+  <div js-video-modal-number="4" class="hidden fixed duration-1000 top-0 left-0 w-full h-screen items-center px-20 md:px-0 bg-black bg-opacity-70 z-50 opacity-0" js-video-modal>
+    <div class="relative w-full md:w-3/5 m-auto pt-60 pb-40 px-0 rounded-md bg-white">
+      <button title="Close Modal" class="absolute top-20 right-20 w-20" js-close-video js-video-close-number="4">
+        {% render 'icons', icon: 'close' %}
+      </button>
+      <div class="video-container">
+        {% if product.metafields.accentuate.tab_video_type_4 == 'youtube' %}
+        <div class="video-full-width--container">
+            {% if product.metafields.accentuate.tab_video_youtube_4 != blank %}
+            <div class="video-full-width--video-container">
+                <iframe class="video-full-width--video" src="{{ product.metafields.accentuate.tab_video_youtube_4 }}?&rel=0&showinfo=0&controls=1" frameborder="0"></iframe>
+            </div>
+            {% endif %}
+        </div>
+        {% elsif product.metafields.accentuate.tab_video_type_4 == 'html5' %}
+            {% if product.metafields.accentuate.tab_video_html5_4 != blank %}
+                <video class="vimeo__video" width="100%" controls playsinline>
+                    <source src="{{ product.metafields.accentuate.tab_video_html5_4 }}" type="video/mp4">
+                    This Browser Doesn't Support Video Tag.
+                </video>
+            {% endif %}
+        {% else %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+{% schema %}
+  {
+    "name": {
+      "en": "Product pages"
+    },
+    "settings": [
+      {
+        "id": "link_more_url",
+        "info": "Free Shipping + Free Returns",
+        "type": "url",
+        "label": "Link URL"
+      }
+    ]
+  }
+{% endschema %}

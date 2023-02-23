@@ -1,0 +1,13 @@
+<span class="block w-full h-100 bg-gradient-to-t from-white top-white"></span>
+<div class="bg-white">
+  <div class="pt-40 lg:pt-80 pb-40 lg:pb-80 bg-white container px-20 lg:px-100">
+    <div class="lg:pr-1">
+      <h3 class="h3 md:pl-60">Reviews</h3>
+   
+<!-- Stamped - Begin main-widget -->
+<div id="stamped-main-widget" class="stamped-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: "large" |replace: " ? ", " % 3F" | replace: "& "," % 26"}}" data-description="{{ product.description | escape }}" data-product-sku="{{product.handle | escape}}" data-product-type="{{product.type | escape}}" data-product-title="{{product.title | escape}}"> {{ product.metafields.stamped.reviews }} </div>
+<!-- Stamped - End main-widget -->
+ 
+    </div>
+  </div>
+</div>

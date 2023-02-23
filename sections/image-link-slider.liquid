@@ -1,0 +1,106 @@
+<section class="image-link-slider p-20 pt-35 lg:pt-40 xl:px-40 xxl:px-60 w-full" {% if section.settings.bg_color != blank %}style="background-color: {{ section.settings.bg_color }};"{% endif %}>
+  {% if section.settings.title != blank %}
+    <h1 class="image-link-slider__title h3 mb-25 md:mb-40 text-center">{{ section.settings.title }}</h1>
+  {% endif %}
+  <div class="carousel swiper-container image-link-slider__container pb-50 md:px-50">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide image-link-slider__slide md:h-auto" aria-hidden="false">
+          {% if block.settings.slide_link != blank %}
+          <a href="{{ block.settings.slide_link }}" class="image-link-slider__slide-wrapper flex flex-col h-full">
+          {% else %}
+          <div class="image-link-slider__slide-wrapper flex flex-col h-full">
+          {% endif %}
+            <img src="{{ block.settings.image | img_url: '400x'}}" class="image-link-slider__slide-image w-full">
+            <div class="image-link-slider__slide-text-container bg-secondary-100 p-20 flex-1">
+              {% if block.settings.slide_title != blank %}
+                <div class="image-link-slider__slide-title p3 font-semibold">{{ block.settings.slide_title }}</div>
+              {% endif %}
+              {% if block.settings.slide_text != blank %}
+                <div class="image-link-slider__slide-text p4 font-normal" {% if block.settings.slide_text_pt != blank %}style="padding-top: {{ block.settings.slide_text_pt }}px;"{% endif %}>{{ block.settings.slide_text }}</div>
+              {% endif %}
+            </div>
+          {% if block.settings.slide_link != blank %}
+          </a>
+          {% else %}
+          </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 1 %}
+      <div class="swiper-pagination image-link-slider__pagination pb-15 flex justify-center items-center"></div>
+      {% if section.settings.show_arrows_desktop %}
+        <div class="image-link-slider__arrows flex-row justify-between w-full px-12 hidden md:flex md:px-0 md:left-0">
+          <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center">
+            {% render 'icons', icon: 'caret-left' %}
+          </button>
+          <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center">
+            {% render 'icons', icon: 'caret-right' %}
+          </button>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Backgroud Color"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_arrows_desktop",
+        "label": "Show Arrow Icons In Desktop"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Slide",
+        "type": "slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slide_title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "slide_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "slide_link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "slide_text_pt",
+            "label": "Text Top Padding (px)",
+            "info": "Number only"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image Link Slider"
+      }
+    ]
+  }
+{% endschema %}

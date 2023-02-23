@@ -1,0 +1,51 @@
+{% if section.settings.banner_full_title %}
+  <section class="pt-100 pb-40 md:pb-80">
+    <div class="container text-center">
+      <div class="bckg-word h3 md:w-1/2 md:m-auto pb-30 md:px-20 animate">
+        {{ section.settings.banner_full_title }}
+      </div>
+      <div class="p3 md:w-1/2 md:m-auto pb-30 md:pb-50">
+        {{ section.settings.banner_full_copy }}
+      </div>
+      <figure class="aspect-w-8 aspect-h-5">
+        {%
+          render 'lazy-image',
+          type: 'color',
+          image_base: section.settings.banner_full_image
+          sizes: '50vw',
+          srcs: '1120x,2240x'
+        %}
+      </figure>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Banner Full",
+    "class": "banner_full",
+    "settings": [
+      {
+        "id": "banner_full_title",
+        "type": "richtext",
+        "label": "Banner Full Title"
+      },
+      {
+        "id": "banner_full_copy",
+        "type": "richtext",
+        "label": "Banner Full Copy"
+      },
+      {
+        "id": "banner_full_image",
+        "type": "image_picker",
+        "label": "Banner Full Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner Full",
+        "category": "Banner"
+      }
+    ]
+  }
+{% endschema %}

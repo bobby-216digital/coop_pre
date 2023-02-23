@@ -1,0 +1,30 @@
+
+{% if product.metafields.accentuate.product_guarantee_icon %}
+  {% if isMobile %}
+    <div class="lg:mb-40 block md:hidden">
+  {% else %}
+    <div class="mb-20 lg:mb-40 hidden md:block">
+  {% endif %}
+      <ul class="grid grid-cols-3 lg:grid-cols-6 lg:gap-20 md:px-40 lg:px-0 mt-20">
+        {% assign acf_product_guarantee_icons = product.metafields.accentuate.product_guarantee_icon %}
+        {% for acf_product_guarantee_icon in acf_product_guarantee_icons limit: 6 %}
+          <li class="justify-center text-center mb-20 lg:mb-0">
+            <div class="m-auto w-40 h-40 inline-block relative">
+              {% for image in acf_product_guarantee_icon %}
+                {%
+                  render 'lazy-image-acf',
+                  type: 'color',
+                  image_base: image.src
+                  sizes: '1vw',
+                  srcs: '33x,66x,',
+                  alt: product.title | escape,
+                  classes: 'object-contain'
+                %}
+              {% endfor %}
+            </div>
+            <div class="text-xs uppercase">{{ product.metafields.accentuate.product_guarantee_text[forloop.index0] }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+{% endif %}

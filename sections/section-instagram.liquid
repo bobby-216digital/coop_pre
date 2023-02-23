@@ -1,0 +1,32 @@
+{% if section.settings.embed_code != blank %}
+  <section class="py-50 md:py-50">
+    <div class="section-instagram rich-text-wrapper md:w-1/2 m-auto px-20 mdpx-40">
+      {% if section.settings.title != blank %}
+        <h1 class="h4 md:h3 pt-40 md:pt-0 mb-60 md:mb-80 text-center">{{ section.settings.title }}</h1>
+      {% endif %}
+
+      <div class="section-instagram__content">
+        {{ section.settings.embed_code }}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Instagram",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "embed_code",
+      "label": "Embed Code"
+    }
+  ]
+}
+{% endschema %}

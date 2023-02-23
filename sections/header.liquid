@@ -1,0 +1,267 @@
+<header class="fixed top-0 w-full z-30" role="banner">
+  {% if settings.enable_announcement_bar == true %}
+  <div class="flex items-center justify-center px-10 py-10 banner__font-size carousel swiper-container {% if section.settings.autoplay == true %}banner-carousel-auto{% else %}banner-carousel{% endif %} relative" style="color:{{ settings.announcement_bar_color }}; background-color:{{ settings.announcement_bar_bg_color }}" banner-slider-js>
+    <div class="swiper-wrapper">
+    {% for block in section.blocks %}
+      {% if block.type == 'banner' %}
+      <div class="swiper-slide" aria-hidden="false">
+        <div class="banner-slide flex items-center justify-center ">
+          {% if block.settings.banner_url != blank %}
+            <a href="{{ block.settings.banner_url }}">
+          {% endif %}
+              <div class="max-w-4xl text-center px-30">
+                {{ block.settings.banner_text }}
+              </div>
+          {% if block.settings.banner_url != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+    </div>
+    <div class="w-full max-w-5xl absolute flex items-center justify-between z-10 {% if section.settings.hide_arrows == true %}hidden{% endif %}">
+      <button title="Previous Button" type="button" class="announcement-bar__button swiper-button-prev flex justify-center items-center md:w-27 md:h-15 absolute left-15">{% render 'icons', icon: 'arrow-prev-white' %}</button>
+      <button title="Next Button" type="button" class="announcement-bar__button swiper-button-next flex justify-center items-center md:w-27 md:h-15 absolute right-15">{% render 'icons', icon: 'arrow-next-white' %}</button>
+    </div>
+  </div>
+  {% endif %}
+  <div class="flex items-center h-70 pl-20 md:pl-30 pr-10 border border-gray-100 bg-white">
+    <button title="Meun" type="button" class="md:hidden w-6 mr-20 duration-500 z-10" data-hamburger-menu>
+      <span>
+        {% render 'icons', icon: 'hamburger' %}
+      </span>
+    </button>
+    <button title="Close Menu" type="button" class="absolute left-22 md:hidden w-6 opacity-0 duration-500" data-close-menu>
+      <span>
+        {% render 'icons', icon: 'close' %}
+      </span>
+    </button>
+    <div class="flex flex-1 md:flex-none md:inline-block duration-500" data-logo>
+      <a class="block w-80 mr-25" href="/">
+        {% render 'icons', icon: 'logo', color: '#000' %}
+        <span class="visually-hidden">Logo</span>
+      </a>
+    </div>
+    <div class="hidden md:flex flex-1 h-full">
+      <nav aria-label="Main Navigation">
+        <ul class="flex h-full">
+          {% for link in linklists[settings.main_linklist].links %}
+          <li class="menu__hover-item px-10 flex items-center h-full cursor-pointer" {% if link.levels > 0 %}aria-haspopup="true"{% endif %} aria-expanded="false">
+            <a class="menu__hover-item--link btn-sm px-5 uppercase bg-gradient-to-r from-primary-100 primary-100 to-primary-100 bg-no-repeat duration-500" href="{{ link.url }}">
+              {{ link.title }}
+            </a>
+            {% if link.levels > 0 %}
+              <div class="menu__hover-submenu absolute {% if settings.enable_announcement_bar == true %}top--banner-detected{% else %}top-70{% endif %} left-0 w-full bg-white py-60 duration-100">
+                <div class="container">
+                  <div class="grid grid-cols-4 gap-2">
+                    <div class="">
+                      <nav>
+                        <ul >
+                          {% for sub_link in link.links %}
+                            <li class="menu__hover-subitem mb-20">
+                              <a class="menu__hover-subitem--link btn-md uppercase bg-gradient-to-r from-primary-100 primary-100 to-primary-100 bg-no-repeat duration-500" href="{{ sub_link.url }}">
+                                {{ sub_link.title }}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </nav>
+                      <a class="btn-md inline-block mt-10 px-25 py-12 bg-primary-100 rounded-full uppercase" href="{{ link.url }}">
+                        All {{ link.title }}
+                      </a>
+                    </div>
+                    <div class="col-span-3 grid grid-cols-3 gap-20">
+                      {% assign count_product = 0 %}
+                      {% for block in section.blocks %}
+                        {% if block.type == "image" %}
+                        {% assign product = all_products[block.settings.header_products] %}
+                        {% if block.settings.header_category_product == link.title %}
+                          {% assign count_product = count_product | plus: 1 %}
+                          {% if count_product <= 3 %}
+                            <div class="focus-within:outline-black cursor-pointer" data-delegate="[data-delegated-link]">
+                              <a title="{{block.settings.header_heading}}" class="outline-none" href="{{block.settings.header_url}}" data-delegated-link >
+                                <figure class="aspect-w-1 aspect-h-1 mb-15">
+                                  {%
+                                    render 'lazy-image',
+                                    type: 'color',
+                                    image_base: block.settings.header_image
+                                    sizes: '30vw',
+                                    srcs: '265x,530x'
+                                  %}
+                                </figure>
+                                <h6 class="h6 mb-5">
+                                    {{ block.settings.header_heading }}
+                                </h6>
+                                <div class="p3 line-clamp-2" style="max-height: 44px;">{{ block.settings.header_subtext }}</div>
+                              </a>
+
+                            </div>
+                          {% endif %}
+                        {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+    <div class="flex items-center">
+      {%- comment -%} Search {%- endcomment -%}
+      <button title="Open Search" type="button" class="icon__hover-round icon-search w-6 mr-21" data-open-search>
+        <span class="relative block">
+          {% render 'icons', icon: 'search', class: 'w-22' %}
+        </span>
+      </button>
+      {%- comment -%} Account {%- endcomment -%}
+      <a class="icon__hover-round hidden md:flex justify-center" href="{% if customer %}/account{% else %}/account/login{% endif %}">
+        <span class="relative inline-block">
+          {% render 'icons', icon: 'account', class: 'w-20' %}
+          <span class="visually-hidden">Account Login</span>
+        </span>
+      </a>
+      {%- comment -%} Cart {%- endcomment -%}
+      <button title="Open Cart" type="button" class="icon__hover-stroke btn-md flex items-center bg-primary-100 p-3 md:pt-3 md:pb-3 md:px-24 rounded-full uppercase hover:bg-black duration-500 hover:text-primary-100" data-open-minicart>
+        <span class="inline-block w-6 md:mr-10">
+          {% render 'icons', icon: 'cart', class: 'w-20' %}
+        </span>
+        <span class="hidden md:block">Cart</span>
+          <div class="ml-10 md:ml-1">
+            (<span id="item-count">{{ cart.item_count }}</span>)
+          </div>
+      </button>
+    </div>
+  </div>
+  {%- comment -%} MENU MOBILE {%- endcomment -%}
+  <div class="fixed md:hidden {% if settings.enable_announcement_bar == true %}top-115{% else %}top-70{% endif %}left-0 w-full h-screen pb-70 transition ease-in-out duration-1000 transform -translate-x-full" data-menu-mobile>
+    <div class="w-full h-full bg-white">
+      <nav class="h-full overflow-hidden overflow-y-auto">
+        <ul>
+          {% for link in linklists[settings.main_linklist].links %}
+          <li class="relative border-b border-black border-opacity-30">
+            {% if link.levels > 0 %}
+              <span class="p4 block w-full py-20 pl-20 uppercase">{{ link.title }}</span>
+              <button title="Open Menu Item" type="button" class="absolute top-0 right-0 w-full h-60 px-4 flex justify-end items-center" data-open-menuitem>
+                <span class="block transform duration-500" data-icon>
+                  {% render 'icons', icon: 'down', class: "w-15" %}
+                </span>
+              </button>
+            {% else %}
+            <a href="{{ link.url }}" class="p4 block w-full py-20 pl-20 uppercase">{{ link.title }}</a>
+            {% endif %}
+            {% if link.levels > 0 %}
+              <div class="pb-15 pl-40" data-submenu style="display: none;">
+                <nav>
+                  <ul>
+                    {% for sub_link in link.links %}
+                      <li>
+                        <a href="{{ sub_link.url }}" class="p4 block py-15 uppercase">{{ sub_link.title }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </nav>
+                <a class="btn-md inline-block my-15 px-25 py-12 bg-primary-100 rounded-full uppercase" href="{{ link.url }}">
+                  All {{ link.title }}
+                </a>
+              </div>
+            {% endif %}
+          </li>
+          {% endfor %}
+          <li class="relative pt-15">
+            <a class="p4 flex items-center p-20" href="{% if customer %}/account{% else %}/account/login{% endif %}">
+              <span class="block w-20 mr-10">
+                {% render 'icons', icon: 'account' %}
+              </span>
+              <span class="uppercase">Account</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  {%- comment -%} / MENU MOBILE{%- endcomment -%}
+</header>
+{% render 'header-search' %}
+
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Links Searches"
+      },
+      {
+        "type": "text",
+        "id": "links_search",
+        "label": "Terms",
+        "info": "Separate each term with a comma ie. (Eden, Pillows)"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay"
+      },
+      {
+        "id": "hide_arrows",
+        "type": "checkbox",
+        "label": "Hide Arrow"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "text",
+            "id": "header_category_product",
+            "label": "Category Product"
+          },
+          {
+           "type": "image_picker",
+           "id": "header_image",
+           "label": "Image"
+          },
+          {
+           "type": "text",
+           "id": "header_heading",
+           "label": "Heading"
+          },
+          {
+            "type": "text",
+            "id": "header_subtext",
+            "label": "Subtext"
+          },
+          {
+           "type": "url",
+           "id": "header_url",
+           "label": "URL"
+          }
+        ]
+      },
+      {
+        "type": "banner",
+        "name": "banner_slide",
+        "settings": [
+          {
+            "type": "text",
+            "id": "banner_text",
+            "label": "Banner Slider"
+          },
+          {
+            "type": "url",
+            "id": "banner_url",
+            "label": "Banner URL"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

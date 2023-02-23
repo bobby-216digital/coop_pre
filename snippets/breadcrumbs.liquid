@@ -1,0 +1,67 @@
+<ul class="flex mb-40 md:mb-0">
+	{% if template contains "product" %}
+		<li class="label {{class}}">
+			<a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a>
+		</li>
+		<span class="p4 px-1 label {{class}}" aria-hidden="true"> > </span>
+		{%- comment -%} Breadcrumbs Product {%- endcomment -%}
+		{% if collection %}
+			<li class="label {{class}}">
+				<a href="{{ routes.collections_url }}">
+					{{ 'general.breadcrumbs.collections' | t }}
+				</a>
+			</li>
+			<span class="p4 px-1 label {{class}}" aria-hidden="true"> > </span>
+			<li class="label">
+				<a href="{{ collection.url }}">{{ collection.title }}</a>
+			</li>
+			<span class="p4 px-1 label {{class}}" aria-hidden="true"> > </span>
+		{% else %}
+			<li class="label {{class}}">
+				<a href="{{ routes.all_products_collection_url }}">
+					{{ 'general.breadcrumbs.products' | t }}
+				</a>
+			</li>
+			<span class="p4 px-1 label {{class}}" aria-hidden="true"> > </span>
+		{% endif %}
+			<li class="label {{class}}">{{ product.title }}</li>
+	{%- comment -%} Breadcrumbs Collection {%- endcomment -%}
+	{% elsif template contains "collection" %}
+		<li class="p4 font-roslinda font-bold">
+			<a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a>
+		</li>
+		{% liquid 
+			assign parent_collection = ''
+			assign child_collection = ''
+			for link in linklists[settings.main_linklist].links
+				if link.links != blank
+					for child_link in link.links
+						if child_link.url == collection.url
+							assign child_collection = child_link
+							assign parent_collection = link
+							break
+						endif
+					endfor
+				endif
+			endfor
+		%}
+		{% if child_collection != blank %}
+			<span class="mx-9 w-7 flex items-center h-22" aria-hidden="true">{% render 'icons', icon: 'caret-right' %}</span>
+			<li class="p4 font-roslinda font-bold">
+				<a href="{{ parent_collection.url }}">{{ parent_collection.title }}</a>
+			</li>
+		{% endif %}
+			<span class="mx-9 w-7 flex items-center h-22" aria-hidden="true">{% render 'icons', icon: 'caret-right' %}</span>
+			<li class="p4 font-roslinda font-bold">
+				{% if current_tags %}
+					{{ collection.title | link_to_remove_tag: current_tags.first }}
+				{% else %}
+					{{ collection.title }}
+				{% endif %}
+			</li>
+		{% if current_tags %}
+			<span class="mx-9 w-7 flex items-center h-22" aria-hidden="true">{% render 'icons', icon: 'caret-right' %}</span>
+			<li class="p4 font-roslinda font-bold">{{ current_tags.first }}</li>
+		{% endif %}
+	{% endif %}
+</ul>

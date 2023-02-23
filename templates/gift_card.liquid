@@ -1,0 +1,86 @@
+{{ 'styles.css' | asset_url | stylesheet_tag }}
+{% layout 'gift_card' %}
+
+{%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros: gift_card.currency -%}
+{%- assign formatted_initial_value_stripped = formatted_initial_value | strip_html -%}
+
+<div class="giftcard-wrapper mx-auto px-20 py-35 text-center" style="max-width: 600px;">
+  <header class="giftcard__header" role="banner">
+    <a href="{{ shop.url }}" class="site-header__link site-header__logo-link block mx-auto w-80">
+      {% render 'icons', icon: 'logo', color: '#000' %}
+      <span class="visually-hidden">{{ shop.name }}</span>
+    </a>
+  
+    <h1 class="capitalize h5 mt-30">{{ 'gift_cards.issued.subtext' | t }}</h1>
+    {% unless gift_card.enabled %}
+      <p class="giftcard__tag mt-10 p2 uppercase font-medium">{{ 'gift_cards.issued.disabled' | t }}</p>
+    {% endunless %}
+    {% assign gift_card_expiry_date = gift_card.expires_on | date: format: "basic" %}
+    {% if gift_card.expired and gift_card.enabled %}
+      <p class="giftcard__tag mt-10 p2 uppercase font-medium">{{ 'gift_cards.issued.expired' | t: expiry: gift_card_expiry_date }}</p>
+    {% endif %}
+    {% if gift_card.expired != true and gift_card.expires_on and gift_card.enabled %}
+      <p class="giftcard__tag giftcard__tag--active mt-10 p2 uppercase font-medium">{{ 'gift_cards.issued.active' | t: expiry: gift_card_expiry_date }}</p>
+    {% endif %}
+  </header>
+
+  <main class="giftcard mt-20" role="main">
+    <div class="giftcard__wrap">
+      <div class="rounded-3xl overflow-hidden">
+        <img src="{{ 'gift-card/card.jpg' | shopify_asset_url }}" alt="" class="w-full">
+      </div>
+
+      {%- assign initial_value_size = formatted_initial_value | size -%}
+      <div class="h5 text-2xl mt-20 md:mt-30 giftcard__amount{% if initial_value_size > 6 %} giftcard__amount--medium{% endif %}">
+        {% if gift_card.balance != gift_card.initial_value %}
+          <span class="giftcard__tooltip">
+            <span class="giftcard__tooltip-label">{{ 'gift_cards.issued.remaining_html' | t: balance: gift_card.balance | money }}</span>
+          </span>
+        {% endif %}
+        <strong>{{ formatted_initial_value }}</strong>
+      </div>
+
+      {%- assign code_size = gift_card.code | format_code | size -%}
+      <div class="giftcard__code my-20 max-w-xs mx-auto">
+        <div class="giftcard__code__inner">
+          <input type="text"
+            class="giftcard__code__text{% if gift_card.expired or gift_card.enabled != true %} disabled{% endif %} text-center border border-black p2 font-medium cursor-default"
+            id="GiftCardDigits"
+            value="{{ gift_card.code | format_code }}"
+            aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}"
+            readonly />
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center p2">
+      {{ 'gift_cards.issued.redeem_html' | t: value: formatted_initial_value_stripped }}
+    </p>
+
+    <div id="QrCode" class="giftcard__qr-code" data-identifier="{{ gift_card.qr_identifier }}"></div>
+
+    <ul class="giftcard-action-list text-center">
+      <li class="giftcard-action-list__item mt-25 mb-15">
+        <a href="{{ shop.url }}"
+          class="btn btn-primary p3 py-15 px-25 font-medium"
+          target="_blank"
+          rel="noopener"
+          aria-describedby="a11y-new-window-message">
+            {{ 'gift_cards.issued.shop_link' | t }}
+        </a>
+      </li>
+      <li>
+        <button type="button" class="btn print-link p3 font-medium border-b-2 border-black hover:border-transparent duration-500" onclick="window.print();">
+          {{ 'gift_cards.issued.print' | t }}
+        </button>
+      </li>
+      {% if gift_card.pass_url %}
+        <li>
+          <a class="giftcard__apple-wallet block max-w-max mx-auto my-40" href="{{ gift_card.pass_url }}">
+            <img class="giftcard__apple-wallet-image" src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}">
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </main>
+</div>

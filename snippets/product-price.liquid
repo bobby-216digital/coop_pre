@@ -1,0 +1,30 @@
+{%- liquid
+  assign compare_at_price = variant.compare_at_price
+  assign price = variant.price
+  assign money_price = price | money
+
+  assign sold_out = true
+  if variant.available
+    assign sold_out = false
+  endif
+-%}
+
+<div class="product-price flex flex-row">
+  {% if sold_out %}
+    <p class="p1 font-normal">Sold Out</p>
+  {% else %}
+
+    <span class="sr-only">{{ 'products.product.regular_price' | t }}</span>
+    {% if disabled != true %}
+      <p class="p1 mr-12 line-through opacity-50 font-normal" data-compare-price>
+        {{ compare_at_price | money }}
+      </p>
+    {% endif %}
+
+    <!-- Price Sale -->
+    <span class="sr-only">{{ 'products.product.sale_price' | t }}</span>
+    <p class="p1 font-normal text-blue-100" data-sale-price>
+      {{ price | money }}
+    </p>
+  {% endif %}
+</div>

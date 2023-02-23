@@ -1,0 +1,11 @@
+{% if product.metafields.accentuate.product_hero_image %}
+  {%- assign hero_image = "" -%}
+  {% for image in product.metafields.accentuate.product_hero_image %}
+    {% assign hero_image = image.src%}
+  {% endfor %}
+
+<div class="product-hero w-full flex items-center justify-center h-445" style="background-image:url('{{ hero_image }}'); background-size: cover">
+  <h1 class="text-5xl font-bold text-white px-20 text-shadow font-roslinda text-center md:text-left">{{ product.metafields.accentuate.product_hero_text }}</h1>
+</div>
+</div>
+{% endif %}

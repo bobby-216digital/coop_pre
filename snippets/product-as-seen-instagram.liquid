@@ -1,0 +1,26 @@
+{% if product.metafields.accentuate.as_seen_on_instagram %}
+
+    <div class="as-seen-on-instagram-section pt-40 px-20 pb-80">
+        <h3 class="m-auto h3 text-center mt-20 mb-60 lg:px-10">
+            As Seen On Instagram 
+        </h3>
+      <ul class="grid grid-cols-1 lg:grid-cols-4 lg:gap-20 px-40 lg:px-0">
+        {% assign as_seen_on_instagrams = product.metafields.accentuate.as_seen_on_instagram %}
+        {% for as_seen_on_instagram in as_seen_on_instagrams limit: 4 %}
+          <li class="justify-center text-center mb-20 lg:mb-0">
+            <div class="mr-10 w-full aspect-w-1 aspect-h-1 inline-block relative">
+              {% for image in as_seen_on_instagram %}
+                {%
+                  render 'lazy-image-acf',
+                  type: 'color',
+                  image_base: image.src
+                  srcs: '315x,500x,'
+                %}
+              {% endfor %}
+            </div>
+            
+          </li>
+        {% endfor%}
+      </ul>
+    </div>
+{% endif %}

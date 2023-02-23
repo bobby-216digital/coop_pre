@@ -1,0 +1,63 @@
+{% if product.metafields.accentuate.product_image_text_image %}
+<div class="product__image-text py-40 lg:py-80 bg-white">
+  {% for acf_images in product.metafields.accentuate.product_image_text_image %}
+    <div class="container flex max-w-full">
+      <div class="flex flex-col justify-center lg:w-1/2 lg:px-40">
+        <h2 class="h3 mb-40">{{ product.metafields.accentuate.product_image_text_title[forloop.index0] }}</h2>
+        <div class="paragraph">
+          {{ product.metafields.accentuate.product_image_text_copy[forloop.index0].html }}
+
+          {% assign video_enable = false %}
+          {% if product.metafields.accentuate.tab_video_1 == 'true' and forloop.index == 1 %}
+            {% assign video_enable = true %}
+          {% endif %}
+
+          {% if product.metafields.accentuate.tab_video_2 == 'true' and forloop.index == 2 %}
+            {% assign video_enable = true %}
+          {% endif %}
+
+          {% if product.metafields.accentuate.tab_video_3 == 'true' and forloop.index == 3 %}
+            {% assign video_enable = true %}
+          {% endif %}
+
+          {% if product.metafields.accentuate.tab_video_4 == 'true' and forloop.index == 4 %}
+            {% assign video_enable = true %}
+          {% endif %}
+
+          {% if video_enable == true %}
+            <div class="product-tab__video-modal-container pt-6">
+              <button class="product-tab__video-modal-button bg-primary-100 rounded-full px-20" js-open-video-modal="{{forloop.index}}" js-open-video>
+                <span class="product-tab__video-modal-button-span pl-20">
+                  PLAY VIDEO
+                </span>
+                <i class="block" data-icon-plus>{% render 'icons', icon: 'play' %}</i>
+              </button>
+            </div>
+            {% endif %}
+        </div>
+      </div>
+
+      <div class="lg:w-1/2 pl-0 lg:pl-30 lg:pr-50 mb-30 lg:mb-0">
+        {% if product.metafields.accentuate.product_image_url[forloop.index0] != blank %}
+        <a href="{{product.metafields.accentuate.product_image_url[forloop.index0]}}" class="image__link">
+        {% endif %}
+        {% for image in acf_images %}
+          <figure class="aspect-w-3 aspect-h-2 m-auto {% if product.tags contains 'no-pill' %}{% else %}overflow-hidden{% endif %}">
+            {%
+              render 'lazy-image-acf',
+              type: 'color',
+              image_base: image.src
+              sizes: '50vw',
+              srcs: '724x,1448x,',
+              alt: product.title | escape
+            %}
+          </figure>
+          {% endfor %}
+          {% if product.metafields.accentuate.product_image_url[forloop.index0] != blank %}
+          </a>
+          {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,73 @@
+{% if section.settings.grid_products_title %}
+  <section class="grid-products bg-secondary-200 pt-50 pb-60 md:py-80">
+    <div class="container">
+      <div class="bckg-word h3 text-center mb-80 animate">
+        {{ section.settings.grid_products_title }}
+      </div>
+      <ul class="grid grid-cols-1 md:grid-cols-3 gap-40">
+        {% for block in section.blocks %}
+          {% assign block_grid_product = all_products[block.settings.grid_product] %}
+          <li class="px-20">
+            <figure class="aspect-w-1 aspect-h-1 mb-20">
+              {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: block_grid_product.featured_image
+                sizes: '25vw',
+                srcs: '280x,560x'
+              %}
+            </figure>
+            <div class="text-center">
+              <h3 class="h5 mb-20">
+                {{ block_grid_product.title }}
+              </h3>
+
+              {% if block_grid_product.metafields.accentuate.short_description %}
+                <div class="p3 font-sansRegular text-black mb-40 line-clamp-2 md:h-40">
+                  {{ block_grid_product.metafields.accentuate.short_description.html }}
+                </div>
+              {% endif %}
+              
+              <a href="{{ block_grid_product.url }}" class="btn-primary">
+                Shop
+              </a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Grid Products",
+    "class": "grid_products",
+    "settings": [
+      {
+        "id": "grid_products_title",
+        "type": "richtext",
+        "label": "Grid Products Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "grid_product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Grid Products ",
+        "category": "Grid Image + Text"
+      }
+    ]
+  }
+{% endschema %}

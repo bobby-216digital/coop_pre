@@ -1,0 +1,89 @@
+<div class="fixed top-0 left-0 bg-black w-full h-full bg-opacity-70 z-40" data-overlay style="display: none;"></div>
+{%- comment -%} Render React id[mini-cart] {%- endcomment -%}
+<div id="mini-cart"
+  class="mini-cart fixed top-0 right-0 w-auto h-screen bg-white transform transition-transform delay-300 translate-x-full"
+  style="z-index:2147483640">
+</div>
+<button title="Close minicart" class="fixed top-20 right-15 w-30" data-close-minicart style="display: none; z-index:2147483641">
+  {% render 'icons', icon: 'close' %}
+</button>
+
+<script>
+  window.emptyCartLinks = [
+    {%- for block in section.blocks -%}
+      {%- if block.type == "image"-%}
+        { 
+          'title': {{ block.settings.title | json }}, 
+          'image': {{ block.settings.collection_image | json }}, 
+          'link': {{ block.settings.collection_link | json}} 
+        },
+      {%- endif -%}
+    {%- endfor -%}
+  ];
+
+  {%- if section.settings.goal_bar_enabled -%}
+    window.minicartGoalBar = [
+      {%- for block in section.blocks -%}
+        {%- if block.type == "goal_bar"-%}
+          { 
+            'title': {{ block.settings.title | json }}, 
+            'amount': {{ block.settings.amount | json }}, 
+          },
+        {%- endif -%}
+      {%- endfor -%}
+    ];
+  {%- endif -%}
+</script>
+
+{% schema %}
+  {
+    "name": "MiniCart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "goal_bar_enabled",
+        "label": "Enable Goal Bar" 
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Collection Link",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "collection_image",
+            "label": "Select Collection Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Collection Title"
+          },
+          {
+            "type": "url",
+            "id": "collection_link",
+            "label": "Collection Link"
+          }
+        ]
+      },
+      {
+        "type": "goal_bar",
+        "name": "Goal Bar",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Goal Title",
+            "info": "Placed next to the bar."
+          },
+          {
+            "type": "text",
+            "id": "amount",
+            "label": "Amount Goal"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

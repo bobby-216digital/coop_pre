@@ -1,0 +1,49 @@
+<div class="consumer-report flex items-center justify-items-center flex-wrap" style="{% if section.settings.bg_color != blank %}background-color: {{ section.settings.bg_color }};{% endif %} {% if section.settings.title_color != blank %}color: {{ section.settings.title_color }};{% endif %}">
+    <div class="h4 text-center px-20 pt-12 pb-15 md:py-0 xl:pl-40 consumer-report__text-area  w-full md:flex-1">
+        <div class="consumer-report__text text-center">
+            {{ section.settings.text_section }}
+        </div>
+    </div>
+    <div class="consumer-report__CR-image w-full md:w-1/5">
+        <!-- ANIAAVKF DIGITAL_MANUFACTURER Code Snippet START --> <script charset="utf-8" type="text/javascript" defer="" async="">(function(w, d, s, o, f, js, fjs) {w['JS-Widget'] = o; w[o] = w[o] || function() { (w[o].q = w[o].q || []).push(arguments) };js = d.createElement(s), (ss = document.getElementsByTagName("script")), (fjs = ss[ss.length - 1]);js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);}(window, document, 'script', 'tw', 'https://ygscdn.azureedge.net/CR/widget.js'));tw('init', null);tw('trustmark', { trustmarkNumber: 'ANIAAVKF', type: 2, containerClass: 'badge-embed'});</script> <!-- ANIAAVKF DIGITAL_MANUFACTURER Code Snippet END -->
+        <div class="badge-embed"></div>
+    </div>
+
+    <style>
+      .trustmark-image {
+        width: 100%;
+      }
+    </style>
+</div>
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Hero Module Content"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color"
+      },
+      {
+        "type": "text",
+        "id": "text_section",
+        "label": "Title",
+        "default": "Consumer Reports Recommended, 3 Years and Counting!"
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Consumer Report Banner"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,44 @@
+{% if product.metafields.accentuate.product_module_image %}
+  <section class="py-40 md:py-80 overflow-hidden bg-secondary-200">
+    <div class="container">
+      <div class="flex flex-col md:flex-row">
+        <div class="w-3/4 m-auto md:w-1/2 md:pr-40 mb-30 md:mb-0">
+          <div class="relative">
+            <figure class="image-round md:aspect-w-5 md:aspect-h-5 md:w-full md:m-auto md:mr-0 rounded-full overflow-hidden">
+              {% for image in product.metafields.accentuate.product_module_image %}
+                {%
+                  render 'lazy-image-acf',
+                  type: 'color',
+                  image_base: image.src
+                  sizes: '50vw',
+                  srcs: '341x,682x,',
+                  alt: product.title | escape
+                %}
+              {% endfor %}
+            </figure>
+            <div class="swirl-graphic-wrapper absolute top-0 left-0 md:-left-140 md:w-full md:h-full z-10">
+              <img class="swirl-graphic-img transform translate-y-50 opacity-0 invisible duration-1000 animate" src="{{ 'swirl-graphic.svg' | asset_url}}" />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start md:w-1/2 md:pl-100 md:pr-60">
+          <h2 class="bckg-word h3 mb-30 md:mb-40 relative z-20 animate">
+            {{ product.metafields.accentuate.product_module_title.html }}
+          </h2>
+          <div class="p3 mb-30 md:mb-40">
+            {{ product.metafields.accentuate.product_module_copy.html }}
+          </div>
+          {% if product.metafields.accentuate.product_module_link_new != blank %}
+            <a class="btn-primary" href="{{ product.metafields.accentuate.product_module_link_new }}" target="_blank">
+              {{ product.metafields.accentuate.product_module_link_title }}
+            </a>
+          {% else %}
+            <a class="btn-primary" href="{{ product.metafields.accentuate.product_module_link }}">
+              {{ product.metafields.accentuate.product_module_link_title }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}

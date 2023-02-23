@@ -1,0 +1,186 @@
+{% if section.settings.layout == "center" %}
+  <div id="ghero__index--image" class="mt-70 py-95 flex flex-col md:flex-row md:py-200 md:items-center overflow-hidden" style="background-image: url({{ section.settings.img_hero_desktop | img_url: '730x630', scale: 2 }}); background-size: cover">
+    <div id="ghero__index--text" class="flex flex-col mx-20 items-center text-center md:order-1 md:w-full">
+      {%- if section.settings.img_swirled != blank -%}
+        <div class="pb-20 lazy--flex max-w-xs">
+          <img src="{{ section.settings.img_swirled }}" alt="">
+        </div>
+      {%- endif -%}
+      {% if section.settings.consumer %}
+      <div class="pb-20 max-w-xs badge-embed"></div>
+      {% endif %}
+      
+      <h1 class="{% if section.settings.smaller_font == true %}h3{% else %}h2{% endif %} pb-15 flex-auto md:pb-20 md:w-930{% if section.settings.text_color == "white" %} text-white{% endif %}">{{ section.settings.title }}</h1>
+      <p class="p2 pb-30 flex-auto md:pb-40 md:w-550{% if section.settings.text_color == "white" %} text-white{% endif %}">{{ section.settings.subtitle }}</p>
+      <a class="btn-primary btn-md flex items-center justify-center w-56" href="{{ section.settings.cta_link }}" title="{{ section.settings.cta_text }} Link">{{ section.settings.cta_text }}</a>
+    </div>
+  </div>
+{% elsif section.settings.layout == "left" and section.settings.img_mask %}
+  <div class="{% if settings.enable_announcement_bar == true %}margin-top--banner-detected{% else %}mt-70{% endif %} pt-20 pb-60 flex flex-col relative md:flex-row md:pt-40 md:pb-120 md:items-center" data-animate-scale>
+    <div id="ghero__index--image" class="ml-20 mr-0 flex-auto rounded-l-full md:order-2 md:ml-0 md:w-725 md:h-600 lazy--flex overflow-hidden" data-img-scale>
+      {%
+        render 'lazy-image',
+        type: 'color',
+        image_base: section.settings.img_hero_desktop,
+        image_mobile: section.settings.img_hero_mobile,
+        sizes: '50vw',
+        srcs: '959x,960x,1450x',
+        classes: 'rounded-l-full h-250 md:h-600',
+        classes_mask: 'rounded-l-full',
+      %}
+    </div>
+    <div id="ghero__index--text" class="flex flex-col mx-20 relative md:ml-80 md:order-1 md:-mr-80 md:w-550 md:z-10">
+      {%- if section.settings.img_swirled != blank -%}
+        <div class="my-20 lazy--flex max-w-xs">
+          <img src="{{ section.settings.img_swirled }}" alt="">
+        </div>
+      {%- endif -%}
+      {% if section.settings.consumer %}
+      <div class="pt-20 pb-20 max-w-xs badge-embed"></div>
+      {% endif %}
+      <h1 class="{% if section.settings.smaller_font == true %}h3{% else %}h2{% endif %} pb-15 flex-auto md:pb-20{% if section.settings.text_color == "white" %} text-white{% endif %}">{{ section.settings.title }}</h1>
+      <p class="p2 pb-30 flex-auto md:pb-40  md:w-445{% if section.settings.text_color == "white" %} text-white{% endif %}">{{ section.settings.subtitle }}</p>
+      <a class="btn-primary btn-md flex items-center justify-center flex-none w-56" href="{{ section.settings.cta_link }}" title="{{ section.settings.cta_text }} Link" data-hover>{{ section.settings.cta_text }}</a>
+    </div>
+  </div>
+{% else %}
+  <div class="mt-70 pb-60 flex flex-col md:flex-row md:pb-0 md:items-center">
+    <div id="ghero__index--image" class="flex-auto h-280 md:order-2 md:h-730 md:w-630 lazy--flex" data-img-scale>
+      {%
+        render 'lazy-image',
+        type: 'color',
+        image_base: section.settings.img_hero_desktop,
+        image_mobile: section.settings.img_hero_mobile,
+        sizes: '50vw',
+        srcs: '959x,960x,1450x',
+        classes: 'h-250 md:h-730',
+      %}
+    </div>
+    <div id="ghero__index--text" class="flex flex-col mx-20 md:ml-80 md:order-1 md:w-550 md:mr-20">
+      <div class="py-20 lazy--flex max-w-xs">
+        {%
+          render 'lazy-image',
+          type: 'color',
+          image_base: section.settings.img_swirled,
+          srcs: '660x',
+        %}
+      </div>
+      <h1 class="{% if section.settings.smaller_font == true %}h3{% else %}h2{% endif %} pb-15 flex-auto md:pb-20{% if section.settings.text_color == "white" %} text-white{% endif %}">{{ section.settings.title }}</h1>
+      <p class="p2 pb-30 flex-auto md:pb-40 md:w-445{% if section.settings.text_color == "white" %} text-white{% endif %}">{{ section.settings.subtitle }}</p>
+      <a class="btn-primary btn-md flex items-center justify-center flex-none w-56" href="{{ section.settings.cta_link }}" title="{{ section.settings.cta_text }} Link">{{ section.settings.cta_text }}</a>
+    </div>
+  </div>
+{% endif %}
+{% if section.settings.consumer %}
+<!-- ANIAAVKF DIGITAL_MANUFACTURER Code Snippet START --> <script charset="utf-8" type="text/javascript" defer="" async="">(function(w, d, s, o, f, js, fjs) {w['JS-Widget'] = o; w[o] = w[o] || function() { (w[o].q = w[o].q || []).push(arguments) };js = d.createElement(s), (ss = document.getElementsByTagName("script")), (fjs = ss[ss.length - 1]);js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);}(window, document, 'script', 'tw', 'https://ygscdn.azureedge.net/CR/widget.js'));tw('init', null);tw('trustmark', { trustmarkNumber: 'ANIAAVKF', type: 2, containerClass: 'badge-embed'});</script> <!-- ANIAAVKF DIGITAL_MANUFACTURER Code Snippet END -->
+{% endif %}
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Hero Module Content"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Sleep Well,<br>Wake Up Weller."
+      },
+      {
+        "id": "smaller_font",
+        "type": "checkbox",
+        "label": "Smaller Title"
+      },
+      {
+        "id": "subtitle",
+        "type": "text",
+        "label": "Subtitle",
+        "default": "We’re here to help you get consistently great nights of sleep with an innovative personalized approach to comfort."
+      },
+      {
+        "id": "cta_text",
+        "type": "text",
+        "label": "CTA Button Text",
+        "default": "SHOP PILLOWS"
+      },
+      {
+        "id": "cta_link",
+        "type": "url",
+        "label": "CTA Button Link"
+      },
+	  {
+        "id": "consumer",
+        "type": "checkbox",
+        "label": "Show consumer badge"
+      },
+      {
+        "id": "img_swirled",
+        "type": "text",
+        "label": "Swirled Text Image",
+        "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+      },
+      {
+        "type": "image_picker",
+        "id": "img_hero_mobile",
+        "label": "Hero Image (Mobile)"
+      },
+      {
+        "type": "image_picker",
+        "id": "img_hero_desktop",
+        "label": "Hero Image (Desktop)"
+      },
+      {
+        "type": "header",
+        "content": "Hero Module Layout"
+      },
+      {
+        "id": "layout",
+        "type": "select",
+        "label": "Hero Module Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left Aligned"
+          },
+          {
+            "value": "center",
+            "label": "Center Aligned"
+          }
+        ],
+        "default": "left",
+        "info": "Select layout for Hero Module"
+      },
+      {
+        "id": "img_mask",
+        "type": "checkbox",
+        "label": "Mask Hero Module Image?",
+        "default": true,
+        "info": "Only applied when Left Aligned is selected"
+      },
+      {
+        "id": "text_color",
+        "type": "select",
+        "label": "Hero Module Text Color",
+        "options": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ],
+        "default": "black",
+        "info": "Select text color for Hero Module"
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Homepage Hero"
+      }
+    ]
+  }
+{% endschema %}

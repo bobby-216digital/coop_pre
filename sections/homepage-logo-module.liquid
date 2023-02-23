@@ -1,0 +1,70 @@
+
+<section id="quilt-section" class="bg-primary-100 h-216">
+  {% comment %}Mobile{% endcomment %}
+  <div id="quilt-mobile" class="logo-carousel swiper-container w-full h-full md:hidden">
+    <div class="swiper-wrapper h-full">
+      {% for block in section.blocks %}
+      <li class="swiper-slide flex items-center justify-center h-full w-full" aria-hidden="false">
+        <img alt="{{ block.settings.logo_alt }}" src="{{ block.settings.logo_image }}" style="height: {{ block.settings.logo_height }}px;">
+      </li>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  {% comment %}Desktop{% endcomment %}
+  <div id="quilt-container" class="hidden h-full w-full relative items-center overflow-hidden md:flex">
+    <div class="quilt flex-none relative flex items-center md:pl-40" style="animation-play-state: paused;">
+    {% for block in section.blocks %}
+      <img alt="{{ block.settings.logo_alt }}" class="px-40" src="{{ block.settings.logo_image }}" style="height: {{ block.settings.logo_height }}px;">
+    {% endfor %}
+    </div>
+    <div class="quilt flex-none relative flex items-center" style="animation-play-state: paused;">
+      {% for block in section.blocks %}
+        <img alt="{{ block.settings.logo_alt }}" class="px-40" src="{{ block.settings.logo_image }}" style="height: {{ block.settings.logo_height }}px;">
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo Quilt Module Content"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_quilt",
+        "name": "Logo",
+        "settings": [
+          {
+            "id": "logo_image",
+            "type": "text",
+            "label": "Logo Image",
+            "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+          },
+          {
+            "id": "logo_alt",
+            "type": "text",
+            "label": "Logo Alt Text"
+          },
+          {
+            "id": "logo_height",
+            "type": "text",
+            "label": "Logo Height",
+            "info": "Enter desired logo height in pixels, ex: '50'",
+            "default": "50"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Homepage Logo Quilt Module"
+      }
+    ]
+  }
+{% endschema %}

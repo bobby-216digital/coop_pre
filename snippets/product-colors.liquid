@@ -1,0 +1,19 @@
+{% assign min = 10 %}
+{% assign max = 80 %}
+{% assign diff = max | minus: min %}
+{% assign uuid = "now" | date: "%N" | modulo: diff | plus: min | append: product.id %}
+<div class="flex">
+  {% for value in option.values %}
+    <div class="relative swatch swatch_{{ value | escape | handleize }} {{class}} rounded-full mr-15">
+      <input aria-label="Product Color" 
+        class="w-25 h-25 opacity-0 cursor-pointer"
+        data-product-color
+        name="{{ option.name | handleize }}" 
+        type="radio"
+        id="{{ value | append: uuid | escape }}"
+        value="{{ value | escape }}"
+        {% if option.selected_value == value %}checked{% endif %} />
+        <div class="check"></div>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,36 @@
+{% if count > 0 %}
+  <div class="flex justify-center items-center">
+    <div class="mr-20">
+      {% if paginate.previous %}
+        <a class="flex h-40" href="{{ paginate.previous.url }}{{ hash }}">
+          {% render 'icons', icon: 'arrow-prev', class: 'w-27' %}
+        </a>
+      {% else %}
+        <div class="opacity-30">
+          {% render 'icons', icon: 'arrow-prev', class: 'w-27' %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="flex">
+      {% for part in paginate.parts %}
+        {% unless !part.is_link %}
+          <p class="label-md"> {{ part.title }} / </p>
+        {% endunless %}
+      {% endfor %}
+      {% if paginate.parts.size > 0 %}
+        <p class="label-md">{{ paginate.pages }}</p>
+      {% endif %}
+    </div>
+    <div class="ml-20">
+      {% if paginate.next %}
+        <a class="flex h-40" href="{{ paginate.next.url }}{{ hash }}">
+          {% render 'icons', icon: 'arrow-next', class: 'w-27' %}
+        </a>
+      {% else %}
+        <div class="opacity-30">
+          {% render 'icons', icon: 'arrow-next', class: 'w-27' %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

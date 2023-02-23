@@ -1,0 +1,84 @@
+{% if section.settings.image_round_title %}
+  <section class="py-40 md:py-80 overflow-hidden bg-secondary-100">
+    <div class="container">
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2 md:pr-40 mb-30 md:mb-0">
+          <div class="relative">
+            <figure class="image-round md:aspect-w-5 md:aspect-h-5 md:w-full md:m-auto md:mr-0 rounded-full overflow-hidden">
+              {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: section.settings.image_round_image
+                sizes: '50vw',
+                srcs: '725x,1450x'
+              %}
+            </figure>
+            <div class="swirl-graphic-wrapper absolute top-0 left-0 md:-left-140 md:w-full md:h-full z-10">
+              <img class="swirl-graphic-img transform translate-y-50 opacity-0 invisible duration-1000 animate" src="{{ section.settings.image_round_svg }}" />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start md:w-1/2 md:pl-100 md:pr-60">
+          <h2 class="bckg-word h3 mb-30 md:mb-40 relative z-20 animate">
+            {{ section.settings.image_round_title }}
+          </h2>
+          <div class="p3 mb-30 md:mb-40">
+            {{ section.settings.image_round_copy }}
+          </div>
+          <a class="btn-primary" href="{{ section.settings.image_round_cta_link }}">
+            {{ section.settings.image_round_cta_text }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Image Round + Text Module Content"
+      },
+      {
+        "id": "image_round_image",
+        "type": "image_picker",
+        "label": "Image"
+      },
+      {
+        "id": "image_round_svg",
+        "type": "text",
+        "label": "SVG",
+        "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+      },
+      {
+        "id": "image_round_title",
+        "type": "richtext",
+        "label": "Title"
+      },
+      {
+        "id": "image_round_copy",
+        "type": "richtext",
+        "label": "Copy"
+      },
+      {
+        "id": "image_round_cta_text",
+        "type": "text",
+        "label": "Button Text",
+        "default": "Learn More"
+      },
+      {
+        "id": "image_round_cta_link",
+        "type": "url",
+        "label": "Button Link"
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Image Round + Text Module"
+      }
+    ]
+  }
+{% endschema %}

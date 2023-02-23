@@ -1,0 +1,184 @@
+<footer class="main-footer bg-blue-200" role="contentinfo">
+  <div class="main-footer__wrapper w-full container p-25 md:p-60 md:flex md:flex-row-reverse">
+    <div class="main-footer__sign-up pb-40 md:w-367 md:ml-30 md:pb-0 md:pt-10">
+      <div class="grid grid-cols-1 gap-y-24 text-white text-center md:gap-y-30">
+        <h3 class="quote-md font-bold">
+          {{ section.settings.newsletter_title }}
+        </h3>
+        <div class="p3 md:px-40">
+          {{ section.settings.newsletter_description }}
+        </div>
+        {% comment %}<div class="klaviyo-form-YifdxV main-footer__sign-up-form max-w-lg mx-auto w-full"></div>{% endcomment %}
+        <div data-newsletter-signup>          
+          <button id="signup_email_sms_button" type="button" class="btn-primary btn-md mx-auto py-20 px-20 flex items-center text-blue-200 hover:bg-blue-200 duration-500 hover:text-primary-100 border-blue-200 hover:border-primary-100" role="button">Sign up for Email / SMS</button>
+        </div>
+      </div>
+    </div>
+    <div class="md:flex-1">
+      <nav class="md:hidden">
+        <ul class="flex justify-center items-center pb-40">
+          {% if settings.facebook_link != blank %}
+            <li class="mr-25">
+              <a class="block w-12 text-white" href="{{ settings.facebook_link }}" target="_blank">
+                {% render 'icons', icon: 'facebook2' %}
+              </a>
+            </li>
+          {% endif %}
+          {% if settings.twitter_link != blank %}
+            <li class="mr-25">
+              <a class="block w-6 text-white" href="{{ settings.twitter_link }}" target="_blank">
+                {% render 'icons', icon: 'twitter2' %}
+              </a>
+            </li>
+          {% endif %}
+          {% if settings.instagram_link != blank %}
+            <li class="mr-25">
+              <a class="block w-6 text-white" href="{{ settings.instagram_link }}" target="_blank">
+                {% render 'icons', icon: 'instagram2' %}
+              </a>
+            </li>
+          {% endif %}
+          {% if settings.youtube_link != blank %}
+          <li class="">
+            <a class="block w-6 text-white" href="{{ settings.youtube_link }}" target="_blank">
+              {% render 'icons', icon: 'youtube2' %}
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <div class="grid grid-cols-2 gap-20">
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <a href="{{ section.settings.link_menu_1 }}" class="p3 block mb-30 text-white font-medium uppercase">{{ section.settings.title_menu_1 }}</a>
+              </li>
+              {% for link in linklists[section.settings.menu_1].links %}
+                <li>
+                  <a class="p3 block mb-25 md:mb-15 text-white opacity-50" href="{{ link.url }}">
+                    {{ link.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <a href="{{ section.settings.link_menu_2 }}" class="p3 block mb-30 text-white font-medium uppercase">{{ section.settings.title_menu_2 }}</a>
+              </li>
+              {% for link in linklists[section.settings.menu_2].links %}
+                <li>
+                  <a class="p3 block mb-25 md:mb-15 text-white opacity-50" href="{{ link.url }}">
+                    {{ link.title }}
+                  </a>
+                </li>
+              {% endfor %}
+              <li class="justify-start items-center pt-15 hidden md:flex">
+                {% if settings.facebook_link != blank %}
+                  <a class="block w-12 text-white mr-25" href="{{ settings.facebook_link }}" target="_blank">
+                    {% render 'icons', icon: 'facebook2' %}
+                  </a>
+                {% endif %}
+                {% if settings.twitter_link != blank %}
+                  <a class="block w-6 text-white mr-25" href="{{ settings.twitter_link }}" target="_blank">
+                    {% render 'icons', icon: 'twitter2' %}
+                  </a>
+                {% endif %}
+                {% if settings.instagram_link != blank %}
+                  <a class="block w-6 text-white mr-25" href="{{ settings.instagram_link }}" target="_blank">
+                    {% render 'icons', icon: 'instagram2' %}
+                  </a>
+                {% endif %}
+                {% if settings.youtube_link != blank %}
+                  <a class="block w-6 text-white" href="{{ settings.youtube_link }}" target="_blank">
+                    {% render 'icons', icon: 'youtube2' %}
+                  </a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="text/javascript">
+  document.querySelector("#signup_email_sms_button").addEventListener('click',function (){
+    if(window.innerWidth >= 760){
+      //call the desktop creative
+      window.__attentive.trigger(null,null,null, 288156)
+    } else {
+      //call the mobile creative
+      window.__attentive.trigger(null,null,null, 288152)
+    }      
+  }); 
+</script>
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "header", 
+        "content": "Newsletter" 
+      }, 
+      { 
+        "type": "richtext", 
+        "id": "newsletter_title", 
+        "label": "Text"
+      }, 
+      { 
+        "type": "richtext", 
+        "id": "newsletter_description", 
+        "label": "Description"
+      },
+      { 
+        "type": "text", 
+        "id": "newsletter_klaviyo_list", 
+        "label": "Klaviyo List"
+      },
+      {
+        "type": "header", 
+        "content": "Menu 1" 
+      },
+      {
+        "type": "text",
+        "id": "title_menu_1",
+        "label": "Title Menu"
+      },
+      {
+        "type": "url",
+        "id": "link_menu_1",
+        "label": "Link Menu"
+      },
+      {
+        "type": "link_list",
+        "id": "menu_1",
+        "label": "Menu"
+      },
+      {
+        "type": "header", 
+        "content": "Menu 2" 
+      },
+      {
+        "type": "text",
+        "id": "title_menu_2",
+        "label": "Title Menu"
+      },
+      {
+        "type": "url",
+        "id": "link_menu_2",
+        "label": "Link Menu"
+      },
+      {
+        "type": "link_list",
+        "id": "menu_2",
+        "label": "Menu"
+      }
+    ]
+  }
+{% endschema %}

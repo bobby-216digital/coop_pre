@@ -1,0 +1,73 @@
+<div id="account">
+  <div class="absolute top-0 left-0 w-full h-full mt-70 md:mt-0 -z-10">
+    <div class="w-full h-full aspect-w-4 aspect-h-3">
+      <img class="object-cover" src="{{ 'pillow-protectors.jpg' | asset_url }}" alt="">
+    </div>
+  </div>
+  <div class="pt-100 pb-30 px-30 md:px-0">
+    <div id="CustomerLoginForm" class="block md:w-1/3 m-auto p-30 md:p-40 text-center bg-white" data-customerloginform>
+      <h2 id="LoginHeading" class="h4 mb-30">{{ 'customer.login.title' | t }}</h2>
+      {% form 'customer_login', novalidate: 'novalidate' %}
+      {%- if form.errors -%}
+        <div class="p3 mb-20">
+          <p tabindex="-1" data-form-status>{{ 'contact.form.error_heading' | t }}</p>
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+      <div>
+        <input class="mb-20 h-55 {% if form.errors contains 'form' %}border border-red{% endif %}" type="email" name="customer[email]" id="CustomerEmail" placeholder="Email" autocomplete="email" autocorrect="off"
+        autocapitalize="off" {%- if form.errors contains 'form' -%}aria-invalid="true" {%- endif -%}>
+      </div>
+      <div>
+        {% if form.password_needed %}
+        <input class="h-55 p3 w-full mb-10 px-30 py-17 bg-secondary-100 rounded-full placeholder-black {% if form.errors contains 'form' %}border border-red{% endif %}" type="password" value="" name="customer[password]" id="CustomerPassword" placeholder="Password" {%- if form.errors contains 'form'
+          -%}aria-invalid="true" {%- endif -%}>
+        {% endif %}
+      </div>
+      <div>
+        {% if form.password_needed %}
+          <p class="p3 mb-30 text-right"><a href="#recover" id="RecoverPassword" data-recoverpassword style="text-decoration: underline !important;">{{ 'customer.login.forgot_password' | t }}</a></p>
+        {% endif %}
+        <input type="submit" class="btn-primary btn-md h-55 w-full mb-40 cursor-pointer" value="{{ 'customer.login.sign_in' | t }}">
+        <hr class="mb-30 border-black border-b-1 border-opacity-30 bg-white">
+        <p class="p3">
+          Not part of the dream team yet? 
+        </p>
+        {{ 'layout.customer.create_account' | t | customer_register_link | replace: '<a', '<a class="p3 underline"' }}
+      </div>
+      {% endform %}
+    </div>
+
+    <div id="RecoverPasswordForm" class="hidden md:w-1/3 m-auto p-40 text-center bg-white" data-Recoverpasswordform>
+      <div>
+        <h2 class="h4 mb-30" id="RecoverHeading">{{ 'customer.recover_password.title' | t }}</h2>
+        <p class="p3 mb-10">{{ 'customer.recover_password.subtext' | t }}</p>
+      </div>
+      <div>
+        {% form 'recover_customer_password' %}
+          {% if form.posted_successfully? %}
+        {% endif %}
+        <input type="email" value="" name="email" id="RecoverEmail" class="h-55 mb-20 {% if form.errors %}border border-red{% endif %}" autocorrect="off" autocapitalize="off" {% if form.errors %} aria-invalid="true" aria-describedby="RecoverEmail-email-error"   {%- endif -%}  placeholder="Email">
+        {%- if form.errors -%}
+        <span id="RecoverEmail-email-error">
+          <p class="p3 text-left mb-20"> {{ 'general.accessibility.error' | t }} <span class="lowercase">{{ form.errors.messages['form'] }}</span></p>
+        </span>
+        {%- endif -%}
+        <div>
+          <input type="submit" class="btn-primary btn-md h-55 w-full mb-10 py-20 cursor-pointer" value="{{ 'customer.recover_password.submit' | t }}">
+          <a href="#LoginHeading" id="RecoverPasswordLink" class="btn-secondary btn-md w-full h-55 py-20 cursor-pointer" data-recoverpasswordlink>{{ 'customer.recover_password.cancel' | t }}</a>
+        </div>
+        {% endform %}
+      </div>
+    </div>
+
+    {% if shop.checkout.guest_login %}
+    <div>
+      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+      {% form 'guest_login' %}
+        <input type="submit" value="{{ 'customer.login.guest_continue' | t }}">
+      {% endform %}
+    </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="fixed w-full h-screen md:h-auto md:block {% if settings.enable_announcement_bar == true %}pt-115{% else %}pt-70{% endif %} md:pt-0 bg-secondary-100 duration-1000 md:-mt-70 transform -translate-x-full md:transform-none md:-translate-x-0 z-20" data-search {% if settings.enable_announcement_bar == true %} data-banner-detected="true" {% else %} data-banner-detected="false" {% endif %}>
+  <div class="flex relative pl-20 md:pl-30 border-b border-gray-100">
+    <form class="flex flex-1 search" action="/search">
+      <span class="block absolute top-20 w-30 p-1">
+        {% render 'icons', icon: 'search' %}
+      </span>
+      <div class="flex flex-1 items-center h-60 md:h-70">
+        <input title="Input Search" class="p2 p-0 px-40 autocomplete-primary" type="text" placeholder="I’m looking for…" name="q" value="{{ search.terms | escape }}" data-input-search id="input-search"/>
+        <input type="hidden" name="type" value="product">
+      </div>
+      <div class="relative flex items-center hidden opacity-0 duration-1000" data-input-submit-search>
+        <span class="md:flex items-center absolute left-15 -z-10">
+          {% render 'icons', icon: 'arrow-next', class: 'w-25' %}
+        </span>
+        <input class="md:block w-60 h-60 md:h-70 text-sm p-0 text-transparent bg-transparent cursor-pointer md:border-r border-l border-gray-100 rounded-none" type="submit" value="Search"/>
+      </div>
+    </form>
+    <button role="button" class="block w-60 h-60 md:h-70 px-15 border-l border-gray-100 md:border-none" data-close-search aria-label="Icon Close">
+      {% render 'icons', icon: 'close', class: 'w-25' %}
+      <span class="visually-hidden">Icon Close</span>
+    </button>
+  </div>
+  <div class="md:h-70 px-30 pb-20 md:pb-0">
+    <div class="p4 md:flex items-center md:h-full">
+      <p class="p4 md:flex items-center md:w-175 md:mr-10 pt-30 md:pt-0 pb-10 md:pb-0">
+        Popular Searches
+      </p>
+      {% assign links_search = section.settings.links_search | split: ',' %}
+      <ul class="md:flex items-center w-full h-screen md:h-auto overflow-hidden overflow-y-auto md:overflow-y-hidden md:overflow-x-auto">
+        {% for link_search in links_search %}
+          {% assign str_link_search = link_search | split: ':' %}
+          <li class="p3 md:mr-40 py-10">
+            <a href="/search?q={{ str_link_search | url_encode }}&type=product" class="capitalize">{{ str_link_search }}</a>
+          </li> 
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+

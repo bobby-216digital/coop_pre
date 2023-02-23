@@ -1,0 +1,28 @@
+{% assign acf_products_accordion = product.metafields.accentuate.produc_single_accordion_text %}
+
+{% if acf_products_accordion.size > 0 %}
+  <div class="bckg-word mb-30 lg:mb-80 animate">
+    {% if product.metafields.accentuate.produc_single_accordion_text %}
+      {% assign acf_products_accordion = product.metafields.accentuate.produc_single_accordion_text %}
+
+      {% for acf_product_accordion in acf_products_accordion %}
+        <div class="relative last:border-t border-b border-black -m-px">
+          <button title="Item Accordion" type="button" class="w-full py-20 text-left" aria-expanded="false" data-toggle-item-accordion="">
+            <h3 class="p2">{{ product.metafields.accentuate.produc_single_accordion_text[forloop.index0] }}</h3>
+
+            <span class="toggle-icon block absolute top-20 right-10 w-25">
+              <i class="block" data-icon-plus>{% render 'icons', icon: 'plus' %}</i>
+              <i class="hidden w-22" data-icon-minus>{% render 'icons', icon: 'minus' %}</i>
+            </span>
+          </button>
+          <div role="region" data-copy-accordion style="display: none;">
+            <div class="paragraph accordion-text pb-20">
+              {{ product.metafields.accentuate.produc_single_accordion_copy[forloop.index0].html }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endif %}
+

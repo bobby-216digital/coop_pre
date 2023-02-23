@@ -1,0 +1,397 @@
+<div class="returns__introduction text-center">
+    {% if section.settings.main_title != blank %}
+    <h1 class="returns__main-title h1 mb-40 md:mb-80">{{ section.settings.main_title }}</h1>
+    {% endif %}
+    {% if section.settings.main_content != blank%}
+    <p class="returns__introduction-content text-xl mx-auto px-20 pb-60  max-w-5xl md:pb-100">
+        {{ section.settings.main_content }}
+    </p>
+    {% endif %}
+</div>
+
+<div class="returns__sections-container px-20 ">
+    {% for block in section.blocks %}
+        {% if block.type == 'full_width' %}
+            
+            <div class="returns__full-width text-center py-30 md:py-50">
+                <div class="returns__full-width-inner text-center py-40 px-40 bg-secondary-200 mx-auto max-w-5xl">
+                    {% if block.settings.block_title != blank %}
+                        <h2 class="returns__block-title h4 leading-none"> {{ block.settings.block_title }} </h2>
+                    {% endif %}
+                    {% if block.settings.block_icon != blank %}
+                        <div class="returns__icon flex align-middle justify-center">
+                            <img class="" src="{{  block.settings.block_icon | img_url: '200x'  }}" />
+                        </div>
+                    {% endif %}
+                    {% if block.settings.returns_content != blank %}
+                        <p class="returns__content text-xl mb-50 block {% if block.settings.left_align == true %}text-left{% else %}text-center{% endif %}"> {{ block.settings.returns_content }} </p>
+                    {% endif %}
+                    {% if block.settings.link_url != blank %}
+                        <a href="{{ block.settings.link_url }}" class="returns__link text-xl underline font-bold block "> {{ block.settings.link_content }} </a>
+                    {% endif %}
+                    {% if block.settings.returns_extra_condition != blank %}
+                        <p class="returns__content text-xl"> {{ block.settings.returns_extra_condition }} </p>
+                    {% endif %}
+                </div>
+            </div>
+            {% if block.settings.extra_side_note != blank %}
+            <p class="text-lg text-center">{{ block.settings.extra_side_note }}</p>
+            {% endif %}
+        {% elsif block.type == 'two_section' %}
+            <div class="returns__two-section flex flex-wrap py-30 md:py-50 max-w-5xl mx-auto">
+                <div class="returns__two-section-left text-center pb-10 w-full md:w-1/2 md:pr-10 md:pb-0">
+                    <div class="returns__two-section-inner py-40 px-40 bg-secondary-200">
+                        {% if block.settings.block_title_1 != blank %}
+                            <h2 class="returns__block-title h4 leading-none "> {{ block.settings.block_title_1 }} </h2>
+                        {% endif %}
+                        {% if block.settings.block_icon_1 != blank %}
+                            <div class="returns__icon flex align-middle justify-center">
+                                <img class="" src="{{ block.settings.block_icon_1 | img_url: '200x' }}" />
+                            </div>
+                        {% endif %}
+                        {% if block.settings.returns_content_1 != blank %}
+                            <p class="returns__content text-xl mb-50 block"> {{ block.settings.returns_content_1 }} </p>
+                        {% endif %}
+                        {% if block.settings.link_url_1 != blank %}
+                            <a href="{{ block.settings.link_url_1 }}" class="returns__link text-xl underline font-bold  block"> {{ block.settings.link_content_1 }} </a>
+                        {% endif %}
+                        {% if block.settings.returns_extra_condition_1 != blank %}
+                            <p class="returns__content text-xl"> {{ block.settings.returns_extra_condition_1 }} </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="returns__two-section-right pt-10 text-center w-full md:w-1/2  md:pl-10 md:pt-0">
+                    <div class="returns__two-section-inner py-40 px-40 bg-secondary-200">
+                        {% if block.settings.block_title_2 != blank %}
+                            <h2 class="returns__block-title h4 leading-none"> {{ block.settings.block_title_2 }} </h2>
+                        {% endif %}
+                        {% if block.settings.block_icon_2 != blank %}
+                            <div class="returns__icon flex align-middle justify-center">
+                                <img class="" src="{{  block.settings.block_icon_2 | img_url: '200x'  }}" />
+                            </div>
+                        {% endif %}
+                        {% if block.settings.returns_content_2 != blank %}
+                            <p class="returns__content text-xl mb-50 block"> {{ block.settings.returns_content_2 }} </p>
+                        {% endif %}
+                        {% if block.settings.link_url_2 != blank %}
+                            <a href="{{ block.settings.link_url_2 }}" class="returns__link text-xl underline font-bold  block"> {{ block.settings.link_content_2 }} </a>
+                        {% endif %}
+                        {% if block.settings.returns_extra_condition_2 != blank %}
+                            <p class="returns__content text-xl"> {{ block.settings.returns_extra_condition_2 }} </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if block.settings.extra_side_note != blank %}
+                <p class="text-lg text-center">{{ block.settings.extra_side_note }}</p>
+            {% endif %}
+            {% elsif block.type == 'three_section' %}
+            <div class="returns__two-section flex flex-wrap py-30 md:py-50 max-w-5xl mx-auto">
+                <div class="returns__two-section-left text-center pb-10 w-full md:w-1/3 md:pr-10 md:pb-0">
+                    <div class="returns__two-section-inner py-40 px-40 bg-secondary-200">
+                        {% if block.settings.block_title_1 != blank %}
+                            <h2 class="returns__block-title h4 leading-none "> {{ block.settings.block_title_1 }} </h2>
+                        {% endif %}
+                        {% if block.settings.block_icon_1 != blank %}
+                            <div class="returns__icon flex align-middle justify-center">
+                                <img class="" src="{{ block.settings.block_icon_1 | img_url: '200x' }}" />
+                            </div>
+                        {% endif %}
+                        {% if block.settings.returns_content_1 != blank %}
+                            <p class="returns__content text-xl mb-[57px] block"> {{ block.settings.returns_content_1 }} </p>
+                        {% endif %}
+                        {% if block.settings.link_url_1 != blank %}
+                            <a href="{{ block.settings.link_url_1 }}" class="returns__link text-xl underline font-bold  block"> {{ block.settings.link_content_1 }} </a>
+                        {% endif %}
+                        {% if block.settings.returns_extra_condition_1 != blank %}
+                            <p class="returns__content text-xl"> {{ block.settings.returns_extra_condition_1 }} </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="returns__two-section-right pt-10 text-center w-full md:w-1/3  md:px-10 md:pt-0">
+                    <div class="returns__two-section-inner py-40 px-40 bg-secondary-200">
+                        {% if block.settings.block_title_2 != blank %}
+                            <h2 class="returns__block-title h4 leading-none"> {{ block.settings.block_title_2 }} </h2>
+                        {% endif %}
+                        {% if block.settings.block_icon_2 != blank %}
+                            <div class="returns__icon flex align-middle justify-center">
+                                <img class="" src="{{  block.settings.block_icon_2 | img_url: '200x'  }}" />
+                            </div>
+                        {% endif %}
+                        {% if block.settings.returns_content_2 != blank %}
+                            <p class="returns__content text-xl mb-[57px] block"> {{ block.settings.returns_content_2 }} </p>
+                        {% endif %}
+                        {% if block.settings.link_url_2 != blank %}
+                            <a href="{{ block.settings.link_url_2 }}" class="returns__link text-xl underline font-bold  block"> {{ block.settings.link_content_2 }} </a>
+                        {% endif %}
+                        {% if block.settings.returns_extra_condition_2 != blank %}
+                            <p class="returns__content text-xl"> {{ block.settings.returns_extra_condition_2 }} </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="returns__two-section-right pt-10 text-center w-full md:w-1/3  md:pl-10 md:pt-0">
+                    <div class="returns__two-section-inner py-40 px-40 bg-secondary-200">
+                        {% if block.settings.block_title_3 != blank %}
+                            <h2 class="returns__block-title h4 leading-none"> {{ block.settings.block_title_3 }} </h2>
+                        {% endif %}
+                        {% if block.settings.block_icon_3 != blank %}
+                            <div class="returns__icon flex align-middle justify-center">
+                                <img class="" src="{{  block.settings.block_icon_3 | img_url: '200x'  }}" />
+                            </div>
+                        {% endif %}
+                        {% if block.settings.returns_content_3 != blank %}
+                            <p class="returns__content text-xl mb-[57px] block"> {{ block.settings.returns_content_3 }} </p>
+                        {% endif %}
+                        {% if block.settings.link_url_3 != blank %}
+                            <a href="{{ block.settings.link_url_3 }}" class="returns__link text-xl underline font-bold  block"> {{ block.settings.link_content_3 }} </a>
+                        {% endif %}
+                        {% if block.settings.returns_extra_condition_3 != blank %}
+                            <p class="returns__content text-xl"> {{ block.settings.returns_extra_condition_3 }} </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if block.settings.extra_side_note != blank %}
+                <p class="text-lg text-center">{{ block.settings.extra_side_note }}</p>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% schema %}
+	{   
+        "name": "Returns",
+        "settings": [
+            {
+                "type": "text",
+                "id": "main_title",
+                "label": "Main Title"
+            },
+            {
+                "type": "textarea",
+                "id": "main_content",
+                "label": "Main Content"
+            }
+        ],
+		"blocks": [
+			{
+				"type": "full_width",
+				"name": "Full Width Section",
+				"settings": [
+                    {
+                        "id": "left_align",
+                        "type": "checkbox",
+                        "label": "Align Content to Left"
+                    },
+                    {
+                        "id": "block_title",
+                        "type": "text",
+                        "label": "Header"
+                    },
+					{
+			            "type": "image_picker",
+			            "id": "block_icon",
+			            "label": "Icon Image"
+					},
+					{
+						"id": "returns_content",
+						"type": "textarea",
+						"label": "Content Under Image"
+					},
+                    {
+						"id": "link_url",
+						"type": "url",
+						"label": "URL for link under content"
+					},
+                    {
+						"id": "link_content",
+						"type": "text",
+						"label": "URL Link Label"
+					},
+                    {
+						"id": "returns_extra_condition",
+						"type": "textarea",
+						"label": "Extra section under link"
+					},
+                    {
+                        "id": "extra_side_note",
+                        "type": "text",
+                        "label": "Disclaimer Note on the bottom"
+                    }
+				]
+			},
+            {
+				"type": "two_section",
+				"name": "Two Heroes Section",
+				"settings": [
+                    {
+                        "id": "block_title_1",
+                        "type": "text",
+                        "label": "Header (left)"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "block_icon_1",
+                        "label": "Icon Image (left)"
+                    },
+                    {
+                        "id": "returns_content_1",
+                        "type": "textarea",
+                        "label": "Content Under Image (left)"
+                    },
+                    {
+                        "id": "link_url_1",
+                        "type": "url",
+                        "label": "URL for link under content (left)"
+                    },
+                    {
+                        "id": "link_content_1",
+                        "type": "text",
+                        "label": "URL Link Label (left)"
+                    },
+                    {
+                        "id": "returns_extra_condition_1",
+                        "type": "textarea",
+                        "label": "Extra section under link (left)"
+                    },
+                    {
+                        "id": "block_title_2",
+                        "type": "text",
+                        "label": "Header (right)"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "block_icon_2",
+                        "label": "Icon Image (right)"
+                    },
+                    {
+                        "id": "returns_content_2",
+                        "type": "textarea",
+                        "label": "Content Under Image (right)"
+                    },
+                    {
+                        "id": "link_url_2",
+                        "type": "url",
+                        "label": "URL for link under content (right)"
+                    },
+                    {
+                        "id": "link_content_2",
+                        "type": "text",
+                        "label": "URL Link Label (right)"
+                    },
+                    {
+                        "id": "returns_extra_condition_2",
+                        "type": "textarea",
+                        "label": "Extra section under link (right)"
+                    },
+                    {
+                        "id": "extra_side_note",
+                        "type": "text",
+                        "label": "Disclaimer Note on the bottom"
+                    }
+				]
+			},
+            {
+				"type": "three_section",
+				"name": "Three Heroes Section",
+				"settings": [
+                    {
+                        "id": "block_title_1",
+                        "type": "text",
+                        "label": "Header (left)"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "block_icon_1",
+                        "label": "Icon Image (left)"
+                    },
+                    {
+                        "id": "returns_content_1",
+                        "type": "textarea",
+                        "label": "Content Under Image (left)"
+                    },
+                    {
+                        "id": "link_url_1",
+                        "type": "url",
+                        "label": "URL for link under content (left)"
+                    },
+                    {
+                        "id": "link_content_1",
+                        "type": "text",
+                        "label": "URL Link Label (left)"
+                    },
+                    {
+                        "id": "returns_extra_condition_1",
+                        "type": "textarea",
+                        "label": "Extra section under link (left)"
+                    },
+                    {
+                        "id": "block_title_2",
+                        "type": "text",
+                        "label": "Header (center)"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "block_icon_2",
+                        "label": "Icon Image (center)"
+                    },
+                    {
+                        "id": "returns_content_2",
+                        "type": "textarea",
+                        "label": "Content Under Image (center)"
+                    },
+                    {
+                        "id": "link_url_2",
+                        "type": "url",
+                        "label": "URL for link under content (center)"
+                    },
+                    {
+                        "id": "link_content_2",
+                        "type": "text",
+                        "label": "URL Link Label (center)"
+                    },
+                    {
+                        "id": "returns_extra_condition_2",
+                        "type": "textarea",
+                        "label": "Extra section under link (center)"
+                    },
+                    {
+                        "id": "block_title_3",
+                        "type": "text",
+                        "label": "Header (right)"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "block_icon_3",
+                        "label": "Icon Image (right)"
+                    },
+                    {
+                        "id": "returns_content_3",
+                        "type": "textarea",
+                        "label": "Content Under Image (right)"
+                    },
+                    {
+                        "id": "link_url_3",
+                        "type": "url",
+                        "label": "URL for link under content (right)"
+                    },
+                    {
+                        "id": "link_content_3",
+                        "type": "text",
+                        "label": "URL Link Label (right)"
+                    },
+                    {
+                        "id": "returns_extra_condition_3",
+                        "type": "textarea",
+                        "label": "Extra section under link (right)"
+                    },
+                    {
+                        "id": "extra_side_note",
+                        "type": "text",
+                        "label": "Disclaimer Note on the bottom"
+                    }
+				]
+			}
+		]
+	}
+{% endschema %}

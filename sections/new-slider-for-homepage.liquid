@@ -1,0 +1,358 @@
+{% assign icon_blocks = section.blocks | where: 'type', 'icon' %}
+<section class="{% if settings.enable_announcement_bar == true %}margin-top--banner-detected{% else %}mt-70{% endif %}" data-section-type="new-hero-section">
+  <div class="swiper-container {% if section.settings.auto_play %}new-hero-slider-auto{% else %}new-hero-slider{% endif %}">
+    <ul class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'slide' %}
+          {% liquid 
+            assign is_image = false
+            assign mobile_image_only = false
+            assign desktop_image_only = false
+            assign both_image = false
+            assign no_image = false
+            if block.settings.bg_image_mobile != blank or block.settings.bg_image != blank
+              assign is_image = true
+            endif
+            if block.settings.bg_image_mobile != blank and block.settings.bg_image == blank
+              assign mobile_image_only = true
+            endif
+            if block.settings.bg_image_mobile == blank and block.settings.bg_image != blank
+              assign desktop_image_only = true
+            endif
+            if block.settings.bg_image_mobile != blank and block.settings.bg_image != blank
+              assign both_image = true
+            endif
+            if block.settings.bg_image_mobile == blank and block.settings.bg_image == blank
+              assign no_image = true
+            endif
+          %}
+          <li class="new-hero-slider__slide swiper-slide w-full" aria-hidden="false">
+            <div class="new-hero-slider__hero-wrapper relative lazy--flex overflow-hidden w-full" data-img-scale style="background-color:{{ block.settings.bg_color }}; {% if no_image %}--mobile-height: 80vh; --desktop-height: 75vh;{% endif %} {% if mobile_image_only %}--mobile-height: auto; --desktop-height: 75vh;{% endif %} {% if desktop_image_only %}--mobile-height: 80vh; --desktop-height: auto;{% endif %}">
+              {% if is_image %}
+                <div class="h-full {% if mobile_image_only %}block{% endif %} {% if desktop_image_only %}hidden{% endif %} {% if both_image %}block md:hidden{% endif %}">
+                  {%
+                    render 'lazy-image',
+                    type: 'color',
+                    image_base: block.settings.bg_image_mobile,
+                    srcs: '959x,960x,1450x,1920x'
+                  %}
+                </div>
+                <div class="h-full {% if mobile_image_only %}hidden{% endif %} {% if desktop_image_only %}block{% endif %} {% if both_image %}hidden md:block{% endif %}">
+                  {%
+                      render 'lazy-image',
+                      type: 'color',
+                      image_base: block.settings.bg_image,
+                      srcs: '959x,960x,1450x,1920x'
+                  %}
+                </div>
+              {% endif %}
+              <div class="new-hero-slider__hero-text-container absolute w-full md:w-535 md:mx-80 {{ block.settings.vertical_alignment }} {{ block.settings.vertical_alignment_desktop }} {{ block.settings.horizontal_alignment_desktop }} " data-animate-scale>
+                <div id="ghero__index--text" class="flex flex-col relative mx-20 md:mx-0 md:order-1 md:z-10">
+                  <h1 class="new-hero-slider__hero-title {% if block.settings.smaller_font == true %}h3{% else %}h2{% endif %} flex-auto pb-20 md:pb-40 md:text-6xl {{ block.settings.text_alignment }} {{ block.settings.text_alignment_desktop }}" style="--desktop-color: {{block.settings.title_color}}; --mobile-color: {{block.settings.title_color_mobile}};">{{ block.settings.title }}</h1>
+                  <p class="new-hero-slider__hero-subtitle p2 pb-30 flex-auto md:pb-40 md:w-445
+                  {% if block.settings.sub_title_color == "white" %} text-white{% endif %} 
+                  {{ block.settings.text_alignment }} 
+                  {{ block.settings.text_alignment_desktop }}
+                  {% if block.settings.text_alignment_desktop == 'md:text-left' %}md:mx-0 md:mr-auto{% elsif block.settings.text_alignment_desktop == 'md:text-center' %}md:mx-auto{% else %}md:mx-0 md:ml-auto{% endif %}" 
+                  style="--desktop-color: {{block.settings.sub_title_color}}; --mobile-color: {{block.settings.sub_title_color_mobile}};">{{ block.settings.subtitle }}</p>
+                  {% if block.settings.cta_link != blank %}
+                    <a class="btn-primary btn-md flex items-center justify-center flex-none max-w-max 
+                    {% if block.settings.text_alignment == 'text-left' %}mr-auto{% elsif block.settings.text_alignment == 'text-center' %}mx-auto{% else %}ml-auto{% endif %} 
+                    {% if block.settings.text_alignment_desktop == 'md:text-left' %}md:mx-0 md:mr-auto{% elsif block.settings.text_alignment_desktop == 'md:text-center' %}md:mx-auto{% else %}md:mx-0 md:ml-auto{% endif %}" 
+                    href="{{ block.settings.cta_link }}" 
+                    title="{{ block.settings.cta_text }} Link" 
+                    data-hover>{{ block.settings.cta_text }}</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% if icon_blocks.size > 0 %}
+              <div class="new-hero-slider__icons-module {% unless section.settings.show_icons_mobile %}hidden{% endunless %} py-20 px-10 w-full md:block" style="background-color:#EEDEC6";>
+                <div class="new-hero-slider__icons grid grid-cols-2 md:grid-cols-4 md:gap-x-8">
+                  {% for icon in section.blocks %}
+                    {% case icon.type %}
+                      {% when 'icon' %}
+                        {% if icon.settings.icon_hero_id == block.settings.hero_id %}
+                          <div class="new-hero-slider__icon-container flex items-center px-5 md:px-20 md:h-60 pb-0 mb-20 md:mb-10 {% if icon.settings.hide_mobile == true %}hidden{% endif %}  md:flex-1 md:flex">
+                            <img src="{{ icon.settings.icon_img | img_url: '60x'}}" alt="{{icon.icon_img.alt}}" class="w-50 h-50 md:w-55 md:h-55">
+                            <p class="text-sm mt-2 md:mt-0 ml-2">{{ icon.settings.icon_text }}</p>
+                          </div>
+                        {% endif %}
+                    {% endcase %}  
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </li>
+        {% endcase %}
+      {% endfor %}
+    </ul>
+    {% unless section.settings.one_hero %}
+      <div class="swiper-pagination new-hero-slider__dots flex justify-center items-center {% if icon_blocks.size == 0 %}new-hero-slider__dots--yellow{% endif %}"></div>
+      {% if section.settings.show_arrows_desktop %}
+        <div class="new-hero-slider__arrows flex-row justify-between w-full px-12 hidden md:flex">
+          <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center">
+            {% render 'icons', icon: 'caret-left' %}
+          </button>
+          <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center">
+            {% render 'icons', icon: 'caret-right' %}
+          </button>
+        </div>
+      {% endif %}
+    {% endunless %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "settings": [      
+    {
+      "type": "checkbox",
+      "id": "one_hero",
+      "label": "One Hero Only"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_play",
+      "label": "Auto Play"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icons_mobile",
+      "label": "Show Icons Module In Mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Show Arrow Icons In Desktop"
+    }
+  ],
+  "blocks":[
+    {
+      "type": "slide",
+      "name": "Hero Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Hero Module Content"
+        },
+        {
+          "type": "text",
+          "id": "hero_id",
+          "label": "Hero Slide ID",
+          "info": "Should match Icon Hero ID"
+        },
+        {
+          "id": "bg_color",
+          "type": "color",
+          "label": "Background Color"
+        },
+        {
+          "id": "bg_image",
+          "type": "image_picker",
+          "label": "Desktop Background Image"
+        },
+        {
+          "id": "bg_image_mobile",
+          "type": "image_picker",
+          "label": "Mobile Background Image"
+        },
+        {
+          "id": "title_color",
+          "type": "color",
+          "label": "Title Color",
+          "default": "#185f79"
+        },
+        {
+          "id": "sub_title_color",
+          "type": "color",
+          "label": "Subtitle Color",
+          "default": "#383732"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title",
+          "default": "Sleep Well,<br>Wake Up Weller."
+        },
+        {
+          "id": "smaller_font",
+          "type": "checkbox",
+          "label": "Smaller Title"
+        },
+        {
+          "id": "subtitle",
+          "type": "text",
+          "label": "Subtitle",
+          "default": "We’re here to help you get consistently great nights of sleep with an innovative personalized approach to comfort."
+        },
+        {
+          "id": "cta_text",
+          "type": "text",
+          "label": "CTA Button Text",
+          "default": "SHOP PILLOWS"
+        },
+        {
+          "id": "cta_link",
+          "type": "url",
+          "label": "CTA Button Link"
+        },
+        {
+          "type": "select",
+          "id": "vertical_alignment_desktop",
+          "label": "Text Container Vertical Alignment (Desktop)",
+          "options": [
+            {
+              "value": "textbox-top--desktop",
+              "label": "Top"
+            },
+            {
+              "value": "textbox-middle--desktop",
+              "label": "Middle"
+            },
+            {
+              "value": "textbox-bottom--desktop",
+              "label": "Bottom"
+            }
+          ],
+          "default": "textbox-middle--desktop"
+        },
+        {
+          "type": "select",
+          "id": "horizontal_alignment_desktop",
+          "label": "Text Container Horizontal Alignment (Desktop)",
+          "options": [
+            {
+              "value": "textbox-left--desktop",
+              "label": "Left"
+            },
+            {
+              "value": "textbox-center--desktop",
+              "label": "Middle"
+            },
+            {
+              "value": "textbox-right--desktop",
+              "label": "Right"
+            }
+          ],
+          "default": "textbox-left--desktop"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment_desktop",
+          "label": "Text Alignment (Destop)",
+          "options": [
+            {
+              "value": "md:text-left",
+              "label": "Left"
+            },
+            {
+              "value": "md:text-center",
+              "label": "Center"
+            },
+            {
+              "value": "md:text-right",
+              "label": "Right"
+            }
+          ],
+          "default": "md:text-left"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Text"
+        },
+        {
+          "id": "title_color_mobile",
+          "type": "color",
+          "label": "Title Color (Mobile)",
+          "default": "#FFFFFF"
+        },
+        {
+          "id": "sub_title_color_mobile",
+          "type": "color",
+          "label": "Subtitle Color (Mobile)",
+          "default": "#FFFFFF"
+        },  
+        {
+          "type": "select",
+          "id": "vertical_alignment",
+          "label": "Text Container Vertical Alignment (Mobile)",
+          "options": [
+            {
+              "value": "textbox-top",
+              "label": "Top"
+            },
+            {
+              "value": "textbox-middle",
+              "label": "Middle"
+            },
+            {
+              "value": "textbox-bottom",
+              "label": "Bottom"
+            }
+          ],
+          "default": "textbox-middle"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment (Mobile)",
+          "options": [
+            {
+              "value": "text-left",
+              "label": "Left"
+            },
+            {
+              "value": "text-center",
+              "label": "Center"
+            },
+            {
+              "value": "text-right",
+              "label": "Right"
+            }
+          ],
+          "default": "text-center"
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Icons Module Content"
+        },
+        {
+          "type": "text",
+          "id": "icon_hero_id",
+          "label": "Hero ID",
+          "info": "Which hero is this icon for? (Should match Hero Slide ID)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_img",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "icon_text",
+          "label": "Icon text"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_mobile",
+          "label": "Hide this icon on mobile"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "WS - Modules",
+      "name": "Homepage Hero Slider (new)"
+    }
+  ]
+}
+{% endschema %}

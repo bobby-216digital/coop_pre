@@ -1,0 +1,107 @@
+<section class="flex flex-col relative bg-secondary-200 md:flex-row w-full">
+  <div class="p-20 md:p-0 relative w-full md:w-6/12 md:flex-1 md:order-2">
+    <div class="carousel swiper-container timed-carousel h-full">
+      <div class="swiper-wrapper w-full md:h-full">
+      {% for block in section.blocks %}
+        <li class="swiper-slide aspect-w-1 aspect-h-1" data-point-target="{{ forloop.index0 }}">
+          <figure class="h-full w-full bg-secondary-200">
+              {% if block.settings.point_image %}
+                {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: block.settings.point_image,
+                sizes: '50vw',
+                srcs: '550x,1100x'
+                %}
+              {% endif %}
+          </figure>
+        </li>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col px-20 pb-80 relative md:pt-115 md:justify-center md:flex-1 md:order-1 md:w-6/12">
+    <div class="h4 mb-20 mx-auto md:mb-40 md:w-445">{{ section.settings.title }}</div>
+    {% for block in section.blocks %}
+      {% comment %}Mobile content{% endcomment %}
+      <div data-mobile-content="{{ forloop.index0 }}" class="mpoint--content md:hidden">
+        <div class="h6 w-full h-0 opacity-0"><span class="highlight">{{ block.settings.point_title }}</span></div>
+        <p class="p3 w-full h-0 opacity-0">{{ block.settings.point_text }}</p>
+      </div>
+    {% endfor %}
+      <div class="flex flex-row md:hidden">
+        {% for block in section.blocks %}
+          <div data-mobile-point="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }} and pause autoplay. Click again to resume autoplay." tabindex="0" class="mpoint flex flex-1 justify-center content-evenly relative {% unless forloop.last %} mr-10{% else %} mr-0{% endunless %} focus-within:outline-black cursor-pointer">
+            <div class="absolute left-0 mpoint--progress" style="width: 0;"></div>
+            <img alt="Point Icon" class="point--icon my-10" src="{{ block.settings.point_icon }}">
+          </div>
+        {% endfor %}
+      </div>
+    {% comment %}Desktop content{% endcomment %}
+    {% for block in section.blocks %}
+      <div data-slide-target="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }} and pause autoplay. Click again to resume autoplay." tabindex="0" class="hidden md:block point mb-30 mx-auto opacity-50 relative md:w-445 md:border-l-2 md:border-opacity-50 focus-within:outline-black cursor-pointer">
+        <div class="absolute md:border-l-2 md:border-black point--progress" style="height: 0;"></div>
+        <div class="flex md:w-445 md:justify-between md:items-center">
+          <div class="h6 max-w-363 md:ml-20"><span class="highlight">{{ block.settings.point_title }}</span></div>
+          <img alt="Point Icon" class="point--icon" src="{{ block.settings.point_icon }}">
+        </div>
+        <p class="p3 w-full md:w-363 h-0 opacity-0 md:pl-20">{{ block.settings.point_text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "Timed Carousel Content"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "default": "Groundbreaking. Sleep. Necessities."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "selling_point",
+        "name": "Selling Point",
+        "limit": 4,
+        "settings": [
+          {
+            "id": "point_title",
+            "type": "text",
+            "label": "Selling Point Title",
+            "default": "A Personalized Sleep System"
+          },
+          {
+            "id": "point_text",
+            "type": "text",
+            "label": "Selling Point Text",
+            "default": "From our pillows to our comforters, all of our products are designed to be personalized to your body and sleep position."
+          },
+          {
+            "id": "point_icon",
+            "type": "text",
+            "label": "Selling Point Icon",
+            "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+          },
+          {
+            "id": "point_image",
+            "type": "image_picker",
+            "label": "Selling Point Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Timed Carousel Module"
+      }
+    ]
+  }
+{% endschema %}

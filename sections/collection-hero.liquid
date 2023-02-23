@@ -1,0 +1,33 @@
+<section class="collection relative w-full flex {% if collection.metafields.accentuate.hero_collection_video != blank %}flex-col{% else %}flex-col-reverse{% endif %} md:flex-row pt-100 md:h-auto lg:pt-115">
+  <div class="relative container flex items-center w-full z-10 pb-40 {% if collection.metafields.accentuate.hero_collection_video != blank %}pt-60{% else %}pt-40{% endif %} md:w-1/2 md:py-25 md:justify-center md:h-auto">
+    <div id="ghero__index--text" class="w-full md:w-max md:max-w-md">
+      {% if collection.metafields.accentuate.hero_collection_svg %}
+        {% for image in collection.metafields.accentuate.hero_collection_svg %}
+          <img class="collection__hero-svg transform translate-x-0 md:translate-x-40" src="{{ image.src }}" alt="">
+        {% endfor %}
+      {% endif %}
+      <h1 class="h1 mb-20 md:mb-30 md:text-8xl">{{ collection.title }}</h1>
+      <div class="p1">{{ collection.description }}</div>
+    </div>
+  </div>
+  {% if collection.metafields.accentuate.hero_collection_video != blank %}
+    <div class="collection__video md:w-1/2 relative">
+      <video class="hero__video w-full object-cover object-center h-full" src="{{ collection.metafields.accentuate.hero_collection_video }}" playsinline js-collection-video></video>
+      <button class="hero__video-btn absolute top-1/2 left-1/2 flex items-center py-12 pr-20 bg-primary-100 rounded-30 whitespace-nowrap" js-collection-video-btn style="transform: translate(-50%, -50%);">
+        <span class="flex-1 text-center px-30 p2 tracking-wider">PLAY VIDEO</span><span class="w-30">{% render 'icons', icon: 'play2' %}</span>
+      </button>
+    </div>
+  {% else %}
+    <div id="ghero__index--image" class="collection__img w-full md:w-1/2">
+      <figure class="aspect-w-4 aspect-h-3 h-full">
+        {%
+        render 'lazy-image',
+        type: 'color',
+        image_base: collection.image.src
+        sizes: '50vw',
+        srcs: '725x,1450x'
+        %}
+      </figure>
+    </div>
+  {% endif %}
+</section>

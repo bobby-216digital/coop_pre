@@ -1,0 +1,61 @@
+<section class="collection__product pb-20 lg:pb-40">
+  <ul class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-3 gap-7 gap-x-5">
+    {% for product in collection.products %}
+      {% assign idx = forloop.index %}
+      {% render 'product-card' product: product, imageClass: 'object-cover', imageHover: false, show_add: true %}
+
+      {% for i in (1..5) %}
+        {% if i == 1 %}
+          {% assign card_location = collection.metafields.accentuate.brand_card_location | plus: 0 %}
+          {% assign card_image = collection.metafields.accentuate.brand_card_image %}
+          {% assign card_description = collection.metafields.accentuate.brand_card_description %}
+          {% assign card_btn_title = collection.metafields.accentuate.brand_card_button_title %}
+          {% assign card_link = collection.metafields.accentuate.brand_card_link %}
+          {% assign card_tag = collection.metafields.accentuate.brand_card_tag %}
+        {% else %}
+          {% assign location_handle = 'brand_card_location_' | append: i %}
+          {% assign img_handle = 'brand_card_image_' | append: i %}
+          {% assign desc_handle = 'brand_card_description_' | append: i %}
+          {% assign btn_title_handle = 'brand_card_button_title_' | append: i %}
+          {% assign link_handle = 'brand_card_link_' | append: i %}
+          {% assign tag_handle = 'brand_card_tag_' | append: i %}
+          {% assign card_location = collection.metafields.accentuate[location_handle] | plus: 0 %}
+          {% assign card_image = collection.metafields.accentuate[img_handle] %}
+          {% assign card_description = collection.metafields.accentuate[desc_handle] %}
+          {% assign card_btn_title = collection.metafields.accentuate[btn_title_handle] %}
+          {% assign card_link = collection.metafields.accentuate[link_handle] %}
+          {% assign card_tag = collection.metafields.accentuate[tag_handle] %}
+        {% endif %}
+
+        {% if card_location == idx %}
+          {% if card_description != blank %}
+            <li class="card focus-within:outline-black col-start-1 col-end-2 md:col-start-auto md:col-end-auto p-12">
+              <div class="h-full bg-primary-100 p-12 pb-35 flex flex-col justify-between">
+                {% if card_image != blank %}
+                  <div class="relative mb-20">
+                    {% for image in card_image %}
+                      <img class="w-full" src="{{ image.src }}" alt="Brand Card">
+                    {% endfor %}
+                    {% if card_tag != blank %}
+                      <div class="uppercase absolute top-0 right-0 px-10 py-7 bg-secondary-100 p3 text-sm whitespace-nowrap max-w-max">{{ card_tag }}</div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+                <div class="p-5 pt-24">
+                  <p class="p2 mb-35 line-clamp-4 font-normal">
+                    {{ card_description }}
+                  </p>
+                  {% if card_link != blank %}
+                  <a class="outline-none btn-secondary max-w-max px-30 text-sm" target="_blank" href="{{ card_link }}">
+                    {{ card_btn_title }}
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+          {% endif %}
+        {% endif %} 
+      {% endfor %}
+    {% endfor %}
+  </ul>
+</section>

@@ -1,0 +1,42 @@
+<section class="homepage-quote py-40 w-full">
+  {% if section.settings.quote_url != blank %}
+  <a href="{{section.settings.quote_url}}" target="_blank" class="homepage-quote__hyperlink">
+  {% endif %}
+    <h2 class="h4 text-center w-full mb-20 text-2xl md:text-4xl">{{ section.settings.quote }}</h2>
+      <div class="homepage-quote__author flex items-center justify-center">
+          <span class="homepage-quote__dash h3 px-20">-</span> 
+          <div class="homepage-quote__img-container max-w-sm">
+              <img src="{{ section.settings.author_image | img_url: '300x'}}" alt="{{section.settings.author_image.alt}}" class="homepage-quote__img">
+          </div>
+      </div>
+    {% if section.settings.quote_url != blank %}
+    </a>
+    {% endif %}
+</section>
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "text",
+        "id": "quote",
+        "label": "Quote"
+      },
+      {
+        "type": "image_picker",
+        "id": "author_image",
+        "label": "Author Image"
+      },
+      {
+        "type": "url",
+        "id": "quote_url",
+        "label": "Quote URL"
+      }
+    ],
+    "presets": [
+      {
+        "category": "WS - Modules",
+        "name": "Quote"
+      }
+    ]
+  }
+{% endschema %}

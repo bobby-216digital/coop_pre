@@ -1,0 +1,57 @@
+
+{% assign acf_selected_handles = collection.metafields.accentuate.featured_product | split: '|' %}
+
+{%- comment -%}
+  There should always be two products in this module, otherwise, should not render the module
+  COOP-8 / COOP-17
+{%- endcomment -%}
+
+{% if acf_selected_handles.size >= 2 %}
+  <section class="container">
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-20 pb-40">
+      {% for acf_selected_handle in acf_selected_handles limit: 2 %}
+        {% assign all_product_handle = all_products[acf_selected_handle] %}
+        <a href="{{ all_product_handle.url }}" class="md:pt-30 pb-20 text-center focus-within:outline-black cursor-pointer outline-none">
+          {% if all_product_handle.metafields.accentuate.featured_products_image %}
+            {% for image in all_product_handle.metafields.accentuate.featured_products_image %}
+              <figure class="aspect-w-16 aspect-h-9">
+                {%
+                  render 'lazy-image-acf',
+                  type: 'color',
+                  image_base: image.src
+                  sizes: '50vw',
+                  srcs: '460x,920x,',
+                  alt: product.title | escape,
+                  classes: 'object-contain'
+                  %}
+              </figure>
+            {% endfor %}
+          {% else %}
+            <figure class="aspect-w-16 aspect-h-9">
+              {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: all_product_handle.featured_image,
+                sizes: '50vw',
+                classes: 'object-contain',
+                srcs: '460x,920x'
+              %}
+            </figure>
+          {% endif %}
+
+          <h2 class="h4 py-10 md:py-20">
+            {{ all_product_handle.title }}
+          </h2>
+          <div class="p3 line-clamp-3 mb-15 md:px-80">
+            {{ all_product_handle.description }}
+          </div>
+          <div class="flex justify-center">
+            {% assign acf_current_variant = all_products[acf_selected_handle].selected_or_first_available_variant %}
+            {% render 'product-price', variant: acf_current_variant, product: product %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+{% endif %}

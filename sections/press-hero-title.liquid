@@ -1,0 +1,66 @@
+<section class="press-hero-title relative w-full mt-70 overflow-hidden">
+  <div class="h-full md:px-40">
+    <div class="relative container flex items-end h-full pb-50 md:pb-70 z-10">
+      <span class="hero__title-svg absolute top-0 left-20 md:-left-40">
+        <img src="{{ section.settings.hero_title_svg }}" alt="">
+      </span>
+      <h1 class="h1-lg md:transform md:-translate-x-50">{{ section.settings.hero_title_text }}</h1>
+    </div>
+  </div>
+  <div class="absolute top-0 left-0 w-full h-full">
+    <figure class="hidden md:block">
+      {%
+        render 'lazy-image',
+        type: 'color',
+        image_base: section.settings.hero_title_image_desk,
+        sizes: '100vw',
+        srcs: '1280x,2560x'
+      %}
+    </figure>
+    <figure class="block md:hidden">
+      {%
+        render 'lazy-image',
+        type: 'color',
+        image_base: section.settings.hero_title_image_mobile,
+        sizes: '100vw',
+        srcs: '1280x,2560x'
+      %}
+    </figure>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Hero Title",
+    "class": "hero_title",
+    "settings": [
+      {
+        "id": "hero_title_text",
+        "type": "text",
+        "label": "Hero Title"
+      },
+      {
+        "id": "hero_title_image_desk",
+        "type": "image_picker",
+        "label": "Hero Image Desktop"
+      },
+      {
+        "id": "hero_title_image_mobile",
+        "type": "image_picker",
+        "label": "Hero Image Mobile"
+      },
+      {
+        "id": "hero_title_svg",
+        "type": "text",
+        "label": "Hero Title SVG",
+        "info": "Upload the SVG [here](https://coop-development-clone.myshopify.com/admin/settings/files) and then copy paste the URL here."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero Title",
+        "category": "Hero"
+      }
+    ]
+  }
+{% endschema %}

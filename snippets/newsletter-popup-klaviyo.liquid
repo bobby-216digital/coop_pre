@@ -1,0 +1,41 @@
+{%- if settings.popup_mailchimp_show == '1' -%}
+<div id="popup-mailchimp" class="popup-klaviyo popup-modal roar-popup">
+  <div class="popup-backdrop"></div>
+  <div class="popup-content">
+    <a href="#" class="close-modal"> <i class="icon-cross"></i> </a>
+    <div class="popup-container">
+      {%- if settings.popup_mailchimp_img -%}
+      <div class="popup-inner popup-image">
+        <img src="{{ settings.popup_mailchimp_img | img_url: 'master' }}" alt="" />
+      </div>
+      {%- endif -%}
+      <div class="popup-inner">
+        <div class="popup-wrap">
+          {%- capture mailchimpHeading -%}{{ 'general.mailchimp_popup.heading_html' | t }}{%- endcapture -%}
+          {%- if mailchimpHeading != '' -%}
+          <h3 class="inner-heading">{{ mailchimpHeading }}</h3>
+          {%- endif -%}
+          
+          {%- capture mailchimpContent -%}{{ 'general.mailchimp_popup.content_html' | t }}{%- endcapture -%}
+          {%- if mailchimpContent != '' -%}
+          <div class="inner-content">{{ mailchimpContent }}</div>
+          {%- endif -%}
+          <form id="email_signup" class="newsletter klaviyo_styling klaviyo_standard_embed_QMMXuD" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+            <input type="hidden" name="g" value="{{settings.flaviyo_list_id}}">
+            <div class="klaviyo_field_group">
+              <input type="email" class="email" value="" name="email" id="k_id_email" placeholder="{{ 'general.mailchimp_popup.enter_your_email' | t }}" required="required" />
+            </div>
+            <div class="klaviyo_form_actions">
+              <button type="submit" class="button btn1 bshadow subscribe klaviyo_submit_button">{{ 'general.mailchimp_popup.subscribe' | t }}</button>
+            </div>
+            <div class="klaviyo_messages">
+              <div class="success_message" style="display:none;"></div>
+              <div class="error_message" style="display:none;"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,93 @@
+<section class="image-text-slider px-20 py-35 lg:py-40 md:px-0 w-full bg-cover bg-center bg-no-repeat" {% if section.settings.bg_image != blank %}style="background: url('{{ section.settings.bg_image | image_url}}');"{% endif %}>
+  {% if section.settings.title != blank %}
+    <h1 class="image-text-slider__title h3 mb-25 md:mb-40 text-white text-center">{{ section.settings.title }}</h1>
+  {% endif %}
+  <div class="carousel swiper-container image-text-slider__container pb-50 md:pb-80">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide image-text-slider__slide md:h-auto" aria-hidden="false">
+          <div class="image-text-slider__slide-wrapper md:grid md:grid-cols-2 h-full">
+            <img src="{{ block.settings.image | img_url: '400x'}}" class="image-text-slider__slide-image object-cover object-center w-full md:h-full">
+            <div class="image-text-slider__slide-text-container bg-white p-40">
+              {% if block.settings.slide_title != blank %}
+                <div class="image-text-slider__slide-title p1 font-medium">{{ block.settings.slide_title }}</div>
+              {% endif %}
+              {% if block.settings.slide_text != blank %}
+                <div class="image-text-slider__slide-text p2" {% if block.settings.slide_text_pt != blank %}style="padding-top: {{ block.settings.slide_text_pt }}px;"{% endif %}>{{ block.settings.slide_text }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 1 %}
+      <div class="swiper-pagination image-text-slider__pagination pb-15 flex justify-center items-center"></div>
+      {% if section.settings.show_arrows_desktop %}
+        <div class="image-text-slider__arrows flex-row justify-between w-full px-12 hidden md:flex">
+          <button title="Previous Button" type="button" class="swiper-button-prev flex justify-center items-center">
+            {% render 'icons', icon: 'caret-left' %}
+          </button>
+          <button title="Next Button" type="button" class="swiper-button-next flex justify-center items-center">
+            {% render 'icons', icon: 'caret-right' %}
+          </button>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_arrows_desktop",
+        "label": "Show Arrow Icons In Desktop"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Slide",
+        "type": "slide",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "slide_title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "slide_text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "slide_text_pt",
+            "label": "Text Top Padding (px)",
+            "info": "Number only"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image Text Slider"
+      }
+    ]
+  }
+{% endschema %}

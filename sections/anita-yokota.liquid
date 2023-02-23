@@ -1,0 +1,286 @@
+<div class="anita-yokota">
+    <div class="anita-yokota__hero relative">
+        {% if section.settings.layout == "center" %}
+          <div id="ghero__index--image" class="mt-70 py-95 flex flex-col md:flex-row md:py-200 md:items-center overflow-hidden" style="background-image: url({{ section.settings.img_hero_desktop | img_url: '730x630', scale: 2 }}); background-size: cover">
+            <div id="ghero__index--text" class="flex flex-col mx-20 items-center text-center md:order-1 md:w-full">
+              {%- if section.settings.img_swirled != blank -%}
+                <div class="pb-20 lazy--flex max-w-xs">
+                  <img src="{{ section.settings.img_swirled }}" alt="">
+                </div>
+              {%- endif -%}
+              {% if section.settings.consumer %}
+              <div class="pb-20 max-w-xs badge-embed"></div>
+              {% endif %}
+              <div class="ghero__logo">
+                <img src="{{ section.settings.logo_img }}" />
+            </div>
+            </div>
+          </div>
+        {% elsif section.settings.layout == "left" and section.settings.img_mask %}
+          <div class="{% if settings.enable_announcement_bar == true %}margin-top--banner-detected{% else %}mt-70{% endif %} pt-20 pb-60 flex flex-col relative md:flex-row md:pt-40 md:pb-120 md:items-center" data-animate-scale>
+            <div id="ghero__index--image" class="ml-20 mr-0 flex-auto rounded-l-full md:order-2 md:ml-0 md:w-725 md:h-600 lazy--flex overflow-hidden" data-img-scale>
+              {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: section.settings.img_hero_desktop,
+                image_mobile: section.settings.img_hero_mobile,
+                sizes: '50vw',
+                srcs: '959x,960x,1450x',
+                classes: 'rounded-l-full h-250 md:h-600',
+                classes_mask: 'rounded-l-full',
+              %}
+            </div>
+            <div id="ghero__index--text" class="flex flex-col mx-20 relative md:ml-80 md:order-1 md:-mr-80 md:w-550 md:z-10">
+              {%- if section.settings.img_swirled != blank -%}
+                <div class="my-20 lazy--flex max-w-xs">
+                  <img src="{{ section.settings.img_swirled }}" alt="">
+                </div>
+              {%- endif -%}
+            <div class="ghero__logo w-full py-40 px-30 md:w-3/4">
+                <img class="w-full" src="{{ section.settings.logo_img | img_url: '1000x' }}" />
+            </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="mt-70 pb-60 flex flex-col md:flex-row md:pb-0 md:items-center">
+            <div id="ghero__index--image" class="flex-auto h-280 md:order-2 md:h-730 md:w-630 lazy--flex" data-img-scale>
+              {%
+                render 'lazy-image',
+                type: 'color',
+                image_base: section.settings.img_hero_desktop,
+                image_mobile: section.settings.img_hero_mobile,
+                sizes: '50vw',
+                srcs: '959x,960x,1450x',
+                classes: 'h-250 md:h-730',
+              %}
+            </div>
+            <div id="ghero__index--text" class="flex flex-col mx-20 md:ml-80 md:order-1 md:w-550 md:mr-20">
+              <div class="py-20 lazy--flex max-w-xs">
+                {%
+                  render 'lazy-image',
+                  type: 'color',
+                  image_base: section.settings.img_swirled,
+                  srcs: '660x',
+                %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <img src="{{ section.settings.hover_image | img_url: '500x' }}" alt="" class="top-hover-img absolute w-140 md:w-250">
+    </div>
+
+    <div class="anita-yokota__middle-section py-40 px-40 bg-secondary-200">
+        <div class="anita-yokota__inner-container max-w-screen-2xl mx-auto">
+            <div class="anita-yokota__middle-top flex flex-col md:flex-row">
+                <div class="anita-yokota__left-top py-10 w-full md:w-1/2 md:px-40">
+                    <img class="anita-img-1" src="{{ section.settings.anita_img_1 | img_url: '1000x' }}" />
+                </div>
+                <div class="anita-yokota__right-top text-center w-full md:w-1/2 md:px-40">
+                    <h2 class="anita-title h2 mb-10">{{ section.settings.anita_title }}</h2>
+                    <h3 class="anita-subtitle h4 italic " style="color:#a8a58d">{{ section.settings.anita_subtitle_1 }}</h3>
+                    <hr class="anita-bar my-20  border-solid md:my-40" style="border-color: #dfafa2; border-width: 4px;">
+                    <p class="anita-content text-center my-20 md:text-left md:my-40"> {{section.settings.anita_content_1 }} </p>
+                </div>
+            </div>
+            <div class="anita-yokota__middle-bottom  flex flex-col-reverse md:flex-row ">
+                <div class="anita-yokota__left-bottom py-10 text-center w-full md:w-1/2 md:px-40">
+                    <hr class="anita-bar my-20 border-solid md:mt-10 md:mb-20" style="border-color: #dfafa2; border-width: 4px;">
+                    <h3 class="anita-subtitle italic h4" style="color:#a8a58d">{{ section.settings.anita_subtitle_2 }}</h3>
+                    <p class="anita-content text-center my-20 md:text-left md:my-40"> {{section.settings.anita_content_2 }} </p>
+                    <div class="anita-triple-img-container ">
+                        <img class="anita-triple-img" src="{{ section.settings.anita_triple_img | img_url: '1000x' }}" />
+                    </div>
+                </div>
+                <div class="anita-yokota__right-bottom relative mb-80 py-10 w-full md:w-1/2 md:px-40 md:mb-0">
+                    <img class="anita-img-2" src="{{ section.settings.anita_img_2 | img_url: '1000x' }}" />
+                    <img src="{{ section.settings.hover_image | img_url: '500x' }}" alt="" class="bottom-hover-img absolute w-140 md:w-250">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="anita-yokota__collection container py-40 md:py-80">
+        {% if section.settings.anita_collection != blank %}
+        <h2 class="h2 text-center mb-20 md:mb-40">{{ section.settings.collection_title }}</h2>
+        {% endif %}
+        {% assign block_collection = section.settings.anita_collection %}
+        <ul class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-3 gap-20 gap-y-60">
+            {% for product in block_collection.products %}
+              {% render 'product-card' product: product, imageClass: 'object-cover', imageHover: false %}              
+            {% endfor %}
+          </ul>
+    </div>
+</div>
+
+<style>
+    .bottom-hover-img {
+        bottom: -88px;
+        right: 0px;
+    }
+
+    .top-hover-img {
+        left: 50%;
+        transform: translate(-50%, 35%);
+        bottom: 0;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .bottom-hover-img {
+            bottom: -140px;
+            right: 0px;
+        }
+
+        .top-hover-img {
+            left: 5%;
+            transform: unset;
+            bottom: -33px;
+        }
+    }
+</style>
+
+
+{% schema %}
+  { 
+    "name": "Anita Yokota",
+    "settings": [
+	  {
+        "id": "consumer",
+        "type": "checkbox",
+        "label": "Show consumer badge"
+      },
+      {
+        "id": "img_swirled",
+        "type": "text",
+        "label": "Swirled Text Image",
+        "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+      },
+      {
+        "type": "image_picker",
+        "id": "img_hero_mobile",
+        "label": "Hero Image (Mobile)"
+      },
+      {
+        "type": "image_picker",
+        "id": "img_hero_desktop",
+        "label": "Hero Image (Desktop)"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_img",
+        "label": "Logo Image"
+      },
+      {
+        "type": "header",
+        "content": "Hero Module Layout"
+      },
+      {
+        "id": "layout",
+        "type": "select",
+        "label": "Hero Module Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left Aligned"
+          },
+          {
+            "value": "center",
+            "label": "Center Aligned"
+          }
+        ],
+        "default": "left",
+        "info": "Select layout for Hero Module"
+      },
+      {
+        "id": "img_mask",
+        "type": "checkbox",
+        "label": "Mask Hero Module Image?",
+        "default": true,
+        "info": "Only applied when Left Aligned is selected"
+      },
+      {
+        "id": "text_color",
+        "type": "select",
+        "label": "Hero Module Text Color",
+        "options": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ],
+        "default": "black",
+        "info": "Select text color for Hero Module"
+      },
+      {
+        "type": "header",
+        "content": "Hovering Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "hover_image",
+        "label": "Hover Image"
+      },
+      {
+        "type": "header",
+        "content": "Middle Section"
+      },
+      {
+        "type": "image_picker",
+        "id": "anita_img_1",
+        "label": "Anita Img 1"
+      },
+      {
+        "type": "text",
+        "id": "anita_title",
+        "label": "Anita Title"
+      },
+      {
+        "type": "text",
+        "id": "anita_subtitle_1",
+        "label": "Anita subtitle"
+      },
+      {
+        "type": "textarea",
+        "id": "anita_content_1",
+        "label": "Anita Content Top"
+      },
+      {
+        "type": "text",
+        "id": "anita_subtitle_2",
+        "label": "Anita subtitle Bottom"
+      },
+      {
+        "type": "textarea",
+        "id": "anita_content_2",
+        "label": "Anita Content Bottom"
+      },
+      {
+        "type": "image_picker",
+        "id": "anita_triple_img",
+        "label": "Anita Triple Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "anita_img_2",
+        "label": "Anita Image 2"
+      },
+      {
+        "type": "header",
+        "content": "Collection"
+      },
+      {
+        "type": "text",
+        "id": "collection_title",
+        "label": "Collection Title"
+      },
+      {
+        "type": "collection",
+        "id": "anita_collection",
+        "label": "Choose a Collection"
+      }
+    ]
+  }
+{% endschema %}

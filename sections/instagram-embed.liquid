@@ -1,0 +1,43 @@
+<section class="instagram-embed py-20 pl-12 lg:p-40 lg:px-0 w-full" {% if section.settings.bg_color != blank %}style="background-color: {{ section.settings.bg_color }};"{% endif %}>
+  {% if section.settings.title != blank %}
+    <h1 class="instagram-embed__title h3 text-center">{{ section.settings.title }}</h1>
+  {% endif %}
+  {% if section.settings.subtitle != blank %}
+    <p class="instagram-embed__subtitle p1 text-center mt-10">{{ section.settings.subtitle }}</p>
+  {% endif %}
+  {% if section.settings.embed != blank %}
+    <div class="instagram-embed__embed-code mt-15">{{ section.settings.embed }}</div>
+  {% endif %}
+</section>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "type": "html",
+        "id": "embed",
+        "label": "Instagram Embed Code"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Instagram Embed"
+      }
+    ]
+  }
+{% endschema %}

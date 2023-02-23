@@ -1,0 +1,13 @@
+{%- if section.settings.collection != blank -%}
+{%- assign collection = collections[section.settings.collection] -%}
+<section class="related products">
+  <h2>{{'products.general.recommended_products' | t | escape }}</h2>
+  <ul class="products" data-slide_enable="{{section.settings.slide_enable}}" data-per_view="{{ section.settings.product_related_products_view }}"> 
+    {%- for my_product in collection.products limit: section.settings.product_related_products_limit -%}
+    <li class="product col-xs-6 col-sm-4 col-md-3 un-4-cols">
+      {%- include 'product-item' -%}
+    </li>
+    {%- endfor -%}  
+  </ul>
+</section>
+{%- endif -%}

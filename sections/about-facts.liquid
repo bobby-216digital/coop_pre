@@ -1,0 +1,77 @@
+{% if section.settings.facts_title %}
+  <section class="about-facts pb-60 md:pb-80">
+    <div class="container">
+      <h2 class="h5 text-center pb-80">
+        {{ section.settings.facts_title }}
+      </h2>
+      <div class="px-95">
+        {% for block in section.blocks %}
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-20 py-20 border-b border-secondary-200">
+            <div class="flex flex-col md:flex-row items-center md:items-end col-span-2 md:col-span-1">
+              <span class="block w-35 md:mr-20">
+                <img src="{{ block.settings.facts_icon }}" alt="">
+              </span>
+              <p class="p1 font-roslinda font-light">
+                {{ block.settings.facts_name }}
+              </p>
+            </div>
+            <div class="p3 flex items-center">{{ block.settings.facts_copy_1 }}</div>
+            <div class="p3 flex items-center">{{ block.settings.facts_copy_2 }}</div>
+          </div>
+        {% endfor %}
+        
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Facts",
+    "class": "facts",
+    "settings": [
+      {
+        "id": "facts_title",
+        "type": "richtext",
+        "label": "Facts Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "quote",
+        "name": "Facts",
+        "settings": [
+          {
+            "id": "facts_icon",
+            "type": "text",
+            "label": "Facts Icon",
+            "info": "Upload the SVG [here](/admin/settings/files) and then copy paste the URL here."
+          },
+          {
+            "id": "facts_name",
+            "type": "text",
+            "label": "Facts Name"
+          },
+          {
+            "id": "facts_copy_1",
+            "type": "richtext",
+            "label": "Fact Copy 1"
+          },
+          {
+            "id": "facts_copy_2",
+            "type": "richtext",
+            "label": "Fact Copy 2"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Facts",
+        "category": "Repeat"
+      }
+    ]
+  }
+{% endschema %}
+
+

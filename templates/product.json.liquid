@@ -1,0 +1,25 @@
+{% layout none %}
+{
+	"id": {{ product.id }},
+	"title": "{{ product.title }}",
+	"available": {{ product.available }},
+  {% assign acf_product_recirculation_handles = product.metafields.accentuate.product_recirculation | split: '|' %}
+  "recirculation": [
+    {% for product_recirculation in acf_product_recirculation_handles %}
+      {% assign all_product_recirculation = all_products[product_recirculation] %}
+      {
+        "id": {{ all_product_recirculation.id | json }},
+        "title": {{ all_product_recirculation.title | json }},
+        "featured_image": {{ all_product_recirculation.featured_image | json }},
+        "handle": {{ all_product_recirculation.handle | json }},
+        "price": {{ all_product_recirculation.price | json }},
+        "first_available_variant": {{ all_product_recirculation.first_available_variant | json }}
+      }{% if forloop.last == false %},{% endif %}
+    {% endfor %}
+  ]
+}
+
+
+
+
+

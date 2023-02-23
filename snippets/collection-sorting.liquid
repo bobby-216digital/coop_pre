@@ -1,0 +1,18 @@
+<div class="sort-by h-60 md:h-50 bg-secondary-200 rounded-30">
+  <select title="Sort By" name="SortBy" id="SortBy" class="uppercase">
+      <option value="">Sort By</option>
+    {% for option in collection.sort_options %}
+      <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+        {{ option.name }}
+      </option>
+    {% endfor %}
+  </select>
+</div>
+
+<script>
+
+document.querySelector('#SortBy').addEventListener('change', function(e) {
+  var value = e.currentTarget.value;
+  location.search = new URLSearchParams({sort_by: value}).toString();
+});
+</script>

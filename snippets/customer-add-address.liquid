@@ -1,0 +1,50 @@
+<h2 class="h5 relative flex items-center mb-50 pl-40 md:pl-0">
+  <button type="button" class="absolute bottom-10 -left-50 w-25" data-close-address-new-form>
+    {% render 'icons', icon: 'arrow-prev', class: 'w-25' %}
+  </button>
+  {{ 'customer.account.add_an_address' | t }}
+</h2>
+<hr class="mb-30 border-black border-b-1 border-opacity-30 bg-white opacity-30">
+<div id="AddressNewForm" class="address-new-form text-center">
+  {% form 'customer_address', customer.new_address %}
+
+    <div class="grid md:grid-cols-2 gap-2 mb-20">
+      <input class="bg-white" type="text" id="AddressFirstNameNew" name="address[first_name]" value="{{ form.first_name }}" placeholder="{{ 'customer.addresses.first_name' | t }}">
+      <input class="bg-white" type="text" id="AddressLastNameNew" name="address[last_name]" value="{{ form.last_name }}" placeholder="{{ 'customer.addresses.last_name' | t }}">
+    </div>    
+    <div class="grid md:grid-cols-2 mb-20">
+      <input class="bg-white" type="text" id="AddressCompanyNew" name="address[company]" value="{{ form.company }}" placeholder="{{ 'customer.addresses.company' | t }}">
+    </div> 
+    <div class="mb-20">
+      <input class="bg-white" type="text" id="AddressAddress1New" name="address[address1]" value="{{ form.address1 }}" placeholder="{{ 'customer.addresses.address1' | t }}">
+    </div>  
+    <div class=" mb-20">
+      <input class="bg-white" type="text" id="AddressAddress2New" name="address[address2]" value="{{ form.address2 }}" placeholder="Address 2 (Optional)">
+    </div>      
+    <div class="mb-20">
+      <input class="bg-white" type="text" id="AddressCityNew" name="address[city]" value="{{ form.city }}" placeholder="{{ 'customer.addresses.city' | t }}">
+    </div>
+    <div class="grid md:grid-cols-2 md:gap-1 mb-20">
+      <div class="mb-20 md:mb-0">
+        <select class="" id="address_country_new" name="address[country]" data-default="{{ form.country }}">{{ country_option_tags }}</select>
+      </div>
+      <div id="address_province_container_new" style="display: none;">
+        <select id="address_province_new" class="" name="address[province]" data-default="{{ form.province }}"></select>
+      </div>
+    </div> 
+    <div class="grid md:grid-cols-2 md:gap-1 mb-40">
+      <input class="bg-white mb-20 md:mb-0" type="text" id="AddressZipNew" name="address[zip]" value="{{ form.zip }}" autocapitalize="characters" placeholder="{{ 'customer.addresses.zip' | t }}">
+      <input class="bg-white" type="tel" id="AddressPhoneNew" name="address[phone]" value="{{ form.phone }}" autocomplete="phone" placeholder="{{ 'customer.addresses.phone' | t }}">
+    </div>      
+    <div class="mb-50 text-left">
+      <span class="label-check">
+        {{ form.set_as_default_checkbox }}
+        <label class="p3 cursor-pointer underline" for="address_default_address_{{ form.id }}">{{ 'customer.addresses.set_default' | t }}</label>
+      </span>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10 md:gap-20">
+      <input type="submit" class="w-full md:w-auto h-60 btn-primary btn-md cursor-pointer" value="{{ 'customer.addresses.add' | t }}">
+      <button type="button" class="btn-secondary btn-md w-full cursor-pointer address-new-toggle" data-close-address-new-form>{{ 'customer.addresses.cancel' | t }}</button>
+    </div>
+  {% endform %}
+</div>

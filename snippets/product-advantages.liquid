@@ -1,0 +1,28 @@
+<div class="bg-white -mb-80">
+    {% if product.metafields.advantage_background.image %}
+        <img class="object-cover m-auto" src="{{ product.metafields.advantage_background.image }}" alt="">
+    {% endif %}
+</div>
+{% if product.metafields.accentuate.product_advantage_icon %}
+<div class="product-hero py-20 px-10 pt-95 w-full md:block" style="background-color:#EEDEC6">
+    <div class="product-hero__icons flex justify-center flex-wrap items-center grid grid-cols-1 md:grid-cols-4 md:gap-x-8">
+        {% assign acf_product_advantage_icons = product.metafields.accentuate.product_advantage_icon %}
+        {% for acf_product_advantage_icon in acf_product_advantage_icons %}
+            <div class="product-hero__container items-center px-5 px-5 md:px-20 md:h-60 pb-0 mb-20 md:mb-10 md:flex-1 flex">
+                <span class="mr-10 w-35 h-35 inline-block relative">
+                    {% for image in acf_product_advantage_icon %}
+                      {%
+                        render 'lazy-image-acf',
+                        type: 'color',
+                        image_base: image.src
+                        srcs: '33x,66x,',
+                        alt: product.title | escape
+                      %}
+                    {% endfor %}
+                </span>
+                <span class="p2">{{ product.metafields.accentuate.product_advantage_text[forloop.index0] }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
